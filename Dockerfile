@@ -18,3 +18,6 @@ RUN mix do deps.get, deps.compile
 # install umbrella apps
 COPY apps/ apps/
 RUN mix compile
+
+# start application
+CMD ["mix", "run", "--no-halt"]
