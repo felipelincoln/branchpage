@@ -5,10 +5,14 @@ defmodule Web.Application do
 
   def start(_type, _args) do
     children = [
-      {Plug.Cowboy, scheme: :http, plug: Web, options: [port: 80]}
+      {Plug.Cowboy, scheme: :http, plug: Web, options: [port: application_port()]}
     ]
 
     opts = [strategy: :one_for_one, name: Web.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp application_port do
+    System.get_env("PORT", 4000)
   end
 end
