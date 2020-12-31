@@ -1,7 +1,7 @@
 FROM elixir:1.10.4-alpine
 
 # install machine dependencies
-RUN apk add curl
+RUN apk add build-base curl
 
 # prepare main dir
 WORKDIR /app
