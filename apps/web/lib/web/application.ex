@@ -5,7 +5,7 @@ defmodule Web.Application do
 
   def start(_type, _args) do
     children = [
-      {Plug.Cowboy, scheme: :http, plug: Web, options: [port: 4000]}
+      {Plug.Cowboy, scheme: :http, plug: Web, options: [port: 80]}
     ]
 
     opts = [strategy: :one_for_one, name: Web.Supervisor]
