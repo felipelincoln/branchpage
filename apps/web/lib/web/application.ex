@@ -13,6 +13,7 @@ defmodule Web.Application do
   end
 
   defp application_port do
-    System.get_env("PORT", 4000)
+    System.get_env("PORT", "4000")
+    |> String.to_integer()
   end
 end
