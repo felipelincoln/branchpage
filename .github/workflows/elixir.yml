@@ -18,8 +18,8 @@ jobs:
 
       - name: Docker build
         run: |
-          docker pull docker.pkg.github.com/felipelincoln/mvp/dev:latest
-          docker build --tag test:latest --cache-from docker.pkg.github.com/felipelincoln/mvp/dev:latest .
+          docker pull docker.pkg.github.com/felipelincoln/branchpage/dev:latest
+          docker build --tag test:latest --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev:latest .
 
       - name: Test
         run: docker run --rm test mix test

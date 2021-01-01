@@ -1,4 +1,4 @@
-defmodule Mvp.MixProject do
+defmodule BranchPage.MixProject do
   use Mix.Project
 
   def project do
