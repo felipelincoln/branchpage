@@ -1,0 +1,25 @@
+name: Elixir CI
+
+on: [ pull_request, push ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to GitHub Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: felipelincoln
+          password: ${{ secrets.WRITE_PACKAGE_TOKEN }}
+
+      - name: Docker build
+        run: |
+          docker pull docker.pkg.github.com/felipelincoln/branchpage/dev:latest
+          docker build --tag test:latest --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev:latest .
+
+      - name: Test
+        run: docker run --rm test mix test

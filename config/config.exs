@@ -1,18 +1,10 @@
-# This file is responsible for configuring your umbrella
-# and **all applications** and their dependencies with the
-# help of the Config module.
-#
-# Note that all applications in your umbrella share the
-# same configuration and dependencies, which is why they
-# all use the same configuration file. If you want different
-# configurations or dependencies per app, it is best to
-# move said applications out of the umbrella.
 import Config
 
-# Sample configuration:
-#
-#     config :logger, :console,
-#       level: :info,
-#       format: "$date $time [$level] $metadata$message\n",
-#       metadata: [:user_id]
-#
+config :phoenix, :json_library, Jason
+
+config :web, Web.Endpoint,
+  url: [host: "localhost"],
+  secret_key_base: "zliHduy02MJH71NcPjCEcVsr7cv/EEna3wSILC4XEU2mAya0tPOsdABKUx2Z5ph2",
+  render_errors: [view: Web.ErrorView, accepts: ~w(html), layout: false]
+
+import_config "#{System.get_env("MIX_ENV", "dev")}.exs"

@@ -1,11 +1,13 @@
-defmodule Mvp.MixProject do
+defmodule BranchPage.MixProject do
   use Mix.Project
+
+  Mix.env(:app)
 
   def project do
     [
       apps_path: "apps",
       version: "0.1.0",
-      start_permanent: Mix.env() == :prod,
+      start_permanent: System.get_env("MIX_ENV") == :prod,
       deps: deps()
     ]
   end
