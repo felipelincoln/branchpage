@@ -10,6 +10,7 @@ defmodule Web.MixProject do
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
       elixir: "~> 1.10",
+      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -17,14 +18,17 @@ defmodule Web.MixProject do
 
   def application do
     [
-      extra_applications: [:logger],
-      mod: {Web.Application, []}
+      mod: {Web.Application, []},
+      extra_applications: [:logger]
     ]
   end
 
   defp deps do
     [
-      {:plug_cowboy, "~> 2.0"}
+      {:phoenix, "~> 1.5.7"},
+      {:phoenix_html, "~> 2.14"},
+      {:plug_cowboy, "~> 2.0"},
+      {:jason, "~> 1.2"}
     ]
   end
 end
