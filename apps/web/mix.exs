@@ -11,7 +11,7 @@ defmodule Web.MixProject do
       lockfile: "../../mix.lock",
       elixir: "~> 1.10",
       compilers: [:phoenix] ++ Mix.compilers(),
-      start_permanent: Mix.env() == :prod,
+      start_permanent: System.get_env("MIX_ENV") == :prod,
       deps: deps()
     ]
   end
