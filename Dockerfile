@@ -18,4 +18,4 @@ COPY apps apps
 RUN mix compile
 
 # start application
-CMD ["mix", "run", "--no-halt"]
+CMD ["mix", "phx.server"]
