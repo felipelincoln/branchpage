@@ -17,14 +17,15 @@ defmodule Web.MixProject do
 
   def application do
     [
-      extra_applications: [:logger],
-      mod: {Web.Application, []}
+      extra_applications: [:logger]
     ]
   end
 
   defp deps do
     [
-      {:plug_cowboy, "~> 2.0"}
+      {:phoenix, "~> 1.5.7"},
+      {:plug_cowboy, "~> 2.0"},
+      {:jason, "~> 1.2"}
     ]
   end
 end

@@ -1,19 +1,18 @@
 defmodule Web do
-  @moduledoc false
+  @moduledoc """
+  Documentation for `Web`.
+  """
 
-  import Plug.Conn
+  @doc """
+  Hello world.
 
-  def init(options) do
-    IO.puts "Starting server"
+  ## Examples
 
-    options
-  end
+      iex> Web.hello()
+      :world
 
-  def call(conn, _opts) do
-    IO.puts "Loading page"
-
-    conn
-    |> put_resp_content_type("text/plain")
-    |> send_resp(200, "Hello world!")
+  """
+  def hello do
+    :world
   end
 end
