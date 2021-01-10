@@ -1,2 +1,6 @@
-<code style="background-color:lightgray">templates/error/404.html.eex</code>
-<p>Page not found.</p>
+<html>
+  <body>
+    <code style="background-color:lightgray">templates/error/404.html.eex</code>
+    <p>Page not found.</p>
+  </body>
+</html>
