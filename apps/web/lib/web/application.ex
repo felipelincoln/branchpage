@@ -7,11 +7,4 @@ defmodule Web.Application do
 
     Supervisor.start_link(children, opts)
   end
-
-  def config_change(change, new, removed) do
-    IO.inspect change
-    IO.inspect new
-    IO.inspect removed
-    :ok
-  end
 end
