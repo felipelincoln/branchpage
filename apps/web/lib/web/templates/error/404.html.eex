@@ -1,6 +1,9 @@
 <html>
+  <head>
+    <link rel="stylesheet" href='<%= Routes.static_path(@conn, "/css/base.css") %>'>
+  </head>
   <body>
-    <code style="background-color:lightgray">templates/error/404.html.eex</code>
+    <code class="bg-gray-300">templates/error/404.html.eex</code>
     <p>Page not found.</p>
   </body>
 </html>
