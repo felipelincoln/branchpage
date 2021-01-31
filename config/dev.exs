@@ -7,7 +7,7 @@ config :web, Web.Endpoint,
   check_origin: false,
   live_reload: [
     patterns: [
-      ~r"apps/web/lib/web/templates/error/.*(eex)$",
+      ~r"apps/web/lib/web/(live|view|templates)/.*(ex)$",
       ~r"apps/web/priv/static/(css|js)/.*(css|js)$"
     ]
   ],

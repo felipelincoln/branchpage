@@ -13,7 +13,7 @@ defmodule Web.Endpoint do
     at: "/",
     from: :web,
     gzip: true,
-    only: ~w(css)
+    only: ~w(css js)
 
   if code_reloading? do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
@@ -21,5 +21,6 @@ defmodule Web.Endpoint do
     plug Phoenix.LiveReloader
   end
 
+  plug Plug.Session, @session_options
   plug Web.Router
 end

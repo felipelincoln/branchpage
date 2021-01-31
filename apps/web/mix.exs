@@ -27,8 +27,8 @@ defmodule Web.MixProject do
     [
       {:phoenix, "~> 1.5.7"},
       {:phoenix_html, "~> 2.14"},
-      {:phoenix_live_reload, "~> 1.3"},
       {:phoenix_live_view, "~> 0.15.4"},
+      {:phoenix_live_reload, "~> 1.3"},
       {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.2"}
     ]
