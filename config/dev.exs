@@ -8,4 +8,13 @@ config :web, Web.Endpoint,
     patterns: [
       ~r"lib/web/templates/error/.*(eex)$"
     ]
+  ],
+  watchers: [
+    node: [
+      "node_modules/webpack/bin/webpack.js",
+      "--mode",
+      "development",
+      "--watch",
+      cd: Path.expand("../apps/web/assets", __DIR__)
+    ]
   ]
