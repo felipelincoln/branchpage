@@ -6,6 +6,7 @@ defmodule Web.Application do
       {Phoenix.PubSub, name: Web.PubSub},
       Web.Endpoint
     ]
+
     opts = [strategy: :one_for_one, name: Web.Supervisor]
 
     Supervisor.start_link(children, opts)
