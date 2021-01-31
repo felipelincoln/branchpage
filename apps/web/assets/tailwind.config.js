@@ -1,6 +1,7 @@
 module.exports = {
   purge: [
-    '../lib/**/*.eex'
+    '../lib/**/*.eex',
+    '../lib/**/*.leex'
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {

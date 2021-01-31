@@ -2,11 +2,12 @@ import Config
 
 config :web, Web.Endpoint,
   http: [port: 4000],
+  debug_errors: false,
   code_reloader: true,
   check_origin: false,
   live_reload: [
     patterns: [
-      ~r"apps/web/lib/web/templates/error/.*(eex)$",
+      ~r"apps/web/lib/web/(live|view|templates)/.*(ex)$",
       ~r"apps/web/priv/static/(css|js)/.*(css|js)$"
     ]
   ],
