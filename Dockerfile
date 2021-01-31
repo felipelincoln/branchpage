@@ -24,7 +24,7 @@ COPY apps/web/assets/package.json apps/web/assets/package-lock.json apps/web/ass
 RUN npm ci --prefix ./apps/web/assets --progress=false --no-audit --loglevel=error
 
 # generate static files
-COPY apps/web/assets apps/web/assets
+COPY apps/web apps/web
 RUN npm run --prefix ./apps/web/assets deploy
 
 # digests and compresses static files
