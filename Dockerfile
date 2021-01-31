@@ -3,6 +3,9 @@ FROM elixir:1.10.4-alpine
 # prepare main dir
 WORKDIR /app
 
+# install build dependencies
+RUN apk add npm
+
 # install dev dependencies
 RUN apk add inotify-tools
 
@@ -16,8 +19,15 @@ COPY apps/web/mix.exs apps/web/mix.exs
 COPY config config
 RUN mix do deps.get, deps.compile --skip-umbrella-children
 
+# install node dependencies
+COPY apps/web/assets/package.json apps/web/assets/package-lock.json apps/web/assets/
+RUN npm ci --prefix ./apps/web/assets --progress=false --no-audit --loglevel=error
+
 # generate static files
-COPY apps/web/priv/static apps/web/priv/static
+COPY apps/web/assets apps/web/assets
+RUN npm run --prefix ./apps/web/assets deploy
+
+# digests and compresses static files
 RUN mix phx.digest
 
 # install umbrella apps
