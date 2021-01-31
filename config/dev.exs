@@ -6,7 +6,8 @@ config :web, Web.Endpoint,
   check_origin: false,
   live_reload: [
     patterns: [
-      ~r"lib/web/templates/error/.*(eex)$"
+      ~r"apps/web/lib/web/templates/error/.*(eex)$",
+      ~r"apps/web/priv/static/(css|js)/.*(css|js)$"
     ]
   ],
   watchers: [
