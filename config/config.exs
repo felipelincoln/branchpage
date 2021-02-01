@@ -8,4 +8,8 @@ config :web, Web.Endpoint,
   pubsub_server: Web.PubSub,
   live_view: [signing_salt: "nNxuMZr4Bq73HLMihu1pYEdtKLAL/f+Z"]
 
-import_config "#{System.get_env("MIX_ENV", "dev")}.exs"
+import_config "#{Mix.env()}.exs"
+
+# `Mix.env` is set to be `:app` to prevent recompiling when
+# running the application in different environments.
+Mix.env(:app)
