@@ -32,6 +32,7 @@ RUN mix phx.digest
 
 # install umbrella apps
 COPY apps apps
+ARG MIX_ENV=prod
 RUN mix compile
 
 # start application
