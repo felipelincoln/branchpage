@@ -22,4 +22,4 @@ jobs:
           docker build --tag branchpage-test:latest --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev:latest .
 
       - name: Test
-        run: docker run --rm branchpage-test mix test
+        run: docker run --rm -e MIX_ENV=test branchpage-test mix test
