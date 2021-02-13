@@ -13,7 +13,7 @@ defmodule Web.Endpoint do
     at: "/",
     from: :web,
     gzip: true,
-    only: ~w(css js favicon.png)
+    only: ~w(css js images favicon.png)
 
   if code_reloading? do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
