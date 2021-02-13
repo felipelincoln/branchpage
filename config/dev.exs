@@ -8,7 +8,8 @@ config :web, Web.Endpoint,
   live_reload: [
     patterns: [
       ~r"apps/web/lib/web/(live|view|templates)/.*(ex)$",
-      ~r"apps/web/priv/static/(css|js)/.*(css|js)$"
+      ~r"apps/web/priv/static/(css|js)/.*(css|js)$",
+      ~r"apps/web/priv/static/.*png$"
     ]
   ],
   watchers: [
