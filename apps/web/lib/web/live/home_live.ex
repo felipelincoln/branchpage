@@ -1,9 +1,20 @@
 defmodule Web.HomeLive do
   use Phoenix.LiveView
 
+  @meta [
+    title: "branchpage title",
+    description: "some description",
+    social_image: "/images/cover.png"
+  ]
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :value, 0)}
+    socket =
+      socket
+      |> assign(@meta)
+      |> assign(:value, 0)
+
+    {:ok, socket}
   end
 
   @impl true

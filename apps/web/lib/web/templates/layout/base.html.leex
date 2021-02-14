@@ -1,25 +1,25 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Branchpage</title>
+    <title><%= @title %></title>
     <%= csrf_meta_tag() %>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#4285f4">
-    <meta name="description" content="A description of the page">
+    <meta name="description" content="<%= @description %>">
     <meta name="robots" content="index,follow">
     <meta property="og:url" content="https://branchpage-homologation.herokuapp.com">
-    <meta property="og:title" content="Content Title">
-    <meta property="og:image" content="/images/cover.png">
-    <meta property="og:description" content="Description Here">
+    <meta property="og:title" content="<%= @title %>">
+    <meta property="og:image" content="<%= @social_image %>">
+    <meta property="og:description" content="<%= @description %>">
     <meta property="og:site_name" content="Branchpage">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://branchpage-homologation.herokuapp.com">
-    <meta name="twitter:title" content="Content Title">
-    <meta name="twitter:description" content="Content description less than 200 characters">
-    <meta name="twitter:image" content="/images/cover.png">
+    <meta name="twitter:title" content="<%= @title %>">
+    <meta name="twitter:description" content="<%= @description %>">
+    <meta name="twitter:image" content="<%= @social_image %>">
     <!--
     <meta name="author" content="author name">
     <meta name="date" content="date article was published">
