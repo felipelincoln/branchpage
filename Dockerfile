@@ -21,7 +21,7 @@ RUN mix do deps.get, deps.compile --skip-umbrella-children
 
 # install node dependencies
 COPY apps/web/assets/package.json apps/web/assets/package-lock.json apps/web/assets/
-RUN npm ci --prefix ./apps/web/assets --progress=false --no-audit --loglevel=error
+RUN npm ci --prefix ./apps/web/assets --no-audit
 
 # generate static files
 COPY apps/web apps/web
@@ -32,6 +32,7 @@ RUN mix phx.digest
 
 # install umbrella apps
 COPY apps apps
+ARG MIX_ENV=prod
 RUN mix compile
 
 # start application

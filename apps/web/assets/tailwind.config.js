@@ -1,5 +1,6 @@
 module.exports = {
   purge: [
+    '../lib/**/*.ex',
     '../lib/**/*.eex',
     '../lib/**/*.leex'
   ],
