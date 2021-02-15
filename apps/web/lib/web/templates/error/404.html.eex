@@ -38,7 +38,6 @@
     -->
     <link rel="stylesheet" href='<%= Routes.static_path(@conn, "/css/base.css") %>'>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <script defer type="text/javascript" src='<%= Routes.static_path(@conn, "/js/main.js") %>'></script>
   </head>
   <body>
     <code class="bg-gray-300">templates/error/404.html.eex</code>
