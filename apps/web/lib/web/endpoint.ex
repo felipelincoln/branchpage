@@ -7,7 +7,8 @@ defmodule Web.Endpoint do
     signing_salt: "KXBHqVtGsYq13l6OnbeU8RllO+S0xUQ+"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [log: false, connect_info: [session: @session_options]]
 
   plug Plug.Static,
     at: "/",
