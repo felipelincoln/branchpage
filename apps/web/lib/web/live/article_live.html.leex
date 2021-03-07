@@ -1,0 +1,13 @@
+<div class="p-4 flex items-center justify-between">
+  <a href="#" class="inline-flex items-center">
+    <svg class="h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    <span class="text-xl font-semibold"><%= @name %></span>
+  </a>
+
+  <a href="#">Edit on GitHub</a>
+</div>
+<div class="container max-w-screen-sm">
+  <p><%= @date %></p>
+  <%= @title %>
+  <%= raw @body_html %>
+</div>
