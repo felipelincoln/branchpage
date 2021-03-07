@@ -1,16 +1,21 @@
-<div class="p-4 flex items-center justify-between">
+<nav class="flex items-center justify-between">
   <a href="#" class="inline-flex items-center">
-    <svg class="h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-    <span class="text-xl font-semibold"><%= @name %></span>
+    <svg class="h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    <span><%= @name %></span>
   </a>
-
   <a href="#">Edit on GitHub</a>
-</div>
-<div class="container max-w-screen-sm">
-  <p class="text-gray-500"><%= @date %></p>
-  <h1 class="font-bold text-3xl"><%= @title %></h1>
-
-  <div class="py-10">
+</nav>
+<main class="container max-w-screen-sm">
+  <article>
+    <p><%= @date %></p>
+    <h1><%= @title %></h1>
+    <br>
     <%= raw @body_html %>
-  </div>
-</div>
+  </article>
+  <br>
+  <section class="flex">
+    <%= for article <- @next_articles do %>
+      <h2 class="w-1/2"><%= article.title %></h2>
+    <% end %>
+  </section>
+</main>
