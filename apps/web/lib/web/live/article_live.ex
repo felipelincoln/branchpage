@@ -11,7 +11,7 @@ defmodule Web.ArticleLive do
   @impl true
   def mount(%{"username" => _username, "article" => _}, _session, socket) do
     name = "Felipe Lincoln"
-    date = DateTime.utc_now()
+    date = Timex.today() |> Timex.format!("%b %e", :strftime)
     title = "Lorem ipsum dolor sit amet. Consectetur adipiscing elit."
     body_html = "<p>iasjdiajdis</p><p>Life is waterfall</p>"
 

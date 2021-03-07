@@ -7,7 +7,10 @@
   <a href="#">Edit on GitHub</a>
 </div>
 <div class="container max-w-screen-sm">
-  <p><%= @date %></p>
-  <%= @title %>
-  <%= raw @body_html %>
+  <p class="text-gray-500"><%= @date %></p>
+  <h1 class="font-bold text-3xl"><%= @title %></h1>
+
+  <div class="py-10">
+    <%= raw @body_html %>
+  </div>
 </div>
