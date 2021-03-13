@@ -12,6 +12,7 @@ defmodule Web.Router do
     pipe_through :browser
 
     live "/", HomeLive
+    live "/:username", BlogLive
     live "/:username/:article", ArticleLive
   end
 end
