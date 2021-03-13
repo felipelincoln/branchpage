@@ -1,0 +1,16 @@
+<nav class="flex items-center justify-between">
+  <a href="#">Felipe Lincoln</a>
+  <a href="#">Publish</a>
+</nav>
+<main class="container max-w-screen-sm">
+  <form>
+    <input class="bg-yellow-100 w-full" type="text" placeholder="url"></input>
+  </form>
+  <article>
+    <p><%= @date %></p>
+    <h1><%= @title %></h1>
+    <br>
+    <%= raw @body_html %>
+  </article>
+</main>
+
