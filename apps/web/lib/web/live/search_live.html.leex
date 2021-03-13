@@ -1,0 +1,22 @@
+<nav class="flex items-center justify-between">
+  <a href="#">Branchpage logo</a>
+  <a href="#">Start a blog</a>
+</nav>
+<main class="container max-w-screen-sm">
+  <form>
+    <input class="bg-yellow-100 w-full" type="text" placeholder="url" value="<%= @q %>"></input>
+  </form>
+  <section>
+    <%= for a <- @articles do %>
+      <article>
+        <p><%= a.date %></p>
+        <h1><%= a.title %></h1>
+        <br>
+        <%= raw a.body_html %>
+        <a href="#">Read more</a>
+      </article>
+    <% end %>
+  </section>
+</main>
+
+
