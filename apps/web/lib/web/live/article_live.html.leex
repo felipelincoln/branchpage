@@ -1,13 +1,15 @@
 <nav class="flex items-center justify-between p-8">
   <a href="#"><%= @name %></a>
-  <a href="#">Edit on GitHub</a>
+  <p>
+    <a href="#" class="mr-8">Edit</a>
+    <a href="#">Donate</a>
+  </p>
 </nav>
 <main class="container max-w-screen-sm">
-  <article class="text-gray-700">
-    <p><%= @date %></p>
-    <h1><%= @title %></h1>
-    <br>
-    <%= raw @body_html %>
+  <article>
+    <p class="text-gray-700"><%= @date %></p>
+    <h1 class="font-bold text-5xl"><%= @title %></h1>
+    <div class="mt-8 text-gray-700"><%= raw @body_html %></div>
   </article>
   <br>
   <section class="flex">
