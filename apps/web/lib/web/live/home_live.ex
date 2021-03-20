@@ -9,9 +9,7 @@ defmodule Web.HomeLive do
   }
 
   @impl true
-  def mount(params, _session, socket) do
-    q = Map.get(params, "q")
-
+  def mount(_params, _session, socket) do
     articles = [
       %{
         title: "Lorem ipsum dolor sit amet. Consectetur adipiscing elit.",
