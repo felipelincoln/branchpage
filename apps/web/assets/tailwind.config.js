@@ -6,7 +6,14 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    container: {
+      center: true,
+    },
+    extend: {
+      screens: {
+        'sm': '680px'
+      },
+    },
   },
   variants: {
     extend: {},

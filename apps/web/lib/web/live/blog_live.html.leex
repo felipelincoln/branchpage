@@ -1,0 +1,30 @@
+<nav class="flex items-center justify-between">
+  <a href="#">Branchpage logo</a>
+  <a href="#">Support this author</a>
+</nav>
+<main class="container max-w-screen-sm">
+  <section class="flex flex-col items-center w-1/2 mx-auto">
+    <figure class="w-52 h-52 rounded-full bg-yellow-400"></figure>
+    <h1>Felipe Lincoln</h1>
+    <p>Hi, I am lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+    <section class="w-full">
+      <a href="#">@felipelincoln</a>
+      <a href="#">/felipelincoln</a>
+    </section>
+  </section>
+
+  <br>
+
+  <section>
+    <%= for a <- @articles do %>
+      <article>
+        <p><%= a.date %></p>
+        <h1><%= a.title %></h1>
+        <br>
+        <%= raw a.body_html %>
+        <a href="#">Read more</a>
+      </article>
+    <% end %>
+  </section>
+</main>
+

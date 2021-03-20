@@ -1,12 +1,11 @@
 <nav class="flex items-center justify-between">
   <a href="#">Branchpage logo</a>
-  <a href="#">Branchpage</a>
-  <p>
-    <a href="#">Search</a>
-    <a href="#">Start a blog</a>
-  </p>
+  <a href="#">Start a blog</a>
 </nav>
 <main class="container max-w-screen-sm">
+  <form>
+    <input class="bg-yellow-100 w-full" type="text" placeholder="url" value="<%= @q %>"></input>
+  </form>
   <section>
     <%= for a <- @articles do %>
       <article>
@@ -19,3 +18,5 @@
     <% end %>
   </section>
 </main>
+
+

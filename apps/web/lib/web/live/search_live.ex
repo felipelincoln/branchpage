@@ -1,4 +1,4 @@
-defmodule Web.HomeLive do
+defmodule Web.SearchLive do
   use Phoenix.LiveView
   import Phoenix.HTML, only: [raw: 1]
 
@@ -36,6 +36,7 @@ defmodule Web.HomeLive do
     socket =
       socket
       |> assign(@meta)
+      |> assign(:q, q)
       |> assign(:articles, articles)
 
     {:ok, socket}

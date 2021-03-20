@@ -42,8 +42,13 @@ defmodule Web.ErrorView do
         <link rel="icon" type="image/png" href="/favicon.png">
       </head>
       <body>
-        <code class="bg-gray-300">apps/web/lib/web/view/error_view.ex</code>
-        <p><%= @description %></p>
+        <nav class="flex items-center justify-between">
+          <a href="#">Felipe Lincoln</a>
+          <a href="#">Start a blog</a>
+        </nav>
+        <main class="container max-w-screen-sm">
+        404!
+        </main>
       </body>
     </html>
     """

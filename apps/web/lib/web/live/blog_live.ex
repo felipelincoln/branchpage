@@ -1,4 +1,4 @@
-defmodule Web.HomeLive do
+defmodule Web.BlogLive do
   use Phoenix.LiveView
   import Phoenix.HTML, only: [raw: 1]
 
@@ -9,9 +9,7 @@ defmodule Web.HomeLive do
   }
 
   @impl true
-  def mount(params, _session, socket) do
-    q = Map.get(params, "q")
-
+  def mount(%{"username" => _username}, _session, socket) do
     articles = [
       %{
         title: "Lorem ipsum dolor sit amet. Consectetur adipiscing elit.",
