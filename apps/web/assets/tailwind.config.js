@@ -13,6 +13,9 @@ module.exports = {
       screens: {
         'sm': '680px'
       },
+      fontFamily: {
+        'sans': '"Lato", "Helvetica Neue", Helvetica, Arial, sans-serif'
+      },
     },
   },
   variants: {
