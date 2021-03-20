@@ -1,2 +1,21 @@
-<button class="bg-blue-500 text-white m-3 p-1 px-2 rounded-xl" phx-click="increase">Increase</button>
-<p class="text-xl m-3"><%= @value %></p>
+<nav class="flex items-center justify-between">
+  <a href="#">Branchpage logo</a>
+  <a href="#">Branchpage</a>
+  <p>
+    <a href="#">Search</a>
+    <a href="#">Start a blog</a>
+  </p>
+</nav>
+<main class="container max-w-screen-sm">
+  <section>
+    <%= for a <- @articles do %>
+      <article>
+        <p><%= a.date %></p>
+        <h1><%= a.title %></h1>
+        <br>
+        <%= raw a.body_html %>
+        <a href="#">Read more</a>
+      </article>
+    <% end %>
+  </section>
+</main>
