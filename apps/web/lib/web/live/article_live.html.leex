@@ -1,4 +1,4 @@
-<nav class="flex items-center justify-between p-8">
+<nav class="flex items-center justify-between p-4 sm:p-8">
   <a href="#"><%= @name %></a>
   <p>
     <a href="#" class="mr-8">Edit</a>
@@ -6,10 +6,10 @@
   </p>
 </nav>
 
-<main class="container max-w-screen-sm mb-32">
+<main class="box-content max-w-screen-sm sm:mx-auto mb-32 px-4 sm:px-8">
   <article>
     <p class="text-gray-700"><%= @date %></p>
-    <h1 class="font-bold text-5xl"><%= @title %></h1>
+    <h1 class="font-bold text-3xl sm:text-5xl"><%= @title %></h1>
     <div class="text-gray-700 mt-8"><%= raw @body_html %></div>
   </article>
 </main>
