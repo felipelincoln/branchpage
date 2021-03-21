@@ -44,8 +44,8 @@
   </head>
   <body>
     <%= @inner_content %>
-    <footer class="p-8">
-      <a class="text-gray-400 -bold" href="/">Branchpage</a>
+    <footer class="p-4 sm:p-8 mt-4 sm:mt-8">
+      <a class="text-gray-400" href="/">Branchpage</a>
     </footer>
   </body>
 </html>
