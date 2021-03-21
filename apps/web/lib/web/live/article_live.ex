@@ -22,17 +22,6 @@ defmodule Web.ArticleLive do
     <p>Fusce sit amet euismod arcu. In hac habitasse platea dictumst. Morbi non ullamcorper turpis. Curabitur rutrum venenatis nisl, sit amet pharetra erat rhoncus non. Suspendisse et arcu vitae eros bibendum porta convallis vel dolor. Maecenas eget sodales ex. Vestibulum feugiat purus vitae risus ultrices, sed vehicula justo posuere. Nulla commodo, elit sed tincidunt facilisis, nunc nunc posuere ligula, bibendum auctor mi ante et augue. Pellentesque finibus facilisis ex, eget volutpat turpis aliquet ac. Nullam lectus erat, finibus sed purus eu, maximus commodo enim. Curabitur tincidunt justo nec justo laoreet sodales vitae a nibh.</p>
     """
 
-    next_artticles = [
-      %{
-        title: "Another lorem ipsum dolor sit amet. Consectetur adpiscing elit.",
-        link: "#"
-      },
-      %{
-        title: "Consectetur.",
-        link: "#"
-      }
-    ]
-
     socket =
       socket
       |> assign(@meta)
@@ -40,7 +29,6 @@ defmodule Web.ArticleLive do
       |> assign(:date, date)
       |> assign(:title, title)
       |> assign(:body_html, body_html)
-      |> assign(:next_articles, next_artticles)
 
     {:ok, socket}
   end

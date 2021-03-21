@@ -5,16 +5,11 @@
     <a href="#">Donate</a>
   </p>
 </nav>
-<main class="container max-w-screen-sm">
+
+<main class="container max-w-screen-sm mb-32">
   <article>
     <p class="text-gray-700"><%= @date %></p>
     <h1 class="font-bold text-5xl"><%= @title %></h1>
-    <div class="mt-8 text-gray-700"><%= raw @body_html %></div>
+    <div class="text-gray-700 mt-8"><%= raw @body_html %></div>
   </article>
-  <br>
-  <section class="flex">
-    <%= for article <- @next_articles do %>
-      <h2 class="w-1/2"><%= article.title %></h2>
-    <% end %>
-  </section>
 </main>
