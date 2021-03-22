@@ -1,19 +1,20 @@
-<nav class="flex items-center justify-between text-gray-800 p-4 sm:p-8 mb-4 sm:mb-8">
+<nav class="flex items-center justify-between text-gray-800 p-5 sm:p-8 mb-5 sm:mb-8">
   <a href="#" class="font-bold">
     <span class="hidden sm:inline"><%= @name %></span>
-    <svg class="sm:hidden inline h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    <svg class="inline sm:hidden h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
   </a>
+
   <p>
-    <a href="#" class="mr-4 sm:mr-8">Edit</a>
+    <a href="#" class="mr-5 sm:mr-8">Edit</a>
     <a href="#">Donate</a>
   </p>
 </nav>
 
-<main class="box-content max-w-screen-sm sm:mx-auto px-4 sm:px-8">
+<main class="max-w-screen-sm sm:mx-auto box-content px-5 sm:px-8">
   <article>
-    <p class="hidden sm:block text-gray-700"><%= @date %></p>
+    <p class="hidden sm:block text-gray-500"><%= @date %></p>
     <h1 class="font-black text-gray-900 text-3xl sm:text-5xl sm:mb-8"><%= @title %></h1>
-    <p class="sm:hidden text-gray-700 mb-4"><%= @date %><span class="px-2">–</span><a href="#" class="font-bold"><%= @name %></a></p>
+    <p class="sm:hidden text-gray-500 mb-5 mt-1"><%= @date %><span class="px-2">–</span><a href="#" class="font-bold"><%= @name %></a></p>
     <div class="text-gray-700"><%= raw @body_html %></div>
   </article>
 </main>

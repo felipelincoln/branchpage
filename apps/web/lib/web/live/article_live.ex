@@ -15,6 +15,8 @@ defmodule Web.ArticleLive do
     title = "Lorem ipsum dolor sit amet. Consectetur adipiscing elit."
 
     body_html = """
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ornare eu mi eget lacinia. Maecenas tincidunt risus vel mi vehicula, sit amet varius ligula porta. Pellentesque id ex viverra, pellentesque neque eget, aliquet magna. Sed viverra egestas pulvinar. Mauris luctus egestas ante, et facilisis ligula vulputate sit amet. Nunc ut ipsum velit. Vivamus finibus scelerisque nibh, ac dapibus mauris finibus ut. Sed consequat nibh at pharetra ornare.</p>
+    <br>
     <img src="https://www.bretfisher.com/content/images/2019/11/C4-promo-with-title.png">
     <br>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ornare eu mi eget lacinia. Maecenas tincidunt risus vel mi vehicula, sit amet varius ligula porta. Pellentesque id ex viverra, pellentesque neque eget, aliquet magna. Sed viverra egestas pulvinar. Mauris luctus egestas ante, et facilisis ligula vulputate sit amet. Nunc ut ipsum velit. Vivamus finibus scelerisque nibh, ac dapibus mauris finibus ut. Sed consequat nibh at pharetra ornare.</p>
