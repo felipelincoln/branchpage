@@ -1,8 +1,8 @@
-name: Update dev image
+name: Update cache
 
-on: push
-  #  push:
-  #    branches: [ dev ]
+on:
+    push:
+      branches: [ dev ]
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
 
       - name: Build docker image from cache
         run: |
-          #          docker pull docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
+          docker pull docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
           docker build --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest --tag new-cache .
 
       - name: Push new cache image
