@@ -19,7 +19,7 @@ defmodule Web.MixProject do
   def application do
     [
       mod: {Web.Application, []},
-      extra_applications: [:logger]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
