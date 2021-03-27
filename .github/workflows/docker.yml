@@ -14,15 +14,9 @@ jobs:
       - name: Login to GitHub container registry
         run: echo ${{ secrets.WRITE_PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u felipelincoln --password-stdin
 
-      - name: Docker push
-        run: |
-          docker pull docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
-          docker build --tag docker.pkg.github.com/felipelincoln/branchpage/dev:latest --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev:latest .
-          docker push docker.pkg.github.com/felipelincoln/branchpage/dev:latest
-
       - name: Build docker image from cache
         run: |
-          docker pull docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
+          #          docker pull docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
           docker build --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest --tag new-cache .
 
       - name: Push new cache image
