@@ -4,15 +4,11 @@ FROM elixir:1.11-alpine
 WORKDIR /app
 ARG MIX_ENV=prod
 
-# install build dependencies
-RUN apk add npm
-
-# install dev dependencies
-RUN apk add inotify-tools
-
 # install hex and rebar
-# ENV MIX_HOME /root/.mix
 RUN mix do local.hex --force, local.rebar --force
+
+# install dependencies
+RUN apk add npm inotify-tools
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
