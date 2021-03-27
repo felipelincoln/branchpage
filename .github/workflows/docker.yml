@@ -1,8 +1,8 @@
 name: Update dev image
 
-on:
-  push:
-    branches: [ dev ]
+on: push
+  #  push:
+  #    branches: [ dev ]
 
 jobs:
   build:
