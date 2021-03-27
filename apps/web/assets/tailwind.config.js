@@ -6,9 +6,6 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    container: {
-      center: true,
-    },
     extend: {
       screens: {
         'sm': '680px'
@@ -22,4 +19,7 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  corePlugins: {
+    container: false
+  }
 }

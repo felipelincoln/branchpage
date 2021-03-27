@@ -2,10 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  font-size: 18px
+@layer base {
+  html {
+    font-size: 18px
+  }
+
+  iframe {
+    display: none
+  }
 }
 
-iframe {
-  display: none
+@layer components {
+  .navbar {
+    @apply flex items-center justify-between text-gray-800 p-5 sm:p-8 mb-5 sm:mb-8
+  }
+
+  .container {
+    @apply max-w-screen-sm sm:mx-auto box-content px-5 sm:px-8
+  }
 }
