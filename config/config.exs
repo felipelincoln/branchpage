@@ -9,7 +9,3 @@ config :web, Web.Endpoint,
   live_view: [signing_salt: "nNxuMZr4Bq73HLMihu1pYEdtKLAL/f+Z"]
 
 import_config "#{Mix.env()}.exs"
-
-# `Mix.env` is set to be `:app` to prevent recompiling when
-# running the application in different environments.
-Mix.env(:app)

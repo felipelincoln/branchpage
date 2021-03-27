@@ -1,17 +1,14 @@
-FROM elixir:1.10.4-alpine
+FROM elixir:1.11-alpine
 
-# prepare main dir
+# setup compile env
 WORKDIR /app
-
-# install build dependencies
-RUN apk add npm
-
-# install dev dependencies
-RUN apk add inotify-tools
+ARG MIX_ENV=prod
 
 # install hex and rebar
-ENV MIX_HOME /root/.mix
 RUN mix do local.hex --force, local.rebar --force
+
+# install dependencies
+RUN apk add npm inotify-tools
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
@@ -31,8 +28,7 @@ RUN npm run --prefix ./apps/web/assets deploy
 RUN mix phx.digest
 
 # install umbrella apps
-COPY apps apps
-ARG MIX_ENV=prod
+COPY . ./
 RUN mix compile
 
 # start application
