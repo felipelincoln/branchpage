@@ -10,6 +10,7 @@ defmodule Web.NewLive do
 
   @impl true
   def mount(_params, _session, socket) do
+    name = "Felipe Lincoln"
     date = Timex.today() |> Timex.format!("%b %e", :strftime)
     title = "Lorem ipsum dolor sit amet. Consectetur adipiscing elit."
 
@@ -24,6 +25,7 @@ defmodule Web.NewLive do
     socket =
       socket
       |> assign(@meta)
+      |> assign(:name, name)
       |> assign(:date, date)
       |> assign(:title, title)
       |> assign(:body_html, body_html)

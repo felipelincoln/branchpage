@@ -17,6 +17,10 @@
     @apply flex items-center justify-between text-gray-800 p-5 sm:p-8 mb-5 sm:mb-8
   }
 
+  .navbar-side-item {
+    @apply w-1/5 min-w-min whitespace-nowrap
+  }
+
   .container {
     @apply max-w-screen-sm sm:mx-auto box-content px-5 sm:px-8
   }
