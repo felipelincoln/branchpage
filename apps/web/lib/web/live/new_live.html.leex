@@ -1,5 +1,5 @@
 <nav class="navbar">
-  <div class="navbar-side-item bg-blue-100 font-bold" aria-labelledby="navBack">
+  <div class="navbar-side-item pr-5 font-bold" aria-labelledby="navBack">
     <a href="#">
       <span id="navBack" class="hidden sm:inline"><%= @name %></span>
       <svg class="inline sm:hidden h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -7,10 +7,10 @@
   </div>
 
   <form class="flex-1 max-w-screen-sm">
-    <input class="w-full bg-gray-100" type="text" placeholder="Your article's url">
+    <input class="w-full text-gray-800 border-b border-gray-300 focus:border-gray-800 focus:outline-none" type="text" placeholder="Your article's url">
   </form>
 
-  <div class="navbar-side-item bg-blue-100 text-right"><a href="#">Publish</a></div>
+  <div class="navbar-side-item pl-5 text-right"><a href="#">Publish</a></div>
 </nav>
 
 <main class="container">
