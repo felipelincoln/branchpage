@@ -1,8 +1,9 @@
-<nav class="flex items-center justify-between">
-  <a href="#">Branchpage logo</a>
-  <a href="#">Support this author</a>
+<nav class="navbar">
+  <a href="#" class="font-bold border-2 border-gray-800 px-1" aria-label="Branchpage">bp</a>
+  <a href="#">Donate</a>
 </nav>
-<main class="container max-w-screen-sm">
+
+<main class="container">
   <section class="flex flex-col items-center w-1/2 mx-auto">
     <figure class="w-52 h-52 rounded-full bg-yellow-400"></figure>
     <h1>Felipe Lincoln</h1>
@@ -18,11 +19,11 @@
   <section>
     <%= for a <- @articles do %>
       <article>
-        <p><%= a.date %></p>
-        <h1><%= a.title %></h1>
-        <br>
-        <%= raw a.body_html %>
-        <a href="#">Read more</a>
+        <header>
+          <p class="text-gray-500"><%= a.date %></p>
+          <h1 class="font-black text-gray-900 text-3xl sm:text-5xl sm:mb-8"><%= a.title %></h1>
+        </header>
+        <div class="text-gray-700"><%= raw a.body_html %></div>
       </article>
     <% end %>
   </section>

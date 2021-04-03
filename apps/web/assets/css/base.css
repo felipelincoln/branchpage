@@ -14,7 +14,7 @@
 
 @layer components {
   .navbar {
-    @apply flex items-center justify-between text-gray-800 p-5 sm:p-8 mb-5 sm:mb-8
+    @apply flex items-center justify-between text-gray-800 px-5 sm:px-7 mb-5 sm:mb-7 h-16 sm:h-20
   }
 
   .navbar-side-item {
