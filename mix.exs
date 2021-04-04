@@ -1,4 +1,4 @@
-defmodule BranchPage.MixProject do
+defmodule BranchPage.Umbrella.MixProject do
   use Mix.Project
 
   def project do
@@ -17,7 +17,7 @@ defmodule BranchPage.MixProject do
 
   defp releases do
     [
-      web: [application: [web: :permanent]]
+      web: [applications: [web: :permanent]]
     ]
   end
 end
