@@ -1,4 +1,4 @@
-FROM elixir:1.11-alpine
+FROM elixir:1.11-alpine AS build
 
 # setup compile env
 WORKDIR /app
@@ -27,9 +27,21 @@ RUN npm run --prefix ./apps/web/assets deploy
 # digests and compresses static files
 RUN mix phx.digest
 
-# install umbrella apps
+# install umbrella apps and create release
 COPY . ./
-RUN mix compile
+RUN mix do compile, release
+
+# production stage
+FROM alpine:3.13
+
+# install dependencies
+RUN apk add ncurses-libs curl
+
+# setup app
+WORKDIR /app
+ARG MIX_ENV=prod
+COPY --from=build /app/_build/$MIX_ENV/rel/web ./
 
 # start application
-CMD ["mix", "phx.server"]
+CMD ["bin/web", "start"]
+
