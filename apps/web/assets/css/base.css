@@ -2,9 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --space-mobile: 1.25rem;
+  --space: 1.75rem;
+}
+
 @layer base {
   html {
-    font-size: 18px
+    font-size: 18px;
+    @apply text-gray-800
   }
 
   iframe {
@@ -14,7 +20,7 @@
 
 @layer components {
   .navbar {
-    @apply flex items-center justify-between text-gray-800 p-5 sm:p-8 mb-5 sm:mb-8
+    @apply flex items-center justify-between px-mb sm:px-sc mb-mb sm:mb-sc h-16 sm:h-20
   }
 
   .navbar-side-item {
@@ -22,6 +28,6 @@
   }
 
   .container {
-    @apply max-w-screen-sm sm:mx-auto box-content px-5 sm:px-8
+    @apply max-w-screen-sm sm:mx-auto box-content px-mb sm:px-sc
   }
 }

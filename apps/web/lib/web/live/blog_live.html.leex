@@ -1,29 +1,28 @@
-<nav class="flex items-center justify-between">
-  <a href="#">Branchpage logo</a>
-  <a href="#">Support this author</a>
+<nav class="navbar">
+  <a href="#" class="font-bold border-2 border-gray-800 px-1" aria-label="Branchpage">bp</a>
+  <a href="#">Donate</a>
 </nav>
-<main class="container max-w-screen-sm">
-  <section class="flex flex-col items-center w-1/2 mx-auto">
-    <figure class="w-52 h-52 rounded-full bg-yellow-400"></figure>
-    <h1>Felipe Lincoln</h1>
-    <p>Hi, I am lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
-    <section class="w-full">
-      <a href="#">@felipelincoln</a>
-      <a href="#">/felipelincoln</a>
-    </section>
-  </section>
 
-  <br>
+<main class="container">
+  <section class="flex flex-col items-center sm:w-1/2 sm:mx-auto px-mb sm:px-0 mb-10 sm:mb-14">
+    <figure class="w-24 h-24 sm:w-40 sm:h-40 rounded-full bg-yellow-400 mb-mb sm:mb-sc"></figure>
+    <h1 class="text-xl sm:text-3xl font-black mb-1">Fernando Lincoln</h1>
+    <p class="text-gray-500">Hi, I am lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+    <div class="w-full">
+    </div>
+  </section>
 
   <section>
     <%= for a <- @articles do %>
       <article>
-        <p><%= a.date %></p>
-        <h1><%= a.title %></h1>
-        <br>
-        <%= raw a.body_html %>
-        <a href="#">Read more</a>
+        <header>
+          <p class="text-gray-500 text-sm sm:text-base"><a href="#"><%= a.date %></a></p>
+          <h2 class="font-black text-lg sm:text-2xl"><a href="#"><%= a.title %></a></h1>
+        </header>
+        <div class="text-gray-700 mb-1"><%= raw a.body_html %></div>
+        <a href="#" class="text-gray-900 font-bold hover:underline">Read more</a>
       </article>
+      <hr class="my-mb my-sc last:hidden">
     <% end %>
   </section>
 </main>

@@ -13,10 +13,16 @@ module.exports = {
       fontFamily: {
         'sans': '"Lato", "Helvetica Neue", Helvetica, Arial, sans-serif'
       },
+      spacing: {
+        'sc': 'var(--space)',
+        'mb': 'var(--space-mobile)'
+      },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      display: ['last'],
+    },
   },
   plugins: [],
   corePlugins: {
