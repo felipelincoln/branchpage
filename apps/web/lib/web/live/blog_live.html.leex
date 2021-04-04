@@ -6,7 +6,7 @@
 <main class="container">
   <section class="flex flex-col items-center sm:w-1/2 sm:mx-auto px-mb sm:px-0 mb-10 sm:mb-14">
     <figure class="w-24 h-24 sm:w-40 sm:h-40 rounded-full bg-yellow-400 mb-mb sm:mb-sc"></figure>
-    <h1 class="text-xl sm:text-2xl font-black">Felipe Lincoln</h1>
+    <h1 class="text-xl sm:text-3xl font-black mb-1">Fernando Lincoln</h1>
     <p class="text-gray-500">Hi, I am lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
     <div class="w-full">
     </div>
@@ -14,13 +14,14 @@
 
   <section>
     <%= for a <- @articles do %>
-      <article class="mb-mb sm:mb-sc">
+      <article>
         <header>
           <p class="text-gray-500 text-sm"><%= a.date %></p>
-          <h1 class="font-bold text-gray-900 text-xl sm:text-2xl"><%= a.title %></h1>
+          <h1 class="font-black text-lg sm:text-2xl"><%= a.title %></h1>
         </header>
         <div class="text-gray-700"><%= raw a.body_html %></div>
       </article>
+      <hr class="my-mb my-sc">
     <% end %>
   </section>
 </main>
