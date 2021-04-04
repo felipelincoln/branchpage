@@ -23,6 +23,6 @@
   }
 
   .container {
-    @apply max-w-screen-sm sm:mx-auto box-content px-5 sm:px-8
+    @apply max-w-screen-sm sm:mx-auto box-content px-5 sm:px-7
   }
 }
