@@ -19,12 +19,16 @@
 }
 
 @layer components {
+  .logo {
+    @apply font-bold border-2 border-gray-800 px-1
+
+  }
   .navbar {
     @apply flex items-center justify-between px-mb sm:px-sc mb-mb sm:mb-sc h-16 sm:h-20
   }
 
   .navbar-side-item {
-    @apply w-1/5 min-w-min whitespace-nowrap
+    @apply w-1/5 min-w-min whitespace-nowrap flex items-center h-16
   }
 
   .container {
