@@ -40,15 +40,22 @@ defmodule Web.ErrorView do
         <meta name="twitter:image" content="/images/cover.png">
         <link rel="stylesheet" href='<%= Routes.static_path(@conn, "/css/base.css") %>'>
         <link rel="icon" type="image/png" href="/favicon.png">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
       </head>
-      <body>
-        <nav class="flex items-center justify-between">
-          <a href="#">Felipe Lincoln</a>
-          <a href="#">Start a blog</a>
+      <body class="h-screen flex flex-col justify-between">
+        <nav class="navbar">
+          <a href="#" class="font-bold border-2 border-gray-800 px-1" aria-label="Branchpage">bp</a>
+          <div>
+            <a href="#" class="mr-mb sm:mr-sc">Search</a>
+            <a href="#">Start a blog</a>
+          </div>
         </nav>
-        <main class="container max-w-screen-sm">
-        404!
+        <main class="container text-center">
+          <h1 class="font-black text-8xl">404</h1>
         </main>
+        <footer class="p-5 sm:p-8 mt-5 sm:mt-8">
+          <a class="text-gray-400" href="/">Branchpage</a>
+        </footer>
       </body>
     </html>
     """
