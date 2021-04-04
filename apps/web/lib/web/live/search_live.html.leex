@@ -1,22 +1,27 @@
-<nav class="flex items-center justify-between">
-  <a href="#">Branchpage logo</a>
-  <a href="#">Start a blog</a>
-</nav>
-<main class="container max-w-screen-sm">
-  <form>
-    <input class="bg-yellow-100 w-full" type="text" placeholder="url" value="<%= @q %>"></input>
+<nav class="navbar">
+  <div class="navbar-side-item pr-mb">
+    <a href="#" class="font-bold border-2 border-gray-800 px-1" aria-label="Branchpage">bp</a>
+  </div>
+
+  <form class="flex-1 max-w-screen-sm">
+    <input class="w-full border-b border-gray-300 focus:border-gray-800 focus:outline-none p-0 sm:p-1" type="search" placeholder="search" autocomplete="off" value="<%= @q %>">
   </form>
+
+  <div class="navbar-side-item pl-mb text-right"><a href="#">Start a blog</a></div>
+</nav>
+
+<main class="container">
   <section>
     <%= for a <- @articles do %>
       <article>
-        <p><%= a.date %></p>
-        <h1><%= a.title %></h1>
-        <br>
-        <%= raw a.body_html %>
-        <a href="#">Read more</a>
+        <header>
+          <p class="text-gray-500 text-sm sm:text-base"><a href="#"><%= a.date %></a><span class="px-2">–</span><a href="#" class="font-bold"><%= "Felipe Lincoln" %></a></p>
+          <h2 class="font-black text-lg sm:text-2xl"><a href="#"><%= a.title %></a></h1>
+        </header>
+        <div class="text-gray-700 mb-1"><%= raw a.body_html %></div>
+        <a href="#" class="text-gray-900 font-bold hover:underline">Read more</a>
       </article>
+      <hr class="my-mb my-sc last:hidden">
     <% end %>
   </section>
 </main>
-
-
