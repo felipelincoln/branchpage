@@ -20,7 +20,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      display: ['last'],
+    },
   },
   plugins: [],
   corePlugins: {
