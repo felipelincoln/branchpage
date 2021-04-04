@@ -1,0 +1,25 @@
+name: Update cache
+
+on:
+    push:
+      branches: [ dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to GitHub container registry
+        run: echo ${{ secrets.WRITE_PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u felipelincoln --password-stdin
+
+      - name: Build docker image from cache
+        run: |
+          docker pull docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
+          docker build --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest --tag new-cache .
+
+      - name: Push new cache image
+        run: |
+          docker tag new-cache docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
+          docker push docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest

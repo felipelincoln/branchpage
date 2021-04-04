@@ -1,16 +1,16 @@
 <nav class="navbar">
-  <a href="/" class="logo" aria-label="Branchpage">bp</a>
-  <div>
-    <a href="/search" class="mr-mb sm:mr-sc">Search</a>
-    <a href="#">Start a blog</a>
+  <div class="navbar-side-item pr-mb">
+    <a href="/a" class="logo" aria-label="Branchpage">bp</a>
   </div>
+
+  <form class="flex-1 max-w-screen-sm">
+    <input class="w-full border-b border-gray-300 focus:border-gray-800 focus:outline-none p-0 sm:p-1" type="search" placeholder="search" autocomplete="off" value="<%= @q %>">
+  </form>
+
+  <div class="navbar-side-item pl-mb justify-end"><a href="#">Start a blog</a></div>
 </nav>
 
 <main class="container">
-  <section class="flex flex-col items-center sm:w-1/2 h-64 sm:mx-auto px-mb sm:px-0 mb-10 sm:mb-14 border-2 border-yellow-400">
-    landing section
-  </section>
-
   <section>
     <%= for a <- @articles do %>
       <article>
