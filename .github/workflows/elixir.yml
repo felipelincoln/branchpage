@@ -15,7 +15,13 @@ jobs:
       - name: Docker build
         run: |
           docker pull docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
-          docker build --tag branchpage:latest --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest .
+          docker build --tag branchpage:latest --target build --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest .
+
+      - name: Start container
+        run: docker-compose run -d -e MIX_ENV=test -v /app/deps -v /app/_build --name bp_test web /bin/sh
+
+      - name: Code format
+        run: docker exec bp_test mix format --check-formatted
 
       - name: Test
-        run: docker run --rm -e MIX_ENV=test branchpage mix test
+        run: docker exec bp_test mix test
