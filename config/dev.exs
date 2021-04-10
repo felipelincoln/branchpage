@@ -21,3 +21,5 @@ config :web, Web.Endpoint,
       cd: Path.expand("../apps/web/assets", __DIR__)
     ]
   ]
+
+IO.puts("on dev configs!")
