@@ -12,6 +12,7 @@ defmodule Web.MixProject do
       elixir: "~> 1.11",
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      test_coverage: [tool: ExCoveralls],
       deps: deps()
     ]
   end

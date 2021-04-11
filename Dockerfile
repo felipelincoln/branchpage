@@ -8,7 +8,7 @@ ARG MIX_ENV=prod
 RUN mix do local.hex --force, local.rebar --force
 
 # install dependencies
-RUN apk add npm inotify-tools
+RUN apk add inotify-tools npm curl bash git
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
