@@ -1,4 +1,6 @@
 defmodule Web.ArticleLive do
+  @moduledoc false
+
   use Phoenix.LiveView
   import Phoenix.HTML, only: [raw: 1]
 

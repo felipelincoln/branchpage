@@ -1,4 +1,6 @@
 defmodule Web.HomeLive do
+  @moduledoc false
+
   use Phoenix.LiveView
   import Phoenix.HTML, only: [raw: 1]
 
