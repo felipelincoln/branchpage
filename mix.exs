@@ -6,13 +6,25 @@ defmodule BranchPage.Umbrella.MixProject do
       apps_path: "apps",
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
+      preferred_cli_env: [coveralls: :test, ci: :test],
+      test_coverage: [tool: ExCoveralls],
       deps: deps(),
+      aliases: aliases(),
       releases: releases()
     ]
   end
 
   defp deps do
-    []
+    [
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
+      {:excoveralls, "== 0.13.3", only: [:dev, :test]}
+    ]
+  end
+
+  defp aliases do
+    [
+      ci: ["format --check-formatted", "credo --strict", "test"]
+    ]
   end
 
   defp releases do
