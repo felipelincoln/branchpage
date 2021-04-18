@@ -21,3 +21,11 @@ config :web, Web.Endpoint,
       cd: Path.expand("../apps/web/assets", __DIR__)
     ]
   ]
+
+config :blog, Blog.Repo,
+  username: "postgres",
+  password: "postgres",
+  database: "branchpage_dev",
+  hostname: "db",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10

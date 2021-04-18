@@ -13,3 +13,15 @@ services:
       - 4000:4000
     volumes:
       - .:/branchpage
+
+  db:
+    image: postgres:13
+    container_name: branchpage_db
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - PGUSER=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
