@@ -4,14 +4,12 @@ services:
   web:
     build:
       context: .
-      target: build
-      args:
-        - MIX_ENV=dev
-    image: branchpage:latest
+      target: base
+    image: branchpage-base:latest
     container_name: branchpage_web
     command: mix phx.server
     restart: unless-stopped
     ports:
       - 4000:4000
     volumes:
-      - .:/app
+      - .:/branchpage
