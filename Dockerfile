@@ -18,6 +18,7 @@ FROM base AS build
 RUN apk add curl bash git
 
 ARG MIX_ENV=prod
+ENV MIX_ENV=$MIX_ENV
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
@@ -27,7 +28,7 @@ RUN mix do deps.get, deps.compile --skip-umbrella-children
 
 # install application
 COPY . ./
-RUN mix do compile
+RUN mix compile
 
 
 # -----------------
@@ -55,13 +56,13 @@ RUN mix release
 # -----------------
 FROM alpine:3.13.3
 
-# install dependencies
-RUN apk add ncurses-libs curl
-
-# setup app environment
 WORKDIR /branchpage
+
 ARG MIX_ENV=prod
 ENV MIX_ENV=$MIX_ENV
+
+# install dependencies
+RUN apk add ncurses-libs curl
 
 COPY --from=release /branchpage/_build/$MIX_ENV/rel/web ./
 

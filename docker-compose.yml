@@ -5,7 +5,7 @@ services:
     build:
       context: .
       target: base
-    image: branchpage-base:latest
+    image: branchpage:latest
     container_name: branchpage_web
     command: mix phx.server
     restart: unless-stopped
