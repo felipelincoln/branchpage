@@ -17,7 +17,7 @@ jobs:
       - name: Build docker image from cache
         run: |
           docker pull docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
-          docker build --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest --tag new-cache .
+          docker build --target build --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest --tag new-cache .
 
       - name: Push new cache image
         run: |

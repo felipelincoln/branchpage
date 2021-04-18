@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      target: base
+    image: branchpage:latest
+    container_name: branchpage_web
+    command: mix phx.server
+    restart: unless-stopped
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/branchpage

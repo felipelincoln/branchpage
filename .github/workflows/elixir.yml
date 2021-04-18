@@ -12,10 +12,23 @@ jobs:
       - name: Login to GitHub container registry
         run: echo ${{ secrets.WRITE_PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u felipelincoln --password-stdin
 
-      - name: Docker build
+      - name: Build Docker image from cache
         run: |
           docker pull docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
-          docker build --tag branchpage:latest --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest .
+          docker build --target build --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest --tag branchpage:latest .
+
+      - name: Start container
+        run: docker-compose run -d -e MIX_ENV=test -e CODECOV_TOKEN=${{ secrets.CODECOV_TOKEN }} -v /branchpage/deps -v /branchpage/_build --name branchpage web /bin/sh
+
+      - name: Code format
+        run: docker exec branchpage mix format --check-formatted
+
+      - name: Code consistency
+        run: docker exec branchpage mix credo --strict
 
       - name: Test
-        run: docker run --rm -e MIX_ENV=test branchpage mix test
+        run: |
+          docker exec branchpage mix coveralls.json --umbrella
+          docker exec branchpage curl -s https://codecov.io/bash -o upload.sh
+          docker exec branchpage bash upload.sh
+
