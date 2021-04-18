@@ -16,6 +16,7 @@ defmodule BranchPage.Umbrella.MixProject do
 
   defp deps do
     [
+      {:certifi, "== 2.5.2"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:excoveralls, "== 0.13.3", only: [:dev, :test]}
     ]
