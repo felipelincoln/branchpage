@@ -1,4 +1,4 @@
-FROM elixir:1.11-alpine AS build
+FROM hexpm/elixir:1.11.4-erlang-23.2.7.2-alpine-3.13.3 AS build
 
 # setup compile env
 WORKDIR /app
