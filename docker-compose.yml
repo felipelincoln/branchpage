@@ -13,6 +13,8 @@ services:
       - 4000:4000
     volumes:
       - .:/branchpage
+    depends_on:
+      - db
 
   db:
     image: postgres:13
@@ -21,7 +23,7 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
       - PGUSER=postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - db_data:/var/lib/postgresql/data/
 
 volumes:
-  postgres_data:
+  db_data:

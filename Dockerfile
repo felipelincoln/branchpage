@@ -7,7 +7,7 @@ WORKDIR /branchpage
 
 RUN mix do local.hex --force, local.rebar --force
 
-RUN apk add inotify-tools
+RUN apk add npm inotify-tools
 
 
 # -----------------
@@ -36,8 +36,6 @@ RUN mix compile
 # RELEASE
 # -----------------
 FROM build AS release
-
-RUN apk add npm
 
 # install node dependencies
 RUN npm ci --prefix ./apps/web/assets --no-audit
