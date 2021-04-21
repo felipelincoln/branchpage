@@ -1,20 +1,18 @@
-defmodule Publishing.Blog do
+defmodule Publishing.Article do
   @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  @optional_fields ~w(fullname username bio donate_url)a
+  @optional_fields ~w(title edit_url blog_id)a
   @required_fields ~w()a
 
-  schema "blog" do
-    field(:fullname, :string)
-    field(:username, :string)
-    field(:bio, :string)
-    field(:donate_url, :string)
+  schema "article" do
+    field(:title, :string)
+    field(:edit_url, :string)
 
-    has_many(:articles, Publishing.Article)
+    belongs_to(:blog, Publishing.Blog, type: :binary_id)
 
     timestamps()
   end
@@ -23,5 +21,6 @@ defmodule Publishing.Blog do
     struct
     |> cast(attrs, @optional_fields ++ @required_fields)
     |> validate_required(@required_fields)
+    |> assoc_constraint(:blog)
   end
 end
