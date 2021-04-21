@@ -12,8 +12,18 @@ defmodule Publishing.Integration.Github do
 
   def get_username(url) do
     [username | _] = decompose(url)
-
     username
+  end
+
+  def get_title(body) do
+    body
+  end
+
+  def get_body(raw_url) do
+    {:ok, 200, _, ref} = :hackney.get(raw_url)
+    {:ok, body} = :hackney.body(ref)
+
+    body
   end
 
   defp decompose(url) do

@@ -21,7 +21,7 @@ defmodule Publishing.MixProject do
   def application do
     [
       mod: {Publishing.Application, []},
-      extra_applications: [:ssl]
+      extra_applications: [:ssl, :hackney]
     ]
   end
 
