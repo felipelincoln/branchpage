@@ -1,6 +1,7 @@
 defmodule Publishing.BlogTest do
   use ExUnit.Case, async: true
 
+  import Publishing.ChangesetHelpers
   alias Publishing.Blog
 
   @valid_empty_attrs %{}
@@ -10,20 +11,38 @@ defmodule Publishing.BlogTest do
     bio: "bio",
     donate_url: "donate_url"
   }
-  @invalid_attrs %{fullname: 0, username: 0, bio: 0, donate_url: 0}
+  @invalid_cast_attrs %{fullname: 0, username: 0, bio: 0, donate_url: 0}
+  @invalid_length_attrs %{
+    fullname: long_string(),
+    username: long_string(),
+    bio: long_string()
+  }
 
-  test "channgeset/2 with valid empty params" do
+  test "changeset/2 with valid empty params" do
     changeset = Blog.changeset(%Blog{}, @valid_empty_attrs)
     assert changeset.valid?
   end
 
-  test "channgeset/2 with valid params" do
+  test "changeset/2 with valid params" do
     changeset = Blog.changeset(%Blog{}, @valid_attrs)
     assert changeset.valid?
   end
 
-  test "channgeset/2 with invalid params" do
-    changeset = Blog.changeset(%Blog{}, @invalid_attrs)
+  test "changeset/2 with invalid cast params" do
+    changeset = Blog.changeset(%Blog{}, @invalid_cast_attrs)
     refute changeset.valid?
+
+    assert %{fullname: [:cast]} = errors_on(changeset)
+    assert %{username: [:cast]} = errors_on(changeset)
+    assert %{bio: [:cast]} = errors_on(changeset)
+  end
+
+  test "changeset/2 with invalid length params" do
+    changeset = Blog.changeset(%Blog{}, @invalid_length_attrs)
+    refute changeset.valid?
+
+    assert %{fullname: [:length]} = errors_on(changeset)
+    assert %{username: [:length]} = errors_on(changeset)
+    assert %{bio: [:length]} = errors_on(changeset)
   end
 end

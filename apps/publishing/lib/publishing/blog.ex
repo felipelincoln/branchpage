@@ -23,5 +23,8 @@ defmodule Publishing.Blog do
     struct
     |> cast(attrs, @optional_fields ++ @required_fields)
     |> validate_required(@required_fields)
+    |> validate_length(:fullname, max: 255)
+    |> validate_length(:username, max: 255)
+    |> validate_length(:bio, max: 255)
   end
 end

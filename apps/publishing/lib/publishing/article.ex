@@ -21,6 +21,7 @@ defmodule Publishing.Article do
     struct
     |> cast(attrs, @optional_fields ++ @required_fields)
     |> validate_required(@required_fields)
+    |> validate_length(:title, max: 255)
     |> assoc_constraint(:blog)
   end
 end
