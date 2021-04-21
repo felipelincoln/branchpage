@@ -8,9 +8,9 @@ config :web, Web.Endpoint,
   pubsub_server: Web.PubSub,
   live_view: [signing_salt: "nNxuMZr4Bq73HLMihu1pYEdtKLAL/f+Z"]
 
-config :blog,
-  ecto_repos: [Blog.Repo]
+config :publishing,
+  ecto_repos: [Publishing.Repo]
 
-config :blog, Blog.Repo, migration_timestamps: [type: :utc_datetime]
+config :publishing, Publishing.Repo, migration_timestamps: [type: :utc_datetime]
 
 import_config "#{Mix.env()}.exs"

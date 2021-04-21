@@ -1,9 +1,9 @@
-defmodule Blog.MixProject do
+defmodule Publishing.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :blog,
+      app: :publishing,
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -19,7 +19,7 @@ defmodule Blog.MixProject do
 
   def application do
     [
-      mod: {Blog.Application, []},
+      mod: {Publishing.Application, []},
       extra_applications: [:ssl]
     ]
   end

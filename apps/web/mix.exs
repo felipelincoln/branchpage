@@ -26,7 +26,7 @@ defmodule Web.MixProject do
 
   defp deps do
     [
-      {:blog, in_umbrella: true},
+      {:publishing, in_umbrella: true},
       {:phoenix, "~> 1.5.8"},
       {:phoenix_html, "~> 2.14"},
       {:phoenix_live_view, "~> 0.15.4"},
