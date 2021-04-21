@@ -1,6 +1,6 @@
-defmodule Blog do
+defmodule Publishing do
   @moduledoc """
-  Documentation for `Blog`.
+  Documentation for `Publishing`.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule Blog do
 
   ## Examples
 
-      iex> Blog.hello()
+      iex> Publishing.hello()
       :world
 
   """

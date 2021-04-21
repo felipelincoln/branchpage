@@ -22,7 +22,7 @@ config :web, Web.Endpoint,
     ]
   ]
 
-config :blog, Blog.Repo,
+config :publishing, Publishing.Repo,
   username: "postgres",
   password: "postgres",
   database: "branchpage_dev",

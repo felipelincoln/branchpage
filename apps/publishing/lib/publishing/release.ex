@@ -1,11 +1,11 @@
-defmodule Blog.Release do
+defmodule Publishing.Release do
   @moduledoc """
   Module for running migrations and rollback using
   the release binary.
-  Example: bin/web eval "Blog.Release.migrate"
+  Example: bin/web eval "Publishing.Release.migrate"
   """
 
-  @app :blog
+  @app :publishing
 
   def migrate do
     load_app()

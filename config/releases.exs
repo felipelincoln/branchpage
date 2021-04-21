@@ -3,7 +3,7 @@ import Config
 config :web, Web.Endpoint,
   secret_key_base: System.get_env("SECRET_KEY_BASE") || raise("SECRET_KEY_BASE is missing.")
 
-config :blog, Blog.Repo,
+config :publishing, Publishing.Repo,
   start_apps_before_migration: [:ssl],
   ssl: true,
   url: System.get_env("DATABASE_URL") || raise("DATABASE_URL is missing."),

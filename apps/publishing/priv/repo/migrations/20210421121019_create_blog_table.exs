@@ -1,4 +1,4 @@
-defmodule Blog.Repo.Migrations.CreateBlogTable do
+defmodule Publishing.Repo.Migrations.CreateBlogTable do
   use Ecto.Migration
 
   def change do
