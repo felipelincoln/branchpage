@@ -11,6 +11,5 @@ defmodule Blog.Repo.Migrations.CreateBlogTable do
 
       timestamps()
     end
-
   end
 end
