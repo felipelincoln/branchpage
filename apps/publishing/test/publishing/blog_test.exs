@@ -12,10 +12,12 @@ defmodule Publishing.BlogTest do
   }
   @invalid_attrs %{fullname: 0, username: 0, bio: 0, donate_url: 0}
 
-  test "channgeset/2 with valid params" do
+  test "channgeset/2 with valid empty params" do
     changeset = Blog.changeset(%Blog{}, @valid_empty_attrs)
     assert changeset.valid?
+  end
 
+  test "channgeset/2 with valid params" do
     changeset = Blog.changeset(%Blog{}, @valid_attrs)
     assert changeset.valid?
   end

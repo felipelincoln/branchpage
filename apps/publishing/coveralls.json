@@ -1,0 +1,11 @@
+{
+  "skip_files": [
+    "lib/publishing/application.ex",
+    "lib/publishing/release.ex",
+    "lib/publishing/repo.ex",
+    "test/support"
+  ],
+  "coverage_options": {
+    "treat_no_relevant_lines_as_covered": true
+  }
+}
