@@ -27,8 +27,4 @@ defmodule Blog.Release do
   defp load_app do
     Application.load(@app)
   end
-
-
-
-
 end

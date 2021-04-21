@@ -11,7 +11,6 @@ config :web, Web.Endpoint,
 config :blog,
   ecto_repos: [Blog.Repo]
 
-config :blog, Blog.Repo,
-  migration_timestamps: [type: :utc_datetime]
+config :blog, Blog.Repo, migration_timestamps: [type: :utc_datetime]
 
 import_config "#{Mix.env()}.exs"
