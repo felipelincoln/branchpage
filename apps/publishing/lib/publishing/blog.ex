@@ -9,12 +9,12 @@ defmodule Publishing.Blog do
   @required_fields ~w()a
 
   schema "blog" do
-    field(:fullname, :string)
-    field(:username, :string)
-    field(:bio, :string)
-    field(:donate_url, :string)
+    field :fullname, :string
+    field :username, :string
+    field :bio, :string
+    field :donate_url, :string
 
-    has_many(:articles, Publishing.Article)
+    has_many :articles, Publishing.Article
 
     timestamps()
   end

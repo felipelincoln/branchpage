@@ -9,10 +9,11 @@ defmodule Publishing.Article do
   @required_fields ~w()a
 
   schema "article" do
-    field(:title, :string)
-    field(:edit_url, :string)
+    field :title, :string
+    field :edit_url, :string
+    field :body, :string, virtual: true
 
-    belongs_to(:blog, Publishing.Blog, type: :binary_id)
+    belongs_to :blog, Publishing.Blog, type: :binary_id
 
     timestamps()
   end
