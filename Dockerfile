@@ -23,6 +23,7 @@ ENV MIX_ENV=$MIX_ENV
 # install mix dependencies
 COPY mix.exs mix.lock ./
 COPY apps/web/mix.exs apps/web/mix.exs
+COPY apps/blog/mix.exs apps/blog/mix.exs
 COPY config config
 RUN mix do deps.get, deps.compile --skip-umbrella-children
 
