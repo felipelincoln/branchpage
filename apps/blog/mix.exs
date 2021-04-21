@@ -19,7 +19,8 @@ defmodule Blog.MixProject do
 
   def application do
     [
-      mod: {Blog.Application, []}
+      mod: {Blog.Application, []},
+      extra_applications: [:ssl]
     ]
   end
 
