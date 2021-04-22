@@ -1,24 +1,34 @@
 defmodule Publishing.Integration.Github do
   @moduledoc """
-  implement a integration interface
+  Integrates with github markdown resources.
   """
 
-  def get_username(url) do
+  @doc """
+  Returns the markdown's main title. It defaults to "Untitled".
+
+  Examples:
+      iex> title("# Hello World!\\nLorem ipsum...")
+      "Hello World!"
+
+      iex> title("Lorem ipsum dolor sit amet...")
+      "Untitled"
+  """
+  @spec title(String.t()) :: String.t()
+  def title(content) do
+    with {:ok, ast, _} <- EarmarkParser.as_ast(content),
+         [{"h1", _, [title], _} | _tail] <- ast do
+      title
+    else
+      _ -> "Untitled"
+    end
+  end
+
+  def author(url) do
     [username | _] = decompose(url)
     username
   end
 
-  def get_title(body) do
-    {:ok, ast, _} = EarmarkParser.as_ast(body)
-
-    default = {"h1", [], "Untitled", %{}}
-
-    {"h1", _, title, _} = Enum.find(ast, default, fn {tag, _, _, _} -> tag == "h1" end)
-
-    title
-  end
-
-  def get_body(url) do
+  def get_content(url) do
     {:ok, 200, _, ref} =
       url
       |> to_raw()
