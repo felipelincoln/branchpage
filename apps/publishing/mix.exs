@@ -32,7 +32,8 @@ defmodule Publishing.MixProject do
     [
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
-      {:ex_machina, "~> 2.7.0", only: :test}
+      {:ex_machina, "~> 2.7.0", only: :test},
+      {:earmark, "~> 1.4.5"}
     ]
   end
 

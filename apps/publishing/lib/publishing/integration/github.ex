@@ -3,27 +3,37 @@ defmodule Publishing.Integration.Github do
   implement a integration interface
   """
 
-  def to_raw(url) do
-    [username, repository, "blob" | tail] = decompose(url)
-    resource = Enum.join(tail, "/")
-
-    "https://raw.githubusercontent.com/#{username}/#{repository}/#{resource}"
-  end
-
   def get_username(url) do
     [username | _] = decompose(url)
     username
   end
 
   def get_title(body) do
-    body
+    {:ok, ast, _} = EarmarkParser.as_ast(body)
+
+    default = {"h1", [], "Untitled", %{}}
+
+    {"h1", _, title, _} = Enum.find(ast, default, fn {tag, _, _, _} -> tag == "h1" end)
+
+    title
   end
 
-  def get_body(raw_url) do
-    {:ok, 200, _, ref} = :hackney.get(raw_url)
+  def get_body(url) do
+    {:ok, 200, _, ref} =
+      url
+      |> to_raw()
+      |> :hackney.get()
+
     {:ok, body} = :hackney.body(ref)
 
     body
+  end
+
+  defp to_raw(url) do
+    [username, repository, "blob" | tail] = decompose(url)
+    resource = Enum.join(tail, "/")
+
+    "https://raw.githubusercontent.com/#{username}/#{repository}/#{resource}"
   end
 
   defp decompose(url) do
