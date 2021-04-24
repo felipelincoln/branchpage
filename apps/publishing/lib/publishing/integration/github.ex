@@ -5,28 +5,6 @@ defmodule Publishing.Integration.Github do
 
   defstruct [:username, :repository, :resource]
 
-  @type t :: %__MODULE__{username: binary, repository: binary, resource: binary}
-
-  @doc """
-  Returns the markdown's main title if there is one.
-
-  Examples:
-      iex> content_title("# Hello World!\\nLorem ipsum...")
-      "Hello World!"
-
-      iex> content_title("Lorem ipsum dolor sit amet...")
-      nil
-  """
-  @spec content_title(String.t()) :: String.t() | nil
-  def content_title(content) do
-    with {:ok, ast, _} <- EarmarkParser.as_ast(content),
-         [{"h1", _, [title], _} | _tail] <- ast do
-      title
-    else
-      _ -> nil
-    end
-  end
-
   @doc """
   Validates the `url` as a github markdown.
 
@@ -44,7 +22,7 @@ defmodule Publishing.Integration.Github do
       {:error, :extension}
   """
   @spec validate(String.t()) :: {:ok, String.t()} | {:error, atom}
-  def validate(url) do
+  def validate(url) when is_binary(url) do
     case URI.parse(url) do
       %URI{scheme: scheme} when scheme not in ["http", "https"] ->
         {:error, :scheme}
@@ -60,6 +38,26 @@ defmodule Publishing.Integration.Github do
   end
 
   @doc """
+  Returns the markdown's main title if there is one.
+
+  Examples:
+      iex> content_title("# Hello World!\\nLorem ipsum...")
+      "Hello World!"
+
+      iex> content_title("Lorem ipsum dolor sit amet...")
+      nil
+  """
+  @spec content_title(String.t()) :: String.t() | nil
+  def content_title(content) when is_binary(content) do
+    with {:ok, ast, _} <- EarmarkParser.as_ast(content),
+         [{"h1", _, [title], _} | _tail] <- ast do
+      title
+    else
+      _ -> nil
+    end
+  end
+
+  @doc """
   Returns the GitHub username from the `url`.
 
   Examples:
@@ -70,13 +68,13 @@ defmodule Publishing.Integration.Github do
       nil
   """
   @spec get_username(String.t()) :: String.t() | nil
-  def get_username(url), do: decompose(url).username
+  def get_username(url) when is_binary(url), do: decompose(url).username
 
   @doc """
   Retrieve the raw content of a resource's `url` from github.
   """
   @spec get_content(String.t()) :: {:ok, Stream.t()} | {:error, integer}
-  def get_content(url) do
+  def get_content(url) when is_binary(url) do
     raw =
       url
       |> decompose()
