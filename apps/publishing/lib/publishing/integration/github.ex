@@ -55,14 +55,14 @@ defmodule Publishing.Integration.Github do
   end
 
   def to_raw(url) do
-    [username, repository, "blob" | tail] = decompose(url)
+    [username, repository, _blob | tail] = decompose(url)
     resource = Enum.join(tail, "/")
 
     "https://raw.githubusercontent.com/#{username}/#{repository}/#{resource}"
   end
 
-  defp decompose(url) do
-    [_, path] = String.split(url, "github.com/")
+  def decompose(url) do
+    %URI{path: <<"/", path::binary>>} = URI.parse(url)
     String.split(path, "/")
   end
 end
