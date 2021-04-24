@@ -3,6 +3,10 @@ defmodule Publishing.Integration.Github do
   Integrates with github.
   """
 
+  defstruct [:username, :repository, :resource]
+
+  @type t :: %__MODULE__{username: binary, repository: binary, resource: binary}
+
   @doc """
   Returns the markdown's main title. It defaults to "Untitled".
 
@@ -11,7 +15,7 @@ defmodule Publishing.Integration.Github do
       "Hello World!"
 
       iex> title("Lorem ipsum dolor sit amet...")
-      "Untitled"
+      nil
   """
   @spec title(String.t()) :: String.t()
   def title(content) do
@@ -19,24 +23,8 @@ defmodule Publishing.Integration.Github do
          [{"h1", _, [title], _} | _tail] <- ast do
       title
     else
-      _ -> "Untitled"
+      _ -> nil
     end
-  end
-
-  def author(url) do
-    [username | _] = decompose(url)
-    username
-  end
-
-  def get_content(url) do
-    {:ok, 200, _, ref} =
-      url
-      |> to_raw()
-      |> :hackney.get()
-
-    {:ok, body} = :hackney.body(ref)
-
-    body
   end
 
   def validate(url) do
@@ -54,15 +42,34 @@ defmodule Publishing.Integration.Github do
     end
   end
 
-  def to_raw(url) do
-    [username, repository, _blob | tail] = decompose(url)
-    resource = Enum.join(tail, "/")
+  def get_username(url), do: decompose(url).username
 
-    "https://raw.githubusercontent.com/#{username}/#{repository}/#{resource}"
+  def get_content(url) do
+    raw =
+      url
+      |> decompose()
+      |> raw_url()
+
+    case :hackney.get(raw) do
+      {:ok, 200, _, ref} ->
+        :hackney.body(ref)
+
+      {:ok, status_code, _, _} ->
+        {:error, status_code}
+    end
   end
 
-  def decompose(url) do
-    %URI{path: <<"/", path::binary>>} = URI.parse(url)
-    String.split(path, "/")
+  defp raw_url(%__MODULE__{} = gh) do
+    "https://raw.githubusercontent.com/#{gh.username}/#{gh.repository}/#{gh.resource}"
+  end
+
+  defp decompose(url) do
+    with %URI{path: <<path::binary>>} <- URI.parse(url),
+         ["", username, repository, "blob" | tail] <- String.split(path, "/"),
+         resource <- Enum.join(tail, "/") do
+      %__MODULE__{username: username, repository: repository, resource: resource}
+    else
+      _ -> %__MODULE__{}
+    end
   end
 end
