@@ -1,25 +1,25 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title><%= @title %></title>
+    <title><%= @meta.title %></title>
     <%= csrf_meta_tag() %>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#4285f4">
-    <meta name="description" content="<%= @description %>">
+    <meta name="description" content="<%= @meta.description %>">
     <meta name="robots" content="index,follow">
     <meta property="og:url" content="https://branchpage-homologation.herokuapp.com">
-    <meta property="og:title" content="<%= @title %>">
-    <meta property="og:image" content="<%= @social_image %>">
-    <meta property="og:description" content="<%= @description %>">
+    <meta property="og:title" content="<%= @meta.title %>">
+    <meta property="og:image" content="<%= @meta.social_image %>">
+    <meta property="og:description" content="<%= @meta.description %>">
     <meta property="og:site_name" content="Branchpage">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://branchpage-homologation.herokuapp.com">
-    <meta name="twitter:title" content="<%= @title %>">
-    <meta name="twitter:description" content="<%= @description %>">
-    <meta name="twitter:image" content="<%= @social_image %>">
+    <meta name="twitter:title" content="<%= @meta.title %>">
+    <meta name="twitter:description" content="<%= @meta.description %>">
+    <meta name="twitter:image" content="<%= @meta.social_image %>">
     <!--
     <meta name="author" content="author name">
     <meta name="date" content="date article was published">
@@ -42,7 +42,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <script defer type="text/javascript" src='<%= Routes.static_path(@conn, "/js/main.js") %>'></script>
   </head>
-  <body>
+  <body class="min-h-screen flex flex-col justify-between">
     <%= @inner_content %>
     <footer class="p-5 sm:p-8 mt-5 sm:mt-8">
       <a class="text-gray-400" href="/">Branchpage</a>

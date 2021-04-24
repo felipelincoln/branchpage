@@ -34,4 +34,8 @@
   .container {
     @apply max-w-screen-sm sm:mx-auto box-content px-mb sm:px-sc
   }
+
+  .input {
+    @apply w-full border-b border-gray-300 focus:border-gray-800 focus:outline-none p-0 sm:p-1
+  }
 }
