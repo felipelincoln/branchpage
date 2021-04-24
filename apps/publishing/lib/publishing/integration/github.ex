@@ -11,19 +11,19 @@ defmodule Publishing.Integration.Github do
   Returns the markdown's main title if there is one.
 
   Examples:
-      iex> title("# Hello World!\\nLorem ipsum...")
+      iex> content_title("# Hello World!\\nLorem ipsum...")
       "Hello World!"
 
-      iex> title("Lorem ipsum dolor sit amet...")
-      ""
+      iex> content_title("Lorem ipsum dolor sit amet...")
+      nil
   """
-  @spec title(String.t()) :: String.t()
-  def title(content) do
+  @spec content_title(String.t()) :: String.t() | nil
+  def content_title(content) do
     with {:ok, ast, _} <- EarmarkParser.as_ast(content),
          [{"h1", _, [title], _} | _tail] <- ast do
       title
     else
-      _ -> ""
+      _ -> nil
     end
   end
 
@@ -59,8 +59,23 @@ defmodule Publishing.Integration.Github do
     end
   end
 
+  @doc """
+  Returns the GitHub username from the `url`.
+
+  Examples:
+      iex> get_username("https://github.com/felipelincoln/branchpage/blob/main/README.md")
+      "felipelincoln"
+
+      iex> get_username("https://github.com/")
+      nil
+  """
+  @spec get_username(String.t()) :: String.t() | nil
   def get_username(url), do: decompose(url).username
 
+  @doc """
+  Retrieve the raw content of a resource's `url` from github.
+  """
+  @spec get_content(String.t()) :: {:ok, Stream.t()} | {:error, integer}
   def get_content(url) do
     raw =
       url
