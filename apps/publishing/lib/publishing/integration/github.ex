@@ -1,6 +1,6 @@
 defmodule Publishing.Integration.Github do
   @moduledoc """
-  Integrates with github markdown resources.
+  Integrates with github.
   """
 
   @doc """
@@ -39,7 +39,22 @@ defmodule Publishing.Integration.Github do
     body
   end
 
-  defp to_raw(url) do
+  def validate(url) do
+    case URI.parse(url) do
+      %URI{scheme: scheme} when scheme not in ["http", "https"] ->
+        {:error, :scheme}
+
+      %URI{host: host} when host != "github.com" ->
+        {:error, :host}
+
+      %URI{path: path} ->
+        if MIME.from_path(path) == "text/markdown",
+          do: {:ok, url},
+          else: {:error, :extension}
+    end
+  end
+
+  def to_raw(url) do
     [username, repository, "blob" | tail] = decompose(url)
     resource = Enum.join(tail, "/")
 
