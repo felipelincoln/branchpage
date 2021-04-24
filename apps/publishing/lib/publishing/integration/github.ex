@@ -8,14 +8,14 @@ defmodule Publishing.Integration.Github do
   @type t :: %__MODULE__{username: binary, repository: binary, resource: binary}
 
   @doc """
-  Returns the markdown's main title. It defaults to "Untitled".
+  Returns the markdown's main title if there is one.
 
   Examples:
       iex> title("# Hello World!\\nLorem ipsum...")
       "Hello World!"
 
       iex> title("Lorem ipsum dolor sit amet...")
-      nil
+      ""
   """
   @spec title(String.t()) :: String.t()
   def title(content) do
@@ -23,10 +23,27 @@ defmodule Publishing.Integration.Github do
          [{"h1", _, [title], _} | _tail] <- ast do
       title
     else
-      _ -> nil
+      _ -> ""
     end
   end
 
+  @doc """
+  Validates the `url` as a github markdown.
+
+  Examples:
+      iex> validate("https://github.com/felipelincoln/branchpage/blob/main/README.md")
+      {:ok, "https://github.com/felipelincoln/branchpage/blob/main/README.md"}
+
+      iex> validate("github.com/felipelincoln/branchpage/blob/main/README.md")
+      {:error, :scheme}
+
+      iex> validate("https://invalid.com/felipelincoln/branchpage/blob/main/README.md")
+      {:error, :host}
+
+      iex> validate("https://github.com/felipelincoln/branchpage/blob/main/README.txt")
+      {:error, :extension}
+  """
+  @spec validate(String.t()) :: {:ok, String.t()} | {:error, atom}
   def validate(url) do
     case URI.parse(url) do
       %URI{scheme: scheme} when scheme not in ["http", "https"] ->
