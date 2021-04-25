@@ -7,31 +7,37 @@ defmodule Publishing do
   alias Publishing.Integration
   alias Publishing.Repo
 
-  @spec create_article(String.t()) :: {:ok, %Article{}} | {:error, String.t()}
-  def create_article(url) do
-    with {:ok, integration} <- Integration.service(url),
-         {:ok, _url} <- integration.validate(url),
+  @spec build_article(String.t()) :: {:ok, %Article{}} | {:error, String.t()}
+  def build_article(url) do
+    with {:ok, _url} <- Integration.validate_url(url),
+         {:ok, integration} <- Integration.service(url),
          {:ok, _username} <- integration.get_username(url),
          {:ok, content} <- integration.get_content(url) do
       title =
         content
-        |> integration.content_heading()
+        |> integration.content_heading("Untitled")
         |> String.trim()
         |> String.slice(0, 255)
 
-      attrs = %{title: title, edit_url: url}
-
-      %Article{body: content}
-      |> Article.changeset(attrs)
-      |> Repo.insert()
+      {:ok, %Article{body: content, title: title, edit_url: url}}
     else
-      {:error, :integration} -> "Not integrated with #{host(url)} yet."
-      {:error, :scheme} -> "Invalid scheme. Use http or https"
-      {:error, :host} -> "Invalid host. Must be #{host(url)}"
-      {:error, :extension} -> "Invalid extension. Must be .md"
-      {:error, :username} -> "Invalid URL."
-      {:error, 404} -> "Page not found."
-      {:error, status} -> "Failed to retrieve page content. (error #{status})"
+      {:error, :integration} ->
+        {:error, "Not integrated with #{host(url)} yet."}
+
+      {:error, :scheme} ->
+        {:error, "Invalid scheme. Use http or https"}
+
+      {:error, :extension} ->
+        {:error, "Invalid extension. Must be .md"}
+
+      {:error, :username} ->
+        {:error, "Invalid resource"}
+
+      {:error, 404} ->
+        {:error, "Page not found"}
+
+      {:error, status} ->
+        {:error, "Failed to retrieve page content. (error #{status})"}
     end
   end
 

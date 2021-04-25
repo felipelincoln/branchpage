@@ -4,7 +4,7 @@ defmodule Web.NewLive do
   use Phoenix.LiveView
   import Phoenix.HTML, only: [raw: 1]
 
-  alias Publishing.Integration.Github
+  alias Publishing
 
   @meta %{
     title: "branchpage title",
@@ -17,14 +17,30 @@ defmodule Web.NewLive do
     socket =
       socket
       |> assign(:meta, @meta)
+      |> assign(:validation, nil)
+      |> assign(:article, nil)
 
     {:ok, socket}
   end
 
   @impl true
   def handle_event("preview", %{"url" => url}, socket) do
-    IO.puts("In development")
+    case Publishing.build_article(url) do
+      {:ok, article} ->
+        socket =
+          socket
+          |> assign(:validation, nil)
+          |> assign(:article, article)
 
-    {:noreply, socket}
+        {:noreply, socket}
+
+      {:error, validation} ->
+        socket =
+          socket
+          |> assign(:validation, validation)
+          |> assign(:article, nil)
+
+        {:noreply, socket}
+    end
   end
 end

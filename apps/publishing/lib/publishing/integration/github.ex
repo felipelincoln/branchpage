@@ -6,38 +6,6 @@ defmodule Publishing.Integration.Github do
   defstruct [:username, :repository, :resource]
 
   @doc """
-  Validates the `url` as a github markdown.
-
-  Examples:
-      iex> validate("https://github.com/felipelincoln/branchpage/blob/main/README.md")
-      {:ok, "https://github.com/felipelincoln/branchpage/blob/main/README.md"}
-
-      iex> validate("github.com/felipelincoln/branchpage/blob/main/README.md")
-      {:error, :scheme}
-
-      iex> validate("https://invalid.com/felipelincoln/branchpage/blob/main/README.md")
-      {:error, :host}
-
-      iex> validate("https://github.com/felipelincoln/branchpage/blob/main/README.txt")
-      {:error, :extension}
-  """
-  @spec validate(String.t()) :: {:ok, String.t()} | {:error, atom}
-  def validate(url) when is_binary(url) do
-    case URI.parse(url) do
-      %URI{scheme: scheme} when scheme not in ["http", "https"] ->
-        {:error, :scheme}
-
-      %URI{host: host} when host != "github.com" ->
-        {:error, :host}
-
-      %URI{path: path} ->
-        if MIME.from_path(path) == "text/markdown",
-          do: {:ok, url},
-          else: {:error, :extension}
-    end
-  end
-
-  @doc """
   Returns the markdown's main title if there is one.
 
   Examples:
@@ -48,12 +16,12 @@ defmodule Publishing.Integration.Github do
       nil
   """
   @spec content_heading(String.t()) :: String.t() | nil
-  def content_heading(content) when is_binary(content) do
+  def content_heading(content, default \\ "") when is_binary(content) do
     with {:ok, ast, _} <- EarmarkParser.as_ast(content),
          [{"h1", _, [title], _} | _tail] <- ast do
       title
     else
-      _ -> nil
+      _ -> default
     end
   end
 
