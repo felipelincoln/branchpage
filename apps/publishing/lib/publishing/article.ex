@@ -9,7 +9,7 @@ defmodule Publishing.Article do
   @required_fields ~w()a
 
   schema "article" do
-    field :title, :string
+    field :title, :string, default: "Untitled"
     field :edit_url, :string
     field :body, :string, virtual: true
 

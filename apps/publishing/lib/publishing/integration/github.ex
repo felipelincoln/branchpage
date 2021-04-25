@@ -41,14 +41,14 @@ defmodule Publishing.Integration.Github do
   Returns the markdown's main title if there is one.
 
   Examples:
-      iex> content_title("# Hello World!\\nLorem ipsum...")
+      iex> content_heading("# Hello World!\\nLorem ipsum...")
       "Hello World!"
 
-      iex> content_title("Lorem ipsum dolor sit amet...")
+      iex> content_heading("Lorem ipsum dolor sit amet...")
       nil
   """
-  @spec content_title(String.t()) :: String.t() | nil
-  def content_title(content) when is_binary(content) do
+  @spec content_heading(String.t()) :: String.t() | nil
+  def content_heading(content) when is_binary(content) do
     with {:ok, ast, _} <- EarmarkParser.as_ast(content),
          [{"h1", _, [title], _} | _tail] <- ast do
       title
@@ -62,13 +62,18 @@ defmodule Publishing.Integration.Github do
 
   Examples:
       iex> get_username("https://github.com/felipelincoln/branchpage/blob/main/README.md")
-      "felipelincoln"
+      {:ok, "felipelincoln"}
 
       iex> get_username("https://github.com/")
-      nil
+      {:error, :username}
   """
-  @spec get_username(String.t()) :: String.t() | nil
-  def get_username(url) when is_binary(url), do: decompose(url).username
+  @spec get_username(String.t()) :: {:ok, String.t()} | {:error, :username}
+  def get_username(url) when is_binary(url) do
+    case decompose(url).username do
+      nil -> {:error, :username}
+      u -> {:ok, u}
+    end
+  end
 
   @doc """
   Retrieve the raw content of a resource's `url` from github.
