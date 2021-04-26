@@ -53,4 +53,17 @@ defmodule Web.NewLive do
         {:noreply, socket}
     end
   end
+
+  @impl true
+  def handle_event("publish", _params, %{assigns: %{article: nil}} = socket),
+    do: {:noreply, socket}
+
+  @impl true
+  def handle_event("publish", _params, socket) do
+    case Publishing.save_article(socket.assigns.article) do
+      {:ok, _article} ->
+        # redirect
+        {:noreply, socket}
+    end
+  end
 end

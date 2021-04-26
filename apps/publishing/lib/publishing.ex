@@ -7,6 +7,14 @@ defmodule Publishing do
   alias Publishing.Integration
   alias Publishing.Repo
 
+  def save_article(%Article{} = article) do
+    attrs = Map.from_struct(article)
+
+    %Article{}
+    |> Article.changeset(attrs)
+    |> Repo.insert()
+  end
+
   @spec build_article(String.t()) :: {:ok, %Article{}} | {:error, String.t()}
   def build_article(url) do
     with {:ok, _url} <- validate_url(url),
