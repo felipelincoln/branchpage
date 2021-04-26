@@ -24,6 +24,16 @@ defmodule Web.NewLive do
   end
 
   @impl true
+  def handle_event("preview", %{"url" => ""}, socket) do
+    socket =
+      socket
+      |> assign(:validation, nil)
+      |> assign(:article, nil)
+
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_event("preview", %{"url" => url}, socket) do
     case Publishing.build_article(url) do
       {:ok, article} ->

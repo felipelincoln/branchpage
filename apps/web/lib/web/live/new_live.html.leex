@@ -5,13 +5,13 @@
 
   <form class="flex-1 max-w-screen-sm" phx-change="preview">
     <input class="input" type="text" placeholder="post url" autocomplete="off" name="url" phx-debounce="500">
-    <p class="text-red-700"><%= @validation %></p>
   </form>
 
   <div class="navbar-side-item pl-mb justify-end"><a href="#">Publish</a></div>
 </nav>
 
 <main class="container">
+  <p class="text-red-700"><%= @validation %></p>
   <%= if @article do %>
   <article>
     <header>

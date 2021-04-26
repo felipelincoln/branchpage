@@ -9,9 +9,8 @@ defmodule Publishing do
 
   @spec build_article(String.t()) :: {:ok, %Article{}} | {:error, String.t()}
   def build_article(url) do
-    with {:ok, _url} <- Integration.validate_url(url),
+    with {:ok, _url} <- validate_url(url),
          {:ok, integration} <- Integration.service(url),
-         {:ok, _username} <- integration.get_username(url),
          {:ok, content} <- integration.get_content(url) do
       title =
         content
@@ -21,25 +20,34 @@ defmodule Publishing do
 
       {:ok, %Article{body: content, title: title, edit_url: url}}
     else
-      {:error, :integration} ->
-        {:error, "Not integrated with #{host(url)} yet."}
-
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}
 
       {:error, :extension} ->
         {:error, "Invalid extension. Must be .md"}
 
-      {:error, :username} ->
-        {:error, "Invalid resource"}
+      {:error, :integration} ->
+        {:error, "Not integrated with #{host(url)} yet."}
 
       {:error, 404} ->
         {:error, "Page not found"}
 
-      {:error, status} ->
+      {:error, status} when is_integer(status) ->
         {:error, "Failed to retrieve page content. (error #{status})"}
     end
   end
 
   defp host(url), do: URI.parse(url).host
+
+  defp validate_url(url) do
+    case URI.parse(url) do
+      %URI{scheme: scheme} when scheme not in ["http", "https"] ->
+        {:error, :scheme}
+
+      %URI{path: path} ->
+        if MIME.from_path(path || "/") == "text/markdown",
+          do: {:ok, url},
+          else: {:error, :extension}
+    end
+  end
 end

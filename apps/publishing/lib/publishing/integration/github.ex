@@ -6,14 +6,17 @@ defmodule Publishing.Integration.Github do
   defstruct [:username, :repository, :resource]
 
   @doc """
-  Returns the markdown's main title if there is one.
+  Returns the markdown's main title or the given `default` (optional).
 
   Examples:
       iex> content_heading("# Hello World!\\nLorem ipsum...")
       "Hello World!"
 
       iex> content_heading("Lorem ipsum dolor sit amet...")
-      nil
+      ""
+
+      iex> content_heading("Lorem ipsum dolor sit amet...", "Untitled")
+      "Untitled"
   """
   @spec content_heading(String.t()) :: String.t() | nil
   def content_heading(content, default \\ "") when is_binary(content) do
