@@ -3,7 +3,7 @@
     <a href="/a" class="logo" aria-label="Branchpage">bp</a>
   </div>
 
-  <form class="flex-1 max-w-screen-sm" phx-change="preview">
+  <form class="flex-1 max-w-screen-sm" phx-change="preview" onkeydown="return event.key != 'Enter';">
     <input class="input" type="text" placeholder="post url" autocomplete="off" name="url" phx-debounce="500">
   </form>
 
