@@ -11,10 +11,10 @@
 </nav>
 
 <%= if @error do %>
-  <div class="flash">
-    <p class="text-red-600">Error</p>
-    <p><%= raw @error %></p>
-  </div>
+<div class="flash" phx-click="clear-flash">
+  <p class="text-red-600">Error</p>
+  <p><%= raw @error %></p>
+</div>
 <% end %>
 
 <main class="container">

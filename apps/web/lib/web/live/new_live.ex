@@ -29,6 +29,7 @@ defmodule Web.NewLive do
     socket =
       socket
       |> assign(:validation, nil)
+      |> assign(:error, nil)
       |> assign(:article, nil)
 
     {:noreply, socket}
@@ -42,6 +43,7 @@ defmodule Web.NewLive do
           socket
           |> assign(:validation, nil)
           |> assign(:article, article)
+          |> assign(:error, nil)
 
         {:noreply, socket}
 
@@ -50,6 +52,7 @@ defmodule Web.NewLive do
           socket
           |> assign(:validation, validation)
           |> assign(:article, nil)
+          |> assign(:error, nil)
 
         {:noreply, socket}
     end
@@ -76,5 +79,14 @@ defmodule Web.NewLive do
 
         {:noreply, socket}
     end
+  end
+
+  @impl true
+  def handle_event("clear-flash", _params, socket) do
+    socket =
+      socket
+      |> assign(:error, nil)
+
+    {:noreply, socket}
   end
 end
