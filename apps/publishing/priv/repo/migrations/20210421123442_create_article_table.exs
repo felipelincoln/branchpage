@@ -10,5 +10,7 @@ defmodule Publishing.Repo.Migrations.CreateArticleTable do
 
       timestamps()
     end
+
+    create unique_index(:article, :edit_url)
   end
 end

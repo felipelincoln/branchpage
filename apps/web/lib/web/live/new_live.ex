@@ -61,8 +61,10 @@ defmodule Web.NewLive do
   @impl true
   def handle_event("publish", _params, socket) do
     case Manage.save_article(socket.assigns.article) do
-      {:ok, _article} ->
+      {:ok, _article} -> IO.puts "success"
         # redirect
+        {:noreply, socket}
+      {:error, cs} -> IO.inspect cs
         {:noreply, socket}
     end
   end

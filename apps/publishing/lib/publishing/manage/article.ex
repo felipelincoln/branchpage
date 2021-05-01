@@ -24,5 +24,6 @@ defmodule Publishing.Manage.Article do
     |> validate_required(@required_fields)
     |> validate_length(:title, max: 255)
     |> assoc_constraint(:blog)
+    |> unique_constraint(:edit_url)
   end
 end
