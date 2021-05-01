@@ -27,7 +27,12 @@ defmodule Publishing.Manage do
         |> String.trim()
         |> String.slice(0, 255)
 
-      {:ok, %Article{body: content, title: title, edit_url: url}}
+      html =
+        content
+        |> ast_no_heading
+        |> Earmark.Transform.transform()
+
+      {:ok, %Article{body: html, title: title, edit_url: url}}
     else
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}
@@ -77,6 +82,15 @@ defmodule Publishing.Manage do
         if MIME.from_path(path || "/") == "text/markdown",
           do: {:ok, url},
           else: {:error, :extension}
+    end
+  end
+
+  defp ast_no_heading(markdown) do
+    with {:ok, ast, _} <- EarmarkParser.as_ast(markdown),
+         [{"h1", _, [_title], _} | tail] <- ast do
+      tail
+    else
+      ast -> ast
     end
   end
 end

@@ -5,7 +5,7 @@ defmodule Publishing.Factory do
 
   use ExMachina.Ecto, repo: Publishing.Repo
 
-  alias Publishing.{Article, Blog}
+  alias Publishing.Manage.{Article, Blog}
 
   def article_factory, do: %Article{}
 
