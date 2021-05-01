@@ -17,7 +17,8 @@ defmodule Publishing.Manage do
 
   @spec build_article(String.t()) :: {:ok, %Article{}} | {:error, String.t()}
   def build_article(url) do
-    with {:ok, _url} <- validate_url(url),
+    with url <- String.trim(url),
+         {:ok, _url} <- validate_url(url),
          {:ok, integration} <- Integration.service(url),
          {:ok, content} <- integration.get_content(url) do
       title =
