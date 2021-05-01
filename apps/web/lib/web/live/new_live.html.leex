@@ -10,8 +10,15 @@
   <div class="navbar-side-item pl-mb justify-end"><a href="#" phx-click="publish">Publish</a></div>
 </nav>
 
+<%= if @error do %>
+  <div class="flash">
+    <p class="text-red-600">Error</p>
+    <p><%= raw @error %></p>
+  </div>
+<% end %>
+
 <main class="container">
-  <p class="text-red-700"><%= @validation %></p>
+  <p class="text-red-600"><%= @validation %></p>
   <%= if @article do %>
   <article>
     <header>

@@ -18,6 +18,7 @@ defmodule Web.NewLive do
       socket
       |> assign(:meta, @meta)
       |> assign(:validation, nil)
+      |> assign(:error, nil)
       |> assign(:article, nil)
 
     {:ok, socket}
@@ -61,10 +62,18 @@ defmodule Web.NewLive do
   @impl true
   def handle_event("publish", _params, socket) do
     case Manage.save_article(socket.assigns.article) do
-      {:ok, _article} -> IO.puts "success"
+      {:ok, _article} ->
+        IO.puts("success")
         # redirect
         {:noreply, socket}
-      {:error, cs} -> IO.inspect cs
+
+      {:error, changeset} ->
+        error = Manage.get_error(changeset)
+
+        socket =
+          socket
+          |> assign(:error, error)
+
         {:noreply, socket}
     end
   end

@@ -45,6 +45,26 @@ defmodule Publishing.Manage do
     end
   end
 
+  @doc """
+  Prints a message relative to the first error in the `changeset`.
+  """
+  def get_error(%Ecto.Changeset{errors: [{error, _reason} | _tail]}) do
+    case error do
+      :edit_url ->
+        "This article has already been published!"
+
+      _ ->
+        get_error([])
+    end
+  end
+
+  def get_error(_) do
+    """
+    A problem ocurred validating your article.<br>
+    Please contact the support.
+    """
+  end
+
   defp host(url), do: URI.parse(url).host
 
   defp validate_url(url) do
