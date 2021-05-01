@@ -1,4 +1,4 @@
-defmodule Publishing.Article do
+defmodule Publishing.Manage.Article do
   @moduledoc false
 
   use Ecto.Schema
@@ -13,7 +13,7 @@ defmodule Publishing.Article do
     field :edit_url, :string
     field :body, :string, virtual: true
 
-    belongs_to :blog, Publishing.Blog, type: :binary_id
+    belongs_to :blog, Publishing.Manage.Blog, type: :binary_id
 
     timestamps()
   end

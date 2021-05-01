@@ -1,10 +1,10 @@
-defmodule Publishing do
+defmodule Publishing.Manage do
   @moduledoc """
-  Documentation for `Publishing`.
+  Manage's public API.
   """
 
-  alias Publishing.Article
   alias Publishing.Integration
+  alias Publishing.Manage.Article
   alias Publishing.Repo
 
   def save_article(%Article{} = article) do

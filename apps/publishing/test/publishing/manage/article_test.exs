@@ -1,8 +1,8 @@
-defmodule Publishing.ArticleTest do
+defmodule Publishing.Manage.ArticleTest do
   use ExUnit.Case, async: true
 
   import Publishing.ChangesetHelpers
-  alias Publishing.Article
+  alias Publishing.Manage.Article
 
   @valid_empty_attrs %{}
   @valid_attrs %{title: "title", edit_url: "edit_url", blog_id: "blog_id"}

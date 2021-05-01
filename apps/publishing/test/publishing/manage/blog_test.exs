@@ -1,8 +1,8 @@
-defmodule Publishing.BlogTest do
+defmodule Publishing.Manage.BlogTest do
   use ExUnit.Case, async: true
 
   import Publishing.ChangesetHelpers
-  alias Publishing.Blog
+  alias Publishing.Manage.Blog
 
   @valid_empty_attrs %{}
   @valid_attrs %{

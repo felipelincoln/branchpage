@@ -4,7 +4,7 @@ defmodule Web.NewLive do
   use Phoenix.LiveView
   import Phoenix.HTML, only: [raw: 1]
 
-  alias Publishing
+  alias Publishing.Manage
 
   @meta %{
     title: "branchpage title",
@@ -35,7 +35,7 @@ defmodule Web.NewLive do
 
   @impl true
   def handle_event("preview", %{"url" => url}, socket) do
-    case Publishing.build_article(url) do
+    case Manage.build_article(url) do
       {:ok, article} ->
         socket =
           socket
@@ -60,7 +60,7 @@ defmodule Web.NewLive do
 
   @impl true
   def handle_event("publish", _params, socket) do
-    case Publishing.save_article(socket.assigns.article) do
+    case Manage.save_article(socket.assigns.article) do
       {:ok, _article} ->
         # redirect
         {:noreply, socket}

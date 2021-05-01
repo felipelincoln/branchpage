@@ -1,4 +1,4 @@
-defmodule Publishing.Blog do
+defmodule Publishing.Manage.Blog do
   @moduledoc false
 
   use Ecto.Schema
@@ -14,7 +14,7 @@ defmodule Publishing.Blog do
     field :bio, :string
     field :donate_url, :string
 
-    has_many :articles, Publishing.Article
+    has_many :articles, Publishing.Manage.Article
 
     timestamps()
   end
