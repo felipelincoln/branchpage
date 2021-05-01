@@ -2,7 +2,7 @@ import Config
 
 config :web, Web.Endpoint,
   http: [port: 4000],
-  debug_errors: true,
+  debug_errors: false,
   code_reloader: true,
   check_origin: false,
   live_reload: [

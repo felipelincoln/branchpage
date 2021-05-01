@@ -7,6 +7,18 @@ defmodule Publishing.Manage do
   alias Publishing.Manage.Article
   alias Publishing.Repo
 
+  def load_article(id) do
+    db_article = Repo.get!(Article, id)
+    {:ok, article} = build_article(db_article.edit_url)
+
+    changes = Map.from_struct(article)
+
+    Map.merge(db_article, changes)
+  rescue
+    _error ->
+      raise Ecto.NoResultsError
+  end
+
   def save_article(%Article{} = article) do
     attrs = Map.from_struct(article)
 
