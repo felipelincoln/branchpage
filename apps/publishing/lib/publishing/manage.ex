@@ -10,13 +10,12 @@ defmodule Publishing.Manage do
   def load_article(id) do
     db_article = Repo.get!(Article, id)
     {:ok, article} = build_article(db_article.url)
-
     changes = Map.from_struct(article)
 
     Map.merge(db_article, changes)
   rescue
     _error ->
-      reraise(Ecto.NoResultsError, __STACKTRACE__)
+      reraise Publishing.PageNotFound, __STACKTRACE__
   end
 
   @spec save_article(Article.t()) :: {:ok, Article.t()} | {:error, String.t()}
