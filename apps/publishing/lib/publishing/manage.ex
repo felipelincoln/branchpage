@@ -7,12 +7,18 @@ defmodule Publishing.Manage do
   alias Publishing.Manage.Article
   alias Publishing.Repo
 
-  def load_article(id) do
+  def load_article!(id) do
     db_article = Repo.get!(Article, id)
     {:ok, article} = build_article(db_article.url)
-    changes = Map.from_struct(article)
+    date = Timex.format!(db_article.inserted_at, "%b %e", :strftime)
 
-    Map.merge(db_article, changes)
+    content = %{
+      title: article.title,
+      body: article.body,
+      inserted_at: date
+    }
+
+    Map.merge(db_article, content)
   rescue
     _error ->
       reraise Publishing.PageNotFound, __STACKTRACE__
