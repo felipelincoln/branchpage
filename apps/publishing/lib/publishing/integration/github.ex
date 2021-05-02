@@ -21,7 +21,7 @@ defmodule Publishing.Integration.Github do
   @spec content_heading(String.t()) :: String.t() | nil
   def content_heading(content, default \\ "") when is_binary(content) do
     with {:ok, ast, _} <- EarmarkParser.as_ast(content),
-         [{"h1", _, [title], _} | _tail] <- ast do
+         [{"h1", _, [title], _} | _tail] when is_binary(title) <- ast do
       title
     else
       _ -> default
