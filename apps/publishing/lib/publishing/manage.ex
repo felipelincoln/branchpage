@@ -91,7 +91,7 @@ defmodule Publishing.Manage do
   end
 
   defp ast_no_heading(markdown) do
-    with {:ok, ast, _} <- EarmarkParser.as_ast(markdown),
+    with {:ok, ast, _} <- EarmarkParser.as_ast(markdown, code_class_prefix: "language-"),
          [{"h1", _, [_title], _} | tail] <- ast do
       tail
     else

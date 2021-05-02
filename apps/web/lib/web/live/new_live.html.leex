@@ -27,7 +27,7 @@
       <h1 class="font-black text-gray-900 text-3xl sm:text-5xl sm:mb-sc"><%= @article.title %></h1>
       <p class="sm:hidden text-gray-500 mb-mb mt-1">Preview</p>
     </header>
-    <div class="text-gray-700"><%= raw @article.body %></div>
+    <div class="text-gray-700" phx-hook="CodeHighlight" id="content"><%= raw @article.body %></div>
   </article>
   <% end %>
 </main>

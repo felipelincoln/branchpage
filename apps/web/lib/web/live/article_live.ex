@@ -24,6 +24,7 @@ defmodule Web.ArticleLive do
       |> assign(:meta, @meta)
       |> assign(:name, name)
       |> assign(:article, article)
+      |> push_event("highlightAll", %{})
 
     {:ok, socket}
   end

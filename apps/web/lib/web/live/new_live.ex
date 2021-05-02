@@ -38,6 +38,7 @@ defmodule Web.NewLive do
           socket
           |> assign(:article, article)
           |> assign(:loading, false)
+          |> push_event("highlightAll", %{})
 
         {:noreply, socket}
 
