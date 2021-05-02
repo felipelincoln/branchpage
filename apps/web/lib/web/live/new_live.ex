@@ -65,19 +65,12 @@ defmodule Web.NewLive do
   @impl true
   def handle_event("publish", _params, socket) do
     case Manage.save_article(socket.assigns.article) do
-      {:ok, _article} ->
-        IO.puts("success")
-        # redirect
+      {:ok, article} ->
+        IO.puts(article.id)
         {:noreply, socket}
 
-      {:error, changeset} ->
-        error = Manage.get_error(changeset)
-
-        socket =
-          socket
-          |> assign(:error, error)
-
-        {:noreply, socket}
+      {:error, reason} ->
+        {:noreply, assign(socket, :error, reason)}
     end
   end
 

@@ -9,25 +9,33 @@ defmodule Publishing.Manage do
 
   def load_article(id) do
     db_article = Repo.get!(Article, id)
-    {:ok, article} = build_article(db_article.edit_url)
+    {:ok, article} = build_article(db_article.url)
 
     changes = Map.from_struct(article)
 
     Map.merge(db_article, changes)
   rescue
     _error ->
-      raise Ecto.NoResultsError
+      reraise(Ecto.NoResultsError, __STACKTRACE__)
   end
 
+  @spec save_article(Article.t()) :: {:ok, Article.t()} | {:error, String.t()}
   def save_article(%Article{} = article) do
     attrs = Map.from_struct(article)
 
     %Article{}
     |> Article.changeset(attrs)
     |> Repo.insert()
+    |> case do
+      {:error, changeset} ->
+        {:error, Article.get_error(changeset)}
+
+      success ->
+        success
+    end
   end
 
-  @spec build_article(String.t()) :: {:ok, %Article{}} | {:error, String.t()}
+  @spec build_article(String.t()) :: {:ok, Article.t()} | {:error, String.t()}
   def build_article(url) do
     with url <- String.trim(url),
          {:ok, _url} <- validate_url(url),
@@ -44,7 +52,7 @@ defmodule Publishing.Manage do
         |> ast_no_heading
         |> Earmark.Transform.transform()
 
-      {:ok, %Article{body: html, title: title, edit_url: url}}
+      {:ok, %Article{body: html, title: title, url: url}}
     else
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}
@@ -61,26 +69,6 @@ defmodule Publishing.Manage do
       {:error, status} when is_integer(status) ->
         {:error, "Failed to retrieve page content. (error #{status})"}
     end
-  end
-
-  @doc """
-  Prints a message relative to the first error in the `changeset`.
-  """
-  def get_error(%Ecto.Changeset{errors: [{error, _reason} | _tail]}) do
-    case error do
-      :edit_url ->
-        "This article has already been published!"
-
-      _ ->
-        get_error([])
-    end
-  end
-
-  def get_error(_) do
-    """
-    A problem ocurred validating your article.<br>
-    Please contact the support.
-    """
   end
 
   defp host(url), do: URI.parse(url).host

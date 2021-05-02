@@ -5,8 +5,8 @@ defmodule Publishing.Manage.ArticleTest do
   alias Publishing.Manage.Article
 
   @valid_empty_attrs %{}
-  @valid_attrs %{title: "title", edit_url: "edit_url", blog_id: "blog_id"}
-  @invalid_cast_attrs %{title: 0, edit_url: 0, blog_id: 0}
+  @valid_attrs %{title: "title", url: "url", blog_id: "blog_id"}
+  @invalid_cast_attrs %{title: 0, url: 0, blog_id: 0}
   @invalid_length_attrs %{title: long_string()}
 
   test "changeset/2 with valid empty params" do
@@ -24,7 +24,7 @@ defmodule Publishing.Manage.ArticleTest do
     refute changeset.valid?
 
     assert %{title: [:cast]} = errors_on(changeset)
-    assert %{edit_url: [:cast]} = errors_on(changeset)
+    assert %{url: [:cast]} = errors_on(changeset)
     assert %{blog_id: [:cast]} = errors_on(changeset)
   end
 
