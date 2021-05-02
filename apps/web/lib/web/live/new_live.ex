@@ -36,9 +36,7 @@ defmodule Web.NewLive do
       {:ok, article} ->
         socket =
           socket
-          |> assign(:validation, nil)
           |> assign(:article, article)
-          |> assign(:error, nil)
           |> assign(:loading, false)
 
         {:noreply, socket}
@@ -47,8 +45,6 @@ defmodule Web.NewLive do
         socket =
           socket
           |> assign(:validation, validation)
-          |> assign(:article, nil)
-          |> assign(:error, nil)
           |> assign(:loading, false)
 
         {:noreply, socket}
@@ -72,6 +68,9 @@ defmodule Web.NewLive do
 
     socket =
       socket
+      |> assign(:validation, nil)
+      |> assign(:error, nil)
+      |> assign(:article, nil)
       |> assign(:loading, true)
       |> assign(:url, url)
 
