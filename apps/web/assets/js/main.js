@@ -2,6 +2,7 @@ import "../css/base.css"
 
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
+import Prism from "prismjs"
 
 let Hooks = {}
 Hooks.CodeHighlight = {
