@@ -5,6 +5,8 @@ defmodule Web.NewLive do
   import Phoenix.HTML, only: [raw: 1]
 
   alias Publishing.Manage
+  alias Web.ArticleLive
+  alias Web.Router.Helpers, as: Routes
 
   @meta %{
     title: "branchpage title",
@@ -66,8 +68,9 @@ defmodule Web.NewLive do
   def handle_event("publish", _params, socket) do
     case Manage.save_article(socket.assigns.article) do
       {:ok, article} ->
-        IO.puts(article.id)
-        {:noreply, socket}
+        path = Routes.live_path(socket, ArticleLive, "username", article.id)
+
+        {:noreply, push_redirect(socket, to: path)}
 
       {:error, reason} ->
         {:noreply, assign(socket, :error, reason)}
