@@ -22,8 +22,37 @@ defmodule Web.NewLive do
       |> assign(:validation, nil)
       |> assign(:error, nil)
       |> assign(:article, nil)
+      |> assign(:loading, false)
+      |> assign(:url, "")
 
     {:ok, socket}
+  end
+
+  @impl true
+  def handle_info(:preview, socket) do
+    url = socket.assigns.url
+
+    case Manage.build_article(url) do
+      {:ok, article} ->
+        socket =
+          socket
+          |> assign(:validation, nil)
+          |> assign(:article, article)
+          |> assign(:error, nil)
+          |> assign(:loading, false)
+
+        {:noreply, socket}
+
+      {:error, validation} ->
+        socket =
+          socket
+          |> assign(:validation, validation)
+          |> assign(:article, nil)
+          |> assign(:error, nil)
+          |> assign(:loading, false)
+
+        {:noreply, socket}
+    end
   end
 
   @impl true
@@ -39,25 +68,14 @@ defmodule Web.NewLive do
 
   @impl true
   def handle_event("preview", %{"url" => url}, socket) do
-    case Manage.build_article(url) do
-      {:ok, article} ->
-        socket =
-          socket
-          |> assign(:validation, nil)
-          |> assign(:article, article)
-          |> assign(:error, nil)
+    send(self(), :preview)
 
-        {:noreply, socket}
+    socket =
+      socket
+      |> assign(:loading, true)
+      |> assign(:url, url)
 
-      {:error, validation} ->
-        socket =
-          socket
-          |> assign(:validation, validation)
-          |> assign(:article, nil)
-          |> assign(:error, nil)
-
-        {:noreply, socket}
-    end
+    {:noreply, socket}
   end
 
   @impl true
