@@ -58,7 +58,6 @@ FROM alpine:3.13.3
 WORKDIR /branchpage
 
 ARG MIX_ENV=prod
-ENV MIX_ENV=$MIX_ENV
 
 # install dependencies
 RUN apk add ncurses-libs curl
