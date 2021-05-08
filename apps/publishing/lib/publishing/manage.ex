@@ -54,7 +54,7 @@ defmodule Publishing.Manage do
 
       html =
         content
-        |> ast_no_heading
+        |> to_ast()
         |> Earmark.Transform.transform()
 
       {:ok, %Article{body: html, title: title, url: url}}
@@ -90,12 +90,32 @@ defmodule Publishing.Manage do
     end
   end
 
-  defp ast_no_heading(markdown) do
-    with {:ok, ast, _} <- EarmarkParser.as_ast(markdown, code_class_prefix: "language-"),
-         [{"h1", _, [_title], _} | tail] <- ast do
-      tail
-    else
-      ast -> ast
-    end
+  defp to_ast(markdown) do
+    markdown
+    |> _to_ast()
+    |> remove_heading()
+    |> add_code_class()
+  end
+
+  defp _to_ast(markdown) do
+    {:ok, ast, _} = EarmarkParser.as_ast(markdown, code_class_prefix: "language-")
+
+    ast
+  end
+
+  defp remove_heading([{"h1", _, [_title], _} | tail]), do: tail
+  defp remove_heading(ast), do: ast
+
+  defp add_code_class(ast) do
+    Earmark.Transform.map_ast(ast, fn
+      {"code", [], [content], %{}} ->
+        {"code", [{"class", "language-none"}], [content], %{}}
+
+      {"code", [{"class", "inline"}], [content], %{}} ->
+        {"code", [{"class", "language-none"}], [content], %{}}
+
+      tag ->
+        tag
+    end)
   end
 end
