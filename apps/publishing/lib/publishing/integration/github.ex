@@ -3,6 +3,8 @@ defmodule Publishing.Integration.Github do
   Integrates with github.
   """
 
+  @behaviour Publishing.Integration
+
   defstruct [:username, :repository, :resource]
 
   @doc """
@@ -18,7 +20,7 @@ defmodule Publishing.Integration.Github do
       iex> content_heading("Lorem ipsum dolor sit amet...", "Untitled")
       "Untitled"
   """
-  @spec content_heading(String.t()) :: String.t() | nil
+  @spec content_heading(String.t()) :: String.t()
   def content_heading(content, default \\ "") when is_binary(content) do
     with {:ok, ast, _} <- EarmarkParser.as_ast(content),
          [{"h1", _, [title], _} | _tail] when is_binary(title) <- ast do

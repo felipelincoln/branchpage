@@ -1,9 +1,13 @@
 defmodule Publishing.Integration do
   @moduledoc """
-  Integration
+  Integrations modules extract information from code hosting platforms.
   """
 
   alias Publishing.Integration.Github
+
+  @callback get_content(String.t()) :: {:ok, String.t()} | {:error, integer}
+  @callback get_username(String.t()) :: {:ok, String.t() | {:error, :username}}
+  @callback content_heading(String.t()) :: String.t()
 
   @doc """
   Returns the `url`'s integration module.
