@@ -8,3 +8,5 @@ config :publishing, Publishing.Repo,
   database: "branchpage_test#{System.get_env("MIX_TEST_PARTITION")}",
   hostname: "db",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :tesla, adapter: Publishing.Tesla.Mock

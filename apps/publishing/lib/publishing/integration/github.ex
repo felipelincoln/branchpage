@@ -44,6 +44,7 @@ defmodule Publishing.Integration.Github do
   def get_username(url) when is_binary(url) do
     case decompose(url).username do
       nil -> {:error, :username}
+      "" -> {:error, :username}
       u -> {:ok, u}
     end
   end
