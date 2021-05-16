@@ -19,14 +19,12 @@ defmodule Publishing.ManageTest do
   @invalid_500_raw_url "https://raw.githubusercontent.com/f/b/repo/500.md"
 
   test "build_article/1 on invalid url returns error tuple" do
-    assert {:error, "Invalid scheme. Use http or https"} =
-      Manage.build_article("")
+    assert {:error, "Invalid scheme. Use http or https"} = Manage.build_article("")
 
-    assert {:error, "Invalid extension. Must be .md"} =
-      Manage.build_article("https://")
+    assert {:error, "Invalid extension. Must be .md"} = Manage.build_article("https://")
 
     assert {:error, "Not integrated with integration.com yet"} =
-      Manage.build_article("https://integration.com/f/b/blob/b.md")
+             Manage.build_article("https://integration.com/f/b/blob/b.md")
   end
 
   test "build_article/1 non existing url returns 404" do
@@ -39,14 +37,13 @@ defmodule Publishing.ManageTest do
     expect(TeslaMock, :call, &api/2)
 
     assert {:error, "Failed to retrieve page content. (error 500)"} =
-      Manage.build_article(@invalid_500_url)
+             Manage.build_article(@invalid_500_url)
   end
 
   test "build_article/1 on valid url returns article" do
     expect(TeslaMock, :call, &api/2)
 
-    assert {:ok, %Article{} = article} =
-      Manage.build_article(@valid_url)
+    assert {:ok, %Article{} = article} = Manage.build_article(@valid_url)
 
     assert article.url == @valid_url
     assert article.title == @valid_title

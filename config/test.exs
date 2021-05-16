@@ -9,4 +9,6 @@ config :publishing, Publishing.Repo,
   hostname: "db",
   pool: Ecto.Adapters.SQL.Sandbox
 
+config :logger, level: :warn
+
 config :tesla, adapter: Publishing.Tesla.Mock
