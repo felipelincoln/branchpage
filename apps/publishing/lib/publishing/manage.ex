@@ -36,7 +36,7 @@ defmodule Publishing.Manage do
       {:error, changeset} ->
         {:error, Article.get_error(changeset)}
 
-      success ->
+      {:ok, %Article{}} = success ->
         success
     end
   end
@@ -64,7 +64,7 @@ defmodule Publishing.Manage do
         {:error, "Invalid extension. Must be .md"}
 
       {:error, :integration} ->
-        {:error, "Not integrated with #{host(url)} yet."}
+        {:error, "Not integrated with #{host(url)} yet"}
 
       {:error, 404} ->
         {:error, "Page not found"}

@@ -20,7 +20,7 @@ defmodule Publishing.Integration.GithubTest do
     assert Github.get_content(@valid_url) == {:ok, @valid_body}
   end
 
-  test "get_content/1 on invalid non existing url returns 404" do
+  test "get_content/1 non existing url returns 404" do
     expect(TeslaMock, :call, &get_content/2)
 
     assert Github.get_content(@invalid_url) == {:error, 404}
