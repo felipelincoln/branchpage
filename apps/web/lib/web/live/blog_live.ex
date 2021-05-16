@@ -32,7 +32,7 @@ defmodule Web.BlogLive do
 
     socket =
       socket
-      |> assign(@meta)
+      |> assign(:meta, @meta)
       |> assign(:articles, articles)
 
     {:ok, socket}
