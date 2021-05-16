@@ -8,6 +8,10 @@ defmodule Publishing.Manage do
   alias Publishing.Manage.Markdown
   alias Publishing.Repo
 
+  @doc """
+  Loads an article from database.
+  """
+  @spec load_article!(any) :: Article.t()
   def load_article!(id) do
     db_article = Repo.get!(Article, id)
     {:ok, article} = build_article(db_article.url)
@@ -25,6 +29,9 @@ defmodule Publishing.Manage do
       reraise Publishing.PageNotFound, __STACKTRACE__
   end
 
+  @doc """
+  Saves an article struct to the database.
+  """
   @spec save_article(Article.t()) :: {:ok, Article.t()} | {:error, String.t()}
   def save_article(%Article{} = article) do
     attrs = Map.from_struct(article)
@@ -41,6 +48,9 @@ defmodule Publishing.Manage do
     end
   end
 
+  @doc """
+  Build an article struct from the given `url`.
+  """
   @spec build_article(String.t()) :: {:ok, Article.t()} | {:error, String.t()}
   def build_article(url) do
     with url <- String.trim(url),
