@@ -19,6 +19,9 @@ defmodule Publishing.Manage.Markdown do
 
       iex> parse("`some code`")
       "<p>\\n<code class=\\"language-none\\">some code</code></p>\\n"
+
+      iex> parse("```\\nsome code\\n```")
+      "<pre><code class=\\"language-none\\">some code</code></pre>\\n"
   """
   @spec parse(String.t()) :: list
   def parse(markdown) do
