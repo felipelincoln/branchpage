@@ -4,9 +4,11 @@ defmodule Publishing.Manage do
   """
 
   alias Publishing.Integration
-  alias Publishing.Manage.Article
+  alias Publishing.Manage.{Article, Blog}
   alias Publishing.Manage.Markdown
   alias Publishing.Repo
+
+  import Ecto.Query
 
   @doc """
   Loads an article from database.
@@ -34,7 +36,12 @@ defmodule Publishing.Manage do
   """
   @spec save_article(Article.t()) :: {:ok, Article.t()} | {:error, String.t()}
   def save_article(%Article{} = article) do
-    attrs = Map.from_struct(article)
+    {:ok, blog} = upsert_blog(article.blog.username)
+
+    attrs =
+      article
+      |> Map.from_struct()
+      |> Map.merge(%{blog_id: blog.id})
 
     %Article{}
     |> Article.changeset(attrs)
@@ -56,6 +63,7 @@ defmodule Publishing.Manage do
     with url <- String.trim(url),
          {:ok, _url} <- validate_url(url),
          {:ok, integration} <- Integration.service(url),
+         {:ok, username} <- integration.get_username(url),
          {:ok, content} <- integration.get_content(url) do
       title =
         content
@@ -65,7 +73,9 @@ defmodule Publishing.Manage do
 
       html = Markdown.parse(content)
 
-      {:ok, %Article{body: html, title: title, url: url}}
+      blog = %Blog{username: username}
+
+      {:ok, %Article{body: html, title: title, url: url, blog: blog}}
     else
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}
@@ -81,6 +91,20 @@ defmodule Publishing.Manage do
 
       {:error, status} when is_integer(status) ->
         {:error, "Failed to retrieve page content. (error #{status})"}
+    end
+  end
+
+  defp upsert_blog(username) do
+    case Repo.one(from Blog, where: [username: ^username]) do
+      nil ->
+        attrs = %{username: username}
+
+        %Blog{}
+        |> Blog.changeset(attrs)
+        |> Repo.insert()
+
+      blog ->
+        {:ok, blog}
     end
   end
 
