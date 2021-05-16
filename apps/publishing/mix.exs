@@ -21,7 +21,7 @@ defmodule Publishing.MixProject do
   def application do
     [
       mod: {Publishing.Application, []},
-      extra_applications: [:ssl]
+      extra_applications: [:ssl, :mime]
     ]
   end
 
@@ -32,7 +32,11 @@ defmodule Publishing.MixProject do
     [
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
-      {:ex_machina, "~> 2.7.0", only: :test}
+      {:earmark, "~> 1.4.15"},
+      {:timex, "~> 3.0"},
+      {:tesla, "~> 1.4.0"},
+      {:ex_machina, "~> 2.7.0", only: :test},
+      {:mox, "~> 1.0", only: :test}
     ]
   end
 

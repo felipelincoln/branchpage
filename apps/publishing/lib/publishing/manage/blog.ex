@@ -1,4 +1,4 @@
-defmodule Publishing.Blog do
+defmodule Publishing.Manage.Blog do
   @moduledoc false
 
   use Ecto.Schema
@@ -9,12 +9,12 @@ defmodule Publishing.Blog do
   @required_fields ~w()a
 
   schema "blog" do
-    field(:fullname, :string)
-    field(:username, :string)
-    field(:bio, :string)
-    field(:donate_url, :string)
+    field :fullname, :string
+    field :username, :string
+    field :bio, :string
+    field :donate_url, :string
 
-    has_many(:articles, Publishing.Article)
+    has_many :articles, Publishing.Manage.Article
 
     timestamps()
   end
@@ -23,5 +23,8 @@ defmodule Publishing.Blog do
     struct
     |> cast(attrs, @optional_fields ++ @required_fields)
     |> validate_required(@required_fields)
+    |> validate_length(:fullname, max: 255)
+    |> validate_length(:username, max: 255)
+    |> validate_length(:bio, max: 255)
   end
 end

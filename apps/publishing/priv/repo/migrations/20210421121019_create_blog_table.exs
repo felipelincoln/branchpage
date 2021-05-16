@@ -7,7 +7,7 @@ defmodule Publishing.Repo.Migrations.CreateBlogTable do
       add :fullname, :string
       add :username, :string
       add :bio, :string
-      add :donate_url, :string
+      add :donate_url, :text
 
       timestamps()
     end
