@@ -15,7 +15,11 @@ defmodule Publishing.Manage do
   """
   @spec load_article!(any) :: Article.t()
   def load_article!(id) do
-    db_article = Repo.get!(Article, id)
+    db_article =
+      Article
+      |> Repo.get!(id)
+      |> Repo.preload(:blog)
+
     {:ok, article} = build_article(db_article.url)
     date = Timex.format!(db_article.inserted_at, "%b %e", :strftime)
 
