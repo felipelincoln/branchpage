@@ -58,12 +58,12 @@ defmodule Publishing.Integration.Github do
       |> decompose()
       |> raw_url()
 
-    case :hackney.get(raw) do
-      {:ok, 200, _, ref} ->
-        :hackney.body(ref)
+    case Tesla.get(raw) do
+      {:ok, %{status: 200, body: body}} ->
+        {:ok, body}
 
-      {:ok, status_code, _, _} ->
-        {:error, status_code}
+      {:ok, %{status: code}} ->
+        {:error, code}
     end
   end
 
