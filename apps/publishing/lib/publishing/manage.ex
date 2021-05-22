@@ -77,9 +77,15 @@ defmodule Publishing.Manage do
 
       html = Markdown.parse(content)
 
+      preview =
+        content
+        |> String.slice(0, 255)
+        |> Kernel.<>(" ...")
+        |> Markdown.parse()
+
       blog = %Blog{username: username}
 
-      {:ok, %Article{body: html, title: title, url: url, blog: blog}}
+      {:ok, %Article{body: html, title: title, url: url, blog: blog, preview: preview}}
     else
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}
