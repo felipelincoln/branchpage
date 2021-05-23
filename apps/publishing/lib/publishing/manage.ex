@@ -5,7 +5,7 @@ defmodule Publishing.Manage do
 
   alias Publishing.Integration
   alias Publishing.Manage.{Article, Blog}
-  alias Publishing.Manage.Markdown
+  alias Publishing.Markdown
   alias Publishing.Repo
 
   import Ecto.Query
@@ -21,12 +21,11 @@ defmodule Publishing.Manage do
       |> Repo.preload(:blog)
 
     {:ok, article} = build_article(db_article.url)
-    date = Timex.format!(db_article.inserted_at, "%b %e", :strftime)
 
     content = %{
       title: article.title,
       body: article.body,
-      inserted_at: date
+      preview: article.preview
     }
 
     Map.merge(db_article, content)
@@ -71,15 +70,22 @@ defmodule Publishing.Manage do
          {:ok, content} <- integration.get_content(url) do
       title =
         content
-        |> integration.content_heading("Untitled")
-        |> String.trim()
+        |> Markdown.get_heading("Untitled")
         |> String.slice(0, 255)
+        |> String.trim()
+
+      preview =
+        content
+        |> String.slice(0, 500)
+        |> String.trim()
+        |> Kernel.<>(" ...")
+        |> Markdown.parse()
 
       html = Markdown.parse(content)
 
       blog = %Blog{username: username}
 
-      {:ok, %Article{body: html, title: title, url: url, blog: blog}}
+      {:ok, %Article{body: html, preview: preview, title: title, url: url, blog: blog}}
     else
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}
@@ -89,6 +95,9 @@ defmodule Publishing.Manage do
 
       {:error, :integration} ->
         {:error, "Not integrated with #{host(url)} yet"}
+
+      {:error, :username} ->
+        {:error, "Invalid #{host(url)} resource"}
 
       {:error, 404} ->
         {:error, "Page not found"}

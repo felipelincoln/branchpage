@@ -1,4 +1,4 @@
-defmodule Publishing.Manage.Markdown do
+defmodule Publishing.Markdown do
   @moduledoc """
   Module for handling raw markdown texts.
   """
@@ -7,7 +7,7 @@ defmodule Publishing.Manage.Markdown do
   Transform markdown into HMTL performing additional mutations.
 
   ## Features
-  * Removes `#` heading
+  * Removes the first `#` heading
   * Add `language-none` to inline and code blocks.
 
   Example:
@@ -30,6 +30,29 @@ defmodule Publishing.Manage.Markdown do
     |> remove_heading()
     |> add_code_class()
     |> Earmark.Transform.transform()
+  end
+
+  @doc """
+  Returns the markdown's main title or the given `default` (optional).
+
+  Examples:
+      iex> get_heading("# Hello World!\\nLorem ipsum...")
+      "Hello World!"
+
+      iex> get_heading("Lorem ipsum dolor sit amet...")
+      ""
+
+      iex> get_heading("Lorem ipsum dolor sit amet...", "Untitled")
+      "Untitled"
+  """
+  @spec get_heading(String.t()) :: String.t()
+  def get_heading(content, default \\ "") when is_binary(content) do
+    with {:ok, ast, _} <- EarmarkParser.as_ast(content),
+         [{"h1", _, [title], _} | _tail] when is_binary(title) <- ast do
+      title
+    else
+      _ -> default
+    end
   end
 
   defp to_ast(markdown) do
