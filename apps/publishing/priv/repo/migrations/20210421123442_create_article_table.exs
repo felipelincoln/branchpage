@@ -5,6 +5,7 @@ defmodule Publishing.Repo.Migrations.CreateArticleTable do
     create table(:article, primary_key: false) do
       add :id, :uuid, primary_key: true, default: fragment("gen_random_uuid()")
       add :title, :string
+      add :preview, :text
       add :url, :text
       add :blog_id, references(:blog, type: :uuid)
 

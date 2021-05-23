@@ -24,7 +24,8 @@ defmodule Publishing.Manage do
 
     content = %{
       title: article.title,
-      body: article.body
+      body: article.body,
+      preview: article.preview
     }
 
     Map.merge(db_article, content)
@@ -73,11 +74,18 @@ defmodule Publishing.Manage do
         |> String.slice(0, 255)
         |> String.trim()
 
+      preview =
+        content
+        |> String.slice(0, 500)
+        |> String.trim()
+        |> Kernel.<>(" ...")
+        |> Markdown.parse()
+
       html = Markdown.parse(content)
 
       blog = %Blog{username: username}
 
-      {:ok, %Article{body: html, title: title, url: url, blog: blog}}
+      {:ok, %Article{body: html, preview: preview, title: title, url: url, blog: blog}}
     else
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}
