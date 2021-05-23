@@ -90,6 +90,9 @@ defmodule Publishing.Manage do
       {:error, :integration} ->
         {:error, "Not integrated with #{host(url)} yet"}
 
+      {:error, :username} ->
+        {:error, "Invalid #{host(url)} endpoint"}
+
       {:error, 404} ->
         {:error, "Page not found"}
 
