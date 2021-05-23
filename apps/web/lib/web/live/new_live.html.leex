@@ -21,7 +21,6 @@
   <p class="text-red-600"><%= @validation %></p>
   <p><%= if @loading, do: "Loading..." %></p>
   <%= if @article do %>
-  <%= raw @article.preview %>
   <article>
     <header>
       <p class="hidden sm:block text-gray-500">Preview</p>
