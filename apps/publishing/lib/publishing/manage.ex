@@ -71,7 +71,7 @@ defmodule Publishing.Manage do
          {:ok, content} <- integration.get_content(url) do
       title =
         content
-        |> integration.content_heading("Untitled")
+        |> Markdown.get_heading("Untitled")
         |> String.trim()
         |> String.slice(0, 255)
 

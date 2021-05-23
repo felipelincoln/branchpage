@@ -12,7 +12,7 @@ defmodule Publishing.Integration.GithubTest do
   @valid_body "# Documet title\n\nSome description"
 
   @invalid_url "https://github.com/"
-  @invalid_raw_url "https://raw.githubusercontent.com///"
+  @invalid_raw_url ""
 
   test "get_content/1 on valid url returns content" do
     expect(TeslaMock, :call, &get_content/2)
