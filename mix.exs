@@ -23,6 +23,7 @@ defmodule BranchPage.Umbrella.MixProject do
 
   defp aliases do
     [
+      "ecto.reset": ["ecto.drop", "ecto.create", "ecto.migrate"],
       ci: ["format --check-formatted", "credo --strict", "test"]
     ]
   end

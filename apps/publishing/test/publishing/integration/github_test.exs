@@ -12,7 +12,7 @@ defmodule Publishing.Integration.GithubTest do
   @valid_body "# Documet title\n\nSome description"
 
   @invalid_url "https://github.com/"
-  @invalid_raw_url "https://raw.githubusercontent.com///"
+  @invalid_raw_url ""
 
   test "get_content/1 on valid url returns content" do
     expect(TeslaMock, :call, &get_content/2)
@@ -24,6 +24,10 @@ defmodule Publishing.Integration.GithubTest do
     expect(TeslaMock, :call, &get_content/2)
 
     assert Github.get_content(@invalid_url) == {:error, 404}
+  end
+
+  test "get_content/1 on empty string returns 404" do
+    assert Github.get_content("") == {:error, 404}
   end
 
   defp get_content(%{url: @valid_raw_url}, _), do: {:ok, %{status: 200, body: @valid_body}}
