@@ -4,6 +4,7 @@ defmodule Web.ArticleLive do
   use Phoenix.LiveView
 
   import Phoenix.HTML, only: [raw: 1]
+  import Publishing.Helper, only: [format_date: 1]
 
   alias Publishing.Manage
 
@@ -18,11 +19,13 @@ defmodule Web.ArticleLive do
     article = Manage.load_article!(id)
 
     name = "Felipe Lincoln"
+    username = article.blog.username
 
     socket =
       socket
       |> assign(:meta, @meta)
       |> assign(:name, name)
+      |> assign(:username, username)
       |> assign(:article, article)
       |> push_event("highlightAll", %{})
 

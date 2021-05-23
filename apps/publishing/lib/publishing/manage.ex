@@ -10,6 +10,15 @@ defmodule Publishing.Manage do
 
   import Ecto.Query
 
+  def get_blog!(username) do
+    Blog
+    |> Repo.get_by!(username: username)
+    |> Repo.preload(:articles)
+  rescue
+    _error ->
+      reraise Publishing.PageNotFound, __STACKTRACE__
+  end
+
   @doc """
   Loads an article from database.
   """

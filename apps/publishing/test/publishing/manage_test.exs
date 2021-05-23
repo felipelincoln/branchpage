@@ -1,6 +1,7 @@
 defmodule Publishing.ManageTest do
   use Publishing.DataCase
 
+  alias Publishing.Factory
   alias Publishing.Manage
   alias Publishing.Manage.{Article, Blog}
   alias Publishing.Tesla.Mock, as: TeslaMock
@@ -121,6 +122,18 @@ defmodule Publishing.ManageTest do
 
   test "load_article!/1 on non existing article raises PageNotFound" do
     assert_raise Publishing.PageNotFound, fn -> Manage.load_article!("") end
+  end
+
+  test "get_blog!/1 on non existing username raises PageNotFound" do
+    assert_raise Publishing.PageNotFound, fn -> Manage.get_blog!("") end
+  end
+
+  test "get_blog!/1 return blogs with preloaded articles" do
+    blog = Factory.insert(:blog, username: "test")
+    _articles = Factory.insert_pair(:article, blog_id: blog.id)
+
+    assert (%Blog{} = blog) = Manage.get_blog!("test")
+    assert [_, _] = blog.articles
   end
 
   defp api_deleted(%{url: @valid_raw_url}, _), do: {:ok, %{status: 404}}
