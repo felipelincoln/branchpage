@@ -72,8 +72,8 @@ defmodule Publishing.Manage do
       title =
         content
         |> Markdown.get_heading("Untitled")
-        |> String.trim()
         |> String.slice(0, 255)
+        |> String.trim()
 
       html = Markdown.parse(content)
 
@@ -91,7 +91,7 @@ defmodule Publishing.Manage do
         {:error, "Not integrated with #{host(url)} yet"}
 
       {:error, :username} ->
-        {:error, "Invalid #{host(url)} endpoint"}
+        {:error, "Invalid #{host(url)} resource"}
 
       {:error, 404} ->
         {:error, "Page not found"}

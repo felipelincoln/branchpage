@@ -2,13 +2,14 @@ defmodule Publishing.ManageTest do
   use Publishing.DataCase
 
   alias Publishing.Manage
-  alias Publishing.Manage.Article
+  alias Publishing.Manage.{Article, Blog}
   alias Publishing.Tesla.Mock, as: TeslaMock
 
   import Mox
 
   @valid_url "https://github.com/felipelincoln/branchpage/blob/main/README.md"
   @valid_raw_url "https://raw.githubusercontent.com/felipelincoln/branchpage/main/README.md"
+  @valid_username "felipelincoln"
   @valid_body "# Document title\n\nSome description"
   @valid_title "Document title"
   @valid_html "<p>\nSome description</p>\n"
@@ -25,6 +26,9 @@ defmodule Publishing.ManageTest do
 
     assert {:error, "Not integrated with integration.com yet"} =
              Manage.build_article("https://integration.com/f/b/blob/b.md")
+
+    assert {:error, "Invalid github.com resource"} =
+             Manage.build_article("https://github.com/test.md")
   end
 
   test "build_article/1 non existing url returns 404" do
@@ -48,6 +52,7 @@ defmodule Publishing.ManageTest do
     assert article.url == @valid_url
     assert article.title == @valid_title
     assert article.body == @valid_html
+    assert article.blog == %Blog{username: @valid_username}
   end
 
   test "save_article/1 saves an article" do
