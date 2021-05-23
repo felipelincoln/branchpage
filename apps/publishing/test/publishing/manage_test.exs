@@ -78,12 +78,12 @@ defmodule Publishing.ManageTest do
     assert {:error, "This article has already been published!"} = Manage.save_article(article)
   end
 
-  test "load_article!/1 loads an article from database" do
+  test "load_article!/2 loads an article from database" do
     expect(TeslaMock, :call, 2, &api/2)
     {:ok, %Article{} = article} = Manage.build_article(@valid_url)
     {:ok, %Article{id: id}} = Manage.save_article(article)
 
-    assert (%Article{} = article) = Manage.load_article!(id)
+    assert (%Article{} = article) = Manage.load_article!(@valid_username, id)
     assert article.url == @valid_url
     assert article.title == @valid_title
     assert article.body == @valid_html
@@ -91,14 +91,14 @@ defmodule Publishing.ManageTest do
     assert %Blog{username: @valid_username} = article.blog
   end
 
-  test "load_article!/1 updates title and preview" do
+  test "load_article!/2 updates title and preview" do
     expect(TeslaMock, :call, &api/2)
     expect(TeslaMock, :call, &api_updated/2)
 
     {:ok, %Article{} = article} = Manage.build_article(@valid_url)
     {:ok, %Article{id: id}} = Manage.save_article(article)
 
-    assert (%Article{} = article) = Manage.load_article!(id)
+    assert (%Article{} = article) = Manage.load_article!(@valid_username, id)
     assert article.url == @valid_url
     assert %Blog{username: @valid_username} = article.blog
 
@@ -107,7 +107,7 @@ defmodule Publishing.ManageTest do
     assert article.preview == @updated_preview
   end
 
-  test "load_article!/1 deletes article if deleted from integration" do
+  test "load_article!/2 deletes article if deleted from integration" do
     expect(TeslaMock, :call, &api/2)
     expect(TeslaMock, :call, &api_deleted/2)
 
@@ -116,12 +116,20 @@ defmodule Publishing.ManageTest do
     {:ok, %Article{id: id}} = Manage.save_article(article)
 
     assert %Article{} = Publishing.Repo.get(Article, id)
-    assert_raise Publishing.PageNotFound, fn -> Manage.load_article!(id) end
+    assert_raise Publishing.PageNotFound, fn -> Manage.load_article!(@valid_username, id) end
     assert Publishing.Repo.get(Article, id) == nil
   end
 
-  test "load_article!/1 on non existing article raises PageNotFound" do
-    assert_raise Publishing.PageNotFound, fn -> Manage.load_article!("") end
+  test "load_article!/2 on non existing article raises PageNotFound" do
+    assert_raise Publishing.PageNotFound, fn -> Manage.load_article!(@valid_username, "") end
+  end
+
+  test "load_article!/2 on non matching username raises PageNotFound" do
+    expect(TeslaMock, :call, 2, &api/2)
+    {:ok, %Article{} = article} = Manage.build_article(@valid_url)
+    {:ok, %Article{}} = Manage.save_article(article)
+
+    assert_raise Publishing.PageNotFound, fn -> Manage.load_article!("invalid", "") end
   end
 
   test "get_blog!/1 on non existing username raises PageNotFound" do

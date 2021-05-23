@@ -22,12 +22,14 @@ defmodule Publishing.Manage do
   @doc """
   Loads an article from database.
   """
-  @spec load_article!(any) :: Article.t()
-  def load_article!(id) do
+  @spec load_article!(String.t(), any) :: Article.t()
+  def load_article!(username, id) do
     db_article =
       Article
       |> Repo.get!(id)
       |> Repo.preload(:blog)
+
+    ^username = db_article.blog.username
 
     {:ok, article} =
       with {:error, _} <- build_article(db_article.url) do

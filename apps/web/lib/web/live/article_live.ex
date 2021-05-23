@@ -15,8 +15,8 @@ defmodule Web.ArticleLive do
   }
 
   @impl true
-  def mount(%{"username" => _username, "article" => id}, _session, socket) do
-    article = Manage.load_article!(id)
+  def mount(%{"username" => username, "article" => id}, _session, socket) do
+    article = Manage.load_article!(username, id)
 
     name = "Felipe Lincoln"
     username = article.blog.username
