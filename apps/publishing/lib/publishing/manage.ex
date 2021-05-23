@@ -20,13 +20,23 @@ defmodule Publishing.Manage do
       |> Repo.get!(id)
       |> Repo.preload(:blog)
 
-    {:ok, article} = build_article(db_article.url)
+    {:ok, article} =
+      with {:error, _} <- build_article(db_article.url) do
+        Repo.delete(db_article)
+
+        :fail
+      end
 
     content = %{
       title: article.title,
       body: article.body,
       preview: article.preview
     }
+
+    {:ok, _} =
+      db_article
+      |> Article.changeset(content)
+      |> Repo.update()
 
     Map.merge(db_article, content)
   rescue
@@ -68,21 +78,9 @@ defmodule Publishing.Manage do
          {:ok, integration} <- Integration.service(url),
          {:ok, username} <- integration.get_username(url),
          {:ok, content} <- integration.get_content(url) do
-      title =
-        content
-        |> Markdown.get_heading("Untitled")
-        |> String.slice(0, 255)
-        |> String.trim()
-
-      preview =
-        content
-        |> String.slice(0, 500)
-        |> String.trim()
-        |> Kernel.<>(" ...")
-        |> Markdown.parse()
-
-      html = Markdown.parse(content)
-
+      title = Markdown.get_heading(content)
+      preview = Markdown.get_preview(content)
+      html = Markdown.get_body(content)
       blog = %Blog{username: username}
 
       {:ok, %Article{body: html, preview: preview, title: title, url: url, blog: blog}}

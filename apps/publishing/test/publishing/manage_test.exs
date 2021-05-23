@@ -13,6 +13,12 @@ defmodule Publishing.ManageTest do
   @valid_body "# Document title\n\nSome description"
   @valid_title "Document title"
   @valid_html "<p>\nSome description</p>\n"
+  @valid_preview "<p>\nSome ...</p>\n"
+
+  @updated_body "# Updated document title\n\nTest"
+  @updated_title "Updated document title"
+  @updated_html "<p>\nTest</p>\n"
+  @updated_preview "<p>\nTest</p>\n"
 
   @invalid_404_url "https://github.com/f/b/blob/repo/a.md"
   @invalid_404_raw_url "https://raw.githubusercontent.com/f/b/repo/a.md"
@@ -52,6 +58,7 @@ defmodule Publishing.ManageTest do
     assert article.url == @valid_url
     assert article.title == @valid_title
     assert article.body == @valid_html
+    assert article.preview == @valid_preview
     assert article.blog == %Blog{username: @valid_username}
   end
 
@@ -75,13 +82,49 @@ defmodule Publishing.ManageTest do
     {:ok, %Article{} = article} = Manage.build_article(@valid_url)
     {:ok, %Article{id: id}} = Manage.save_article(article)
 
-    assert %Article{} = Manage.load_article!(id)
+    assert (%Article{} = article) = Manage.load_article!(id)
+    assert article.url == @valid_url
+    assert article.title == @valid_title
+    assert article.body == @valid_html
+    assert article.preview == @valid_preview
+    assert %Blog{username: @valid_username} = article.blog
+  end
+
+  test "load_article!/1 updates title and preview" do
+    expect(TeslaMock, :call, &api/2)
+    expect(TeslaMock, :call, &api_updated/2)
+
+    {:ok, %Article{} = article} = Manage.build_article(@valid_url)
+    {:ok, %Article{id: id}} = Manage.save_article(article)
+
+    assert (%Article{} = article) = Manage.load_article!(id)
+    assert article.url == @valid_url
+    assert %Blog{username: @valid_username} = article.blog
+
+    assert article.body == @updated_html
+    assert article.title == @updated_title
+    assert article.preview == @updated_preview
+  end
+
+  test "load_article!/1 deletes article if deleted from integration" do
+    expect(TeslaMock, :call, &api/2)
+    expect(TeslaMock, :call, &api_deleted/2)
+
+    {:ok, %Article{} = article} = Manage.build_article(@valid_url)
+
+    {:ok, %Article{id: id}} = Manage.save_article(article)
+
+    assert %Article{} = Publishing.Repo.get(Article, id)
+    assert_raise Publishing.PageNotFound, fn -> Manage.load_article!(id) end
+    assert Publishing.Repo.get(Article, id) == nil
   end
 
   test "load_article!/1 on non existing article raises PageNotFound" do
     assert_raise Publishing.PageNotFound, fn -> Manage.load_article!("") end
   end
 
+  defp api_deleted(%{url: @valid_raw_url}, _), do: {:ok, %{status: 404}}
+  defp api_updated(%{url: @valid_raw_url}, _), do: {:ok, %{status: 200, body: @updated_body}}
   defp api(%{url: @valid_raw_url}, _), do: {:ok, %{status: 200, body: @valid_body}}
   defp api(%{url: @invalid_404_raw_url}, _), do: {:ok, %{status: 404}}
   defp api(%{url: @invalid_500_raw_url}, _), do: {:ok, %{status: 500}}
