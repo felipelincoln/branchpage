@@ -5,7 +5,7 @@ defmodule Publishing.Manage do
 
   alias Publishing.Integration
   alias Publishing.Manage.{Article, Blog}
-  alias Publishing.Manage.Markdown
+  alias Publishing.Markdown
   alias Publishing.Repo
 
   import Ecto.Query

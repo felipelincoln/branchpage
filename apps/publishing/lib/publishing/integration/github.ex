@@ -73,7 +73,7 @@ defmodule Publishing.Integration.Github do
   end
 
   defp decompose(url) do
-    with %URI{path: <<path::binary>>} <- URI.parse(url),
+    with %URI{path: path} when is_binary(path) <- URI.parse(url),
          ["", username, repository, "blob" | tail] <- String.split(path, "/"),
          resource <- Enum.join(tail, "/") do
       %__MODULE__{username: username, repository: repository, resource: resource}

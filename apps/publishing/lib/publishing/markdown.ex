@@ -1,4 +1,4 @@
-defmodule Publishing.Manage.Markdown do
+defmodule Publishing.Markdown do
   @moduledoc """
   Module for handling raw markdown texts.
   """
