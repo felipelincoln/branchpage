@@ -21,12 +21,10 @@ defmodule Publishing.Manage do
       |> Repo.preload(:blog)
 
     {:ok, article} = build_article(db_article.url)
-    date = Timex.format!(db_article.inserted_at, "%b %e", :strftime)
 
     content = %{
       title: article.title,
-      body: article.body,
-      inserted_at: date
+      body: article.body
     }
 
     Map.merge(db_article, content)

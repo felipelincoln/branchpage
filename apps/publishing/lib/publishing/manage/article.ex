@@ -33,11 +33,4 @@ defmodule Publishing.Manage.Article do
   def get_error(%Ecto.Changeset{errors: [{:url, _reason} | _tail]}) do
     "This article has already been published!"
   end
-
-  def get_error(_) do
-    """
-    A problem ocurred validating your article.<br>
-    Please contact the support.
-    """
-  end
 end
