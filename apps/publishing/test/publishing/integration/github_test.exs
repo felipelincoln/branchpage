@@ -26,6 +26,10 @@ defmodule Publishing.Integration.GithubTest do
     assert Github.get_content(@invalid_url) == {:error, 404}
   end
 
+  test "get_content/1 on empty string returns 404" do
+    assert Github.get_content("") == {:error, 404}
+  end
+
   defp get_content(%{url: @valid_raw_url}, _), do: {:ok, %{status: 200, body: @valid_body}}
   defp get_content(%{url: @invalid_raw_url}, _), do: {:ok, %{status: 404}}
 end

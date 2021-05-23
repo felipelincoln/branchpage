@@ -27,6 +27,8 @@ defmodule Publishing.Integration.Github do
   Retrieve the raw content of a resource's `url` from github.
   """
   @spec get_content(String.t()) :: {:ok, Stream.t()} | {:error, integer}
+  def get_content(""), do: {:error, 404}
+
   def get_content(url) when is_binary(url) do
     raw =
       url
@@ -42,12 +44,6 @@ defmodule Publishing.Integration.Github do
     end
   end
 
-  defp raw_url([username, resource]) do
-    "https://raw.githubusercontent.com/#{username}/#{resource}"
-  end
-
-  defp raw_url(_), do: ""
-
   defp decompose(url) do
     with %URI{path: path} when is_binary(path) <- URI.parse(url),
          ["", username, repository, "blob" | tail] <- String.split(path, "/"),
@@ -59,6 +55,12 @@ defmodule Publishing.Integration.Github do
       _ -> []
     end
   end
+
+  defp raw_url([username, resource]) do
+    "https://raw.githubusercontent.com/#{username}/#{resource}"
+  end
+
+  defp raw_url([]), do: ""
 
   defp not_empty_string(str), do: is_binary(str) and str != ""
 end
