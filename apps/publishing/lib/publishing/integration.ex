@@ -7,6 +7,7 @@ defmodule Publishing.Integration do
 
   @callback get_content(String.t()) :: {:ok, String.t()} | {:error, integer}
   @callback get_username(String.t()) :: {:ok, String.t() | {:error, :username}}
+  @callback get_blog_data(String.t()) :: {:ok, map} | {:error, :blog}
 
   @doc """
   Returns the `url`'s integration module.

@@ -35,12 +35,14 @@ defmodule Publishing.Manage do
       reraise Publishing.PageNotFound, __STACKTRACE__
   end
 
-  defp build_blog(%Blog{}) do
-    %{
-      fullname: "Teste",
-      bio: "mybio",
-      avatar_url: "someurl"
-    }
+  defp build_blog(%Blog{} = blog) do
+    %{username: username, platform: %{name: platform}} = blog
+
+    {:ok, integration} = Integration.service(platform)
+    {:ok, content} = integration.get_blog_data(username)
+
+    %Blog{}
+    |> Map.merge(content)
   end
 
   @doc """
