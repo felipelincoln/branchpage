@@ -8,6 +8,7 @@ defmodule Publishing.Repo.Migrations.CreateBlogTable do
       add :username, :string
       add :bio, :string
       add :donate_url, :text
+      add :platform_id, references(:platform)
 
       timestamps()
     end
