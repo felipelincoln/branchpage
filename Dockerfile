@@ -7,7 +7,7 @@ WORKDIR /branchpage
 
 RUN mix do local.hex --force, local.rebar --force
 
-RUN apk add inotify-tools
+RUN apk add npm inotify-tools
 
 
 # -----------------
@@ -23,6 +23,7 @@ ENV MIX_ENV=$MIX_ENV
 # install mix dependencies
 COPY mix.exs mix.lock ./
 COPY apps/web/mix.exs apps/web/mix.exs
+COPY apps/publishing/mix.exs apps/publishing/mix.exs
 COPY config config
 RUN mix do deps.get, deps.compile --skip-umbrella-children
 
@@ -35,8 +36,6 @@ RUN mix compile
 # RELEASE
 # -----------------
 FROM build AS release
-
-RUN apk add npm
 
 # install node dependencies
 RUN npm ci --prefix ./apps/web/assets --no-audit
@@ -59,7 +58,6 @@ FROM alpine:3.13.3
 WORKDIR /branchpage
 
 ARG MIX_ENV=prod
-ENV MIX_ENV=$MIX_ENV
 
 # install dependencies
 RUN apk add ncurses-libs curl

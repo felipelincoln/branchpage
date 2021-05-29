@@ -21,3 +21,13 @@ config :web, Web.Endpoint,
       cd: Path.expand("../apps/web/assets", __DIR__)
     ]
   ]
+
+config :publishing, Publishing.Repo,
+  username: "postgres",
+  password: "postgres",
+  database: "branchpage_dev",
+  hostname: "db",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
+config :publishing, Publishing.Integration.Github, token: System.get_env("GITHUB_API_TOKEN")

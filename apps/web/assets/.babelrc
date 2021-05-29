@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    ["prismjs", {
+        "languages": [],
+        "theme": "okaidia",
+        "css": true
+    }]
+  ]
+}

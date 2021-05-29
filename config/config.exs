@@ -8,4 +8,14 @@ config :web, Web.Endpoint,
   pubsub_server: Web.PubSub,
   live_view: [signing_salt: "nNxuMZr4Bq73HLMihu1pYEdtKLAL/f+Z"]
 
+config :publishing,
+  ecto_repos: [Publishing.Repo]
+
+config :publishing, Publishing.Repo, migration_timestamps: [type: :utc_datetime]
+
+config :publishing, :markdown,
+  preview_length: 500,
+  heading_length: 255,
+  heading_default: "Untitled"
+
 import_config "#{Mix.env()}.exs"

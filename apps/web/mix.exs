@@ -26,13 +26,13 @@ defmodule Web.MixProject do
 
   defp deps do
     [
+      {:publishing, in_umbrella: true},
       {:phoenix, "~> 1.5.8"},
       {:phoenix_html, "~> 2.14"},
       {:phoenix_live_view, "~> 0.15.4"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:plug_cowboy, "~> 2.0"},
-      {:jason, "~> 1.2"},
-      {:timex, "~> 3.0"}
+      {:jason, "~> 1.2"}
     ]
   end
 end
