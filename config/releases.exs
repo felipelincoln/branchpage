@@ -10,4 +10,4 @@ config :publishing, Publishing.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 config :publishing, Publishing.Integration.Github,
-  token: System.get_env("GITHUB_API_KEY") || raise("GITHUB_API_KEY is missing.")
+  token: System.get_env("GITHUB_API_TOKEN") || raise("GITHUB_API_TOKEN is missing.")
