@@ -11,24 +11,24 @@ defmodule Publishing.Helper do
 
   Examples
       iex> format_date(~D[2021-06-15])
-      {:ok, "Jun 15"}
+      "Jun 15"
 
       iex> format_date(~D[2020-06-21])
-      {:ok, "Last year"}
+      "Last year"
 
       iex> format_date(~D[2019-12-12])
-      {:ok, "2 years ago"}
+      "2 years ago"
   """
   def format_date(%{year: @current_year} = datetime) do
-    Timex.format(datetime, "%b %e", :strftime)
+    Timex.format!(datetime, "%b %e", :strftime)
   end
 
   def format_date(%{year: @last_year}) do
-    {:ok, "Last year"}
+    "Last year"
   end
 
   def format_date(%{year: year}) do
     n = @current_year - year
-    {:ok, "#{n} years ago"}
+    "#{n} years ago"
   end
 end

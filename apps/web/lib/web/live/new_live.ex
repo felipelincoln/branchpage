@@ -86,7 +86,8 @@ defmodule Web.NewLive do
   def handle_event("publish", _params, socket) do
     case Manage.save_article(socket.assigns.article) do
       {:ok, article} ->
-        path = Routes.live_path(socket, ArticleLive, "username", article.id)
+        username = socket.assigns.article.blog.username
+        path = Routes.live_path(socket, ArticleLive, username, article.id)
 
         {:noreply, push_redirect(socket, to: path)}
 

@@ -12,3 +12,5 @@ config :publishing, Publishing.Repo,
 config :logger, level: :warn
 
 config :tesla, adapter: Publishing.Tesla.Mock
+
+config :publishing, :markdown, preview_length: 5

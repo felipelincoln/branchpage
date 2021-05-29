@@ -2,7 +2,7 @@ import Config
 
 config :web, Web.Endpoint,
   http: [port: 4000],
-  debug_errors: false,
+  debug_errors: true,
   code_reloader: true,
   check_origin: false,
   live_reload: [
@@ -29,3 +29,5 @@ config :publishing, Publishing.Repo,
   hostname: "db",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
+
+config :publishing, Publishing.Integration.Github, token: System.get_env("GITHUB_API_TOKEN")

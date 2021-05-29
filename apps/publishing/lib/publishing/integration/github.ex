@@ -3,7 +3,43 @@ defmodule Publishing.Integration.Github do
   Integrates with github.
   """
 
+  use Tesla
+
   @behaviour Publishing.Integration
+
+  plug Tesla.Middleware.BaseUrl, "https://api.github.com/"
+  plug Tesla.Middleware.Headers, [{"Authorization", "Bearer #{token()}"}]
+  plug Tesla.Middleware.Headers, [{"User-Agent", "branchpage"}]
+  plug Tesla.Middleware.JSON
+
+  defp token, do: Application.get_env(:publishing, __MODULE__)[:token]
+
+  def get_blog_data(username) do
+    body = %{
+      query: "query($login: String!){user(login: $login){bio name avatarUrl}}",
+      variables: %{login: username}
+    }
+
+    case post("graphql", body) do
+      {:ok, %{status: 200, body: response}} ->
+        %{
+          "data" => %{
+            "user" => %{
+              "name" => name,
+              "bio" => bio,
+              "avatarUrl" => avatar_url
+            }
+          }
+        } = response
+
+        data = %{fullname: name, bio: bio, avatar_url: avatar_url}
+
+        {:ok, data}
+
+      _ ->
+        {:error, :blog}
+    end
+  end
 
   @doc """
   Returns the GitHub username from the `url`.

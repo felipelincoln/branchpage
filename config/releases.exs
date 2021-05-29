@@ -8,3 +8,6 @@ config :publishing, Publishing.Repo,
   ssl: true,
   url: System.get_env("DATABASE_URL") || raise("DATABASE_URL is missing."),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+
+config :publishing, Publishing.Integration.Github,
+  token: System.get_env("GITHUB_API_TOKEN") || raise("GITHUB_API_TOKEN is missing.")

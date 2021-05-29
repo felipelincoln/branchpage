@@ -1,5 +1,5 @@
 <nav class="navbar">
-  <a href="/a" class="font-bold" aria-labelledby="navBack">
+  <a href="/<%= @username %>" class="font-bold" aria-labelledby="navBack">
     <span id="navBack" class="hidden sm:inline"><%= @name %></span>
     <svg class="inline sm:hidden h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
   </a>
@@ -13,7 +13,7 @@
 <main class="container">
   <article>
     <header>
-      <p class="hidden sm:block text-gray-500"><%= @article.inserted_at %></p>
+      <p class="hidden sm:block text-gray-500"><%= format_date(@article.inserted_at) %></p>
       <h1 class="font-black text-gray-900 text-3xl sm:text-5xl sm:mb-sc"><%= @article.title %></h1>
       <p class="sm:hidden text-gray-500 mb-5 mt-1"><%= @article.inserted_at %><span class="px-2">–</span><a href="/a" class="font-bold"><%= @name %></a></p>
     </header>

@@ -4,29 +4,76 @@ defmodule Publishing.Manage do
   """
 
   alias Publishing.Integration
-  alias Publishing.Manage.{Article, Blog}
+  alias Publishing.Manage.{Article, Blog, Platform}
   alias Publishing.Markdown
   alias Publishing.Repo
 
   import Ecto.Query
 
+  def load_blog!(username) do
+    db_blog =
+      Blog
+      |> Repo.get_by!(username: username)
+      |> Repo.preload([:articles, :platform])
+
+    blog = build_blog(db_blog)
+
+    content = %{
+      fullname: blog.fullname,
+      bio: blog.bio,
+      avatar_url: blog.avatar_url
+    }
+
+    {:ok, _} =
+      db_blog
+      |> Blog.changeset(content)
+      |> Repo.update()
+
+    Map.merge(db_blog, content)
+  rescue
+    _error ->
+      reraise Publishing.PageNotFound, __STACKTRACE__
+  end
+
+  defp build_blog(%Blog{} = blog) do
+    %{username: username, platform: %{name: platform}} = blog
+
+    {:ok, integration} = Integration.service(platform)
+    {:ok, content} = integration.get_blog_data(username)
+
+    %Blog{}
+    |> Map.merge(content)
+  end
+
   @doc """
   Loads an article from database.
   """
-  @spec load_article!(any) :: Article.t()
-  def load_article!(id) do
+  @spec load_article!(String.t(), any) :: Article.t()
+  def load_article!(username, id) do
     db_article =
       Article
       |> Repo.get!(id)
       |> Repo.preload(:blog)
 
-    {:ok, article} = build_article(db_article.url)
+    ^username = db_article.blog.username
+
+    {:ok, article} =
+      with {:error, _} <- build_article(db_article.url) do
+        Repo.delete(db_article)
+
+        :fail
+      end
 
     content = %{
       title: article.title,
       body: article.body,
       preview: article.preview
     }
+
+    {:ok, _} =
+      db_article
+      |> Article.changeset(content)
+      |> Repo.update()
 
     Map.merge(db_article, content)
   rescue
@@ -39,7 +86,7 @@ defmodule Publishing.Manage do
   """
   @spec save_article(Article.t()) :: {:ok, Article.t()} | {:error, String.t()}
   def save_article(%Article{} = article) do
-    {:ok, blog} = upsert_blog(article.blog.username)
+    {:ok, blog} = upsert_blog(article)
 
     attrs =
       article
@@ -68,21 +115,9 @@ defmodule Publishing.Manage do
          {:ok, integration} <- Integration.service(url),
          {:ok, username} <- integration.get_username(url),
          {:ok, content} <- integration.get_content(url) do
-      title =
-        content
-        |> Markdown.get_heading("Untitled")
-        |> String.slice(0, 255)
-        |> String.trim()
-
-      preview =
-        content
-        |> String.slice(0, 500)
-        |> String.trim()
-        |> Kernel.<>(" ...")
-        |> Markdown.parse()
-
-      html = Markdown.parse(content)
-
+      title = Markdown.get_heading(content)
+      preview = Markdown.get_preview(content)
+      html = Markdown.get_body(content)
       blog = %Blog{username: username}
 
       {:ok, %Article{body: html, preview: preview, title: title, url: url, blog: blog}}
@@ -107,10 +142,23 @@ defmodule Publishing.Manage do
     end
   end
 
-  defp upsert_blog(username) do
+  defp get_platform(url) do
+    platform_url =
+      url
+      |> URI.parse()
+      |> Map.merge(%{path: "/"})
+      |> URI.to_string()
+
+    Repo.one(from Platform, where: [name: ^platform_url])
+  end
+
+  defp upsert_blog(%Article{} = article) do
+    %{url: url, blog: %{username: username}} = article
+    platform = get_platform(url)
+
     case Repo.one(from Blog, where: [username: ^username]) do
       nil ->
-        attrs = %{username: username}
+        attrs = %{username: username, platform_id: platform.id}
 
         %Blog{}
         |> Blog.changeset(attrs)
