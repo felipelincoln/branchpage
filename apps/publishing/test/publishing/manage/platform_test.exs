@@ -29,7 +29,7 @@ defmodule Publishing.Manage.PlatformTest do
   end
 
   test "changeset/2 with existing platform returns error on insert" do
-    _ = Factory.insert(:platform, name: "platform3")
+    _ = Factory.insert(:platform, name: "platform")
 
     {:error, changeset} =
       %Platform{}
