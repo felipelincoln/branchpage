@@ -16,7 +16,7 @@ defmodule Web.BlogLive do
 
   @impl true
   def mount(%{"username" => username}, _session, socket) do
-    blog = Manage.get_blog!(username)
+    blog = Manage.load_blog!(username)
     articles = blog.articles
 
     socket =

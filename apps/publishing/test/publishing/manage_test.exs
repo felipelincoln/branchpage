@@ -132,15 +132,15 @@ defmodule Publishing.ManageTest do
     assert_raise Publishing.PageNotFound, fn -> Manage.load_article!("invalid", "") end
   end
 
-  test "get_blog!/1 on non existing username raises PageNotFound" do
-    assert_raise Publishing.PageNotFound, fn -> Manage.get_blog!("") end
+  test "load_blog!/1 on non existing username raises PageNotFound" do
+    assert_raise Publishing.PageNotFound, fn -> Manage.load_blog!("") end
   end
 
-  test "get_blog!/1 return blogs with preloaded articles" do
+  test "load_blog!/1 return blogs with preloaded articles" do
     blog = Factory.insert(:blog, username: "test")
     _articles = Factory.insert_pair(:article, blog_id: blog.id)
 
-    assert (%Blog{} = blog) = Manage.get_blog!("test")
+    assert (%Blog{} = blog) = Manage.load_blog!("test")
     assert [_, _] = blog.articles
   end
 

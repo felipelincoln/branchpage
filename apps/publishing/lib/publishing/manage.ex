@@ -10,7 +10,7 @@ defmodule Publishing.Manage do
 
   import Ecto.Query
 
-  def get_blog!(username) do
+  def load_blog!(username) do
     Blog
     |> Repo.get_by!(username: username)
     |> Repo.preload(:articles)
