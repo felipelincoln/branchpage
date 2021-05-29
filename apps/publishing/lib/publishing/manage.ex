@@ -4,7 +4,7 @@ defmodule Publishing.Manage do
   """
 
   alias Publishing.Integration
-  alias Publishing.Manage.{Article, Blog}
+  alias Publishing.Manage.{Article, Blog, Platform}
   alias Publishing.Markdown
   alias Publishing.Repo
 
@@ -60,7 +60,7 @@ defmodule Publishing.Manage do
   """
   @spec save_article(Article.t()) :: {:ok, Article.t()} | {:error, String.t()}
   def save_article(%Article{} = article) do
-    {:ok, blog} = upsert_blog(article.blog.username)
+    {:ok, blog} = upsert_blog(article)
 
     attrs =
       article
@@ -116,10 +116,23 @@ defmodule Publishing.Manage do
     end
   end
 
-  defp upsert_blog(username) do
+  defp get_platform(url) do
+    platform_url =
+      url
+      |> URI.parse()
+      |> Map.merge(%{path: "/"})
+      |> URI.to_string()
+
+    Repo.one(from Platform, where: [name: ^platform_url])
+  end
+
+  defp upsert_blog(%Article{} = article) do
+    %{url: url, blog: %{username: username}} = article
+    platform = get_platform(url)
+
     case Repo.one(from Blog, where: [username: ^username]) do
       nil ->
-        attrs = %{username: username}
+        attrs = %{username: username, platform_id: platform.id}
 
         %Blog{}
         |> Blog.changeset(attrs)

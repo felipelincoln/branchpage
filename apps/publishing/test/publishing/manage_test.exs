@@ -26,6 +26,8 @@ defmodule Publishing.ManageTest do
   @invalid_500_url "https://github.com/f/b/blob/repo/500.md"
   @invalid_500_raw_url "https://raw.githubusercontent.com/f/b/repo/500.md"
 
+  setup :create_github_platform
+
   test "build_article/1 on invalid url returns error tuple" do
     assert {:error, "Invalid scheme. Use http or https"} = Manage.build_article("")
 
@@ -149,4 +151,10 @@ defmodule Publishing.ManageTest do
   defp api(%{url: @valid_raw_url}, _), do: {:ok, %{status: 200, body: @valid_body}}
   defp api(%{url: @invalid_404_raw_url}, _), do: {:ok, %{status: 404}}
   defp api(%{url: @invalid_500_raw_url}, _), do: {:ok, %{status: 500}}
+
+  defp create_github_platform(_) do
+    Factory.insert(:platform, name: "https://github.com/")
+
+    :ok
+  end
 end

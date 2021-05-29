@@ -6,6 +6,6 @@ defmodule Publishing.Repo.Migrations.CreatePlatformTable do
       add :name, :string
     end
 
-    create index(:platform, :name)
+    create unique_index(:platform, :name)
   end
 end

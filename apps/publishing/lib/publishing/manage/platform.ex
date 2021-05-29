@@ -18,5 +18,6 @@ defmodule Publishing.Manage.Platform do
     |> cast(attrs, @optional_fields ++ @required_fields)
     |> validate_required(@required_fields)
     |> validate_length(:name, max: 255)
+    |> unique_constraint(:name)
   end
 end
