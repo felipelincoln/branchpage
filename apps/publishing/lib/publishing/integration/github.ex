@@ -6,12 +6,13 @@ defmodule Publishing.Integration.Github do
   use Tesla
 
   @behaviour Publishing.Integration
-  @token Application.compile_env!(:publishing, __MODULE__)[:token]
 
   plug Tesla.Middleware.BaseUrl, "https://api.github.com/"
-  plug Tesla.Middleware.Headers, [{"Authorization", "Bearer #{@token}"}]
+  plug Tesla.Middleware.Headers, [{"Authorization", "Bearer #{token()}"}]
   plug Tesla.Middleware.Headers, [{"User-Agent", "branchpage"}]
   plug Tesla.Middleware.JSON
+
+  defp token, do: Application.get_env(:publishing, __MODULE__)[:token]
 
   def get_blog_data(username) do
     body = %{
