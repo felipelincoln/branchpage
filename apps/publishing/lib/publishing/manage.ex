@@ -11,12 +11,36 @@ defmodule Publishing.Manage do
   import Ecto.Query
 
   def load_blog!(username) do
-    Blog
-    |> Repo.get_by!(username: username)
-    |> Repo.preload(:articles)
+    db_blog =
+      Blog
+      |> Repo.get_by!(username: username)
+      |> Repo.preload([:articles, :platform])
+
+    blog = build_blog(db_blog)
+
+    content = %{
+      fullname: blog.fullname,
+      bio: blog.bio,
+      avatar_url: blog.avatar_url
+    }
+
+    {:ok, _} =
+      db_blog
+      |> Blog.changeset(content)
+      |> Repo.update()
+
+    Map.merge(db_blog, content)
   rescue
     _error ->
       reraise Publishing.PageNotFound, __STACKTRACE__
+  end
+
+  defp build_blog(%Blog{}) do
+    %{
+      fullname: "Teste",
+      bio: "mybio",
+      avatar_url: "someurl"
+    }
   end
 
   @doc """

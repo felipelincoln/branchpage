@@ -22,7 +22,7 @@ defmodule Web.BlogLive do
     socket =
       socket
       |> assign(:meta, @meta)
-      |> assign(:username, username)
+      |> assign(:blog, blog)
       |> assign(:articles, articles)
       |> push_event("highlightAll", %{})
 

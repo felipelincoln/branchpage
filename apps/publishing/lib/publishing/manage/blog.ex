@@ -5,7 +5,7 @@ defmodule Publishing.Manage.Blog do
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  @optional_fields ~w(fullname username bio donate_url platform_id)a
+  @optional_fields ~w(fullname username bio donate_url avatar_url platform_id)a
   @required_fields ~w()a
 
   schema "blog" do
@@ -13,6 +13,7 @@ defmodule Publishing.Manage.Blog do
     field :username, :string
     field :bio, :string
     field :donate_url, :string
+    field :avatar_url, :string
 
     belongs_to :platform, Publishing.Manage.Platform
     has_many :articles, Publishing.Manage.Article
