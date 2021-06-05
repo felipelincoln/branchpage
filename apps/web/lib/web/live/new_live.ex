@@ -15,7 +15,11 @@ defmodule Web.NewLive do
   }
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(params, _session, socket) do
+    url = Map.get(params, "url")
+
+    if url, do: send(self(), :preview)
+
     socket =
       socket
       |> assign(:meta, @meta)
@@ -23,7 +27,7 @@ defmodule Web.NewLive do
       |> assign(:error, nil)
       |> assign(:article, nil)
       |> assign(:loading, false)
-      |> assign(:url, "")
+      |> assign(:url, url || "")
 
     {:ok, socket}
   end

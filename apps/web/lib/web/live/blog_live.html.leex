@@ -18,10 +18,8 @@
       <article>
         <header>
           <p class="text-gray-500 text-sm sm:text-base"><a href="<%= link %>"><%= format_date(a.inserted_at) %></a></p>
-          <h2 class="font-black text-lg sm:text-2xl"><a href="<%= link %>"><%= a.title %></a></h1>
+          <h2 class="font-black text-xl sm:text-3xl"><a href="<%= link %>"><%= a.title %></a></h1>
         </header>
-        <div class="text-gray-700 mb-1 markdown-body"><%= raw a.preview %></div>
-        <a href="<%= link %>" class="text-gray-900 font-bold hover:underline">Read more</a>
       </article>
       <hr class="my-mb my-sc last:hidden">
     <% end %>

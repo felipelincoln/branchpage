@@ -5,7 +5,7 @@ defmodule Web.BlogLive do
 
   alias Publishing.Manage
 
-  import Phoenix.HTML, only: [raw: 1]
+  # import Phoenix.HTML, only: [raw: 1]
   import Publishing.Helper, only: [format_date: 1]
 
   @meta %{
