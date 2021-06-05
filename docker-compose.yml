@@ -6,8 +6,6 @@ services:
       context: .
       target: base
     image: branchpage:latest
-    env_file:
-      - .env
     container_name: branchpage_web
     command: mix phx.server
     restart: unless-stopped
