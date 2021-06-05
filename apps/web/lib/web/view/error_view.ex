@@ -25,7 +25,7 @@ defmodule Web.ErrorView do
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <meta name="theme-color" content="#4285f4">
         <meta name="description" content="Page not found">
-        <meta property="og:url" content="https://branchpage-homologation.herokuapp.com">
+        <meta property="og:url" content="https://branchpage.com">
         <meta property="og:title" content="Page not found">
         <meta property="og:image" content="/images/cover.png">
         <meta property="og:description" content="page not found">
@@ -34,7 +34,7 @@ defmodule Web.ErrorView do
         <meta property="og:image:height" content="630">
         <meta property="og:type" content="website">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:url" content="https://branchpage-homologation.herokuapp.com">
+        <meta name="twitter:url" content="https://branchpage.com">
         <meta name="twitter:title" content="page not found">
         <meta name="twitter:description" content="page not found">
         <meta name="twitter:image" content="/images/cover.png">
@@ -44,10 +44,8 @@ defmodule Web.ErrorView do
       </head>
       <body class="h-screen flex flex-col justify-between">
         <nav class="navbar">
-          <a href="#" class="font-bold border-2 border-gray-800 px-1" aria-label="Branchpage">bp</a>
+          <a href="/" class="font-bold border-2 border-gray-800 px-1" aria-label="Branchpage">bp</a>
           <div>
-            <a href="#" class="mr-mb sm:mr-sc">Search</a>
-            <a href="#">Start a blog</a>
           </div>
         </nav>
         <main class="container text-center">

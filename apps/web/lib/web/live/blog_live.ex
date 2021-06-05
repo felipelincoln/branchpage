@@ -18,10 +18,11 @@ defmodule Web.BlogLive do
   def mount(%{"username" => username}, _session, socket) do
     blog = Manage.load_blog!(username)
     articles = blog.articles
+    meta = %{@meta | title: "#{username} – Branchpage"}
 
     socket =
       socket
-      |> assign(:meta, @meta)
+      |> assign(:meta, meta)
       |> assign(:blog, blog)
       |> assign(:articles, articles)
       |> push_event("highlightAll", %{})

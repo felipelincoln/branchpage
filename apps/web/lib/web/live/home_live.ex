@@ -9,8 +9,9 @@ defmodule Web.HomeLive do
   import Publishing.Manage, only: [count_blogs: 0]
 
   @meta %{
-    title: "branchpage title",
-    description: "some description",
+    title: "Branchpage",
+    description:
+      "Branchpage is an open source blogging platform where you can create a blog using GitHub markdown files.",
     social_image: "/images/cover.png"
   }
 
