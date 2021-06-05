@@ -9,8 +9,8 @@ defmodule Web.NewLive do
   alias Web.Router.Helpers, as: Routes
 
   @meta %{
-    title: "branchpage title",
-    description: "some description",
+    title: "Preview – Branchpage",
+    description: "",
     social_image: "/images/cover.png"
   }
 
