@@ -10,7 +10,7 @@ defmodule Web.ArticleLive do
 
   @meta %{
     title: "branchpage title",
-    description: "some description",
+    description: "no description yet",
     social_image: "/images/cover.png"
   }
 
@@ -18,12 +18,13 @@ defmodule Web.ArticleLive do
   def mount(%{"username" => username, "article" => id}, _session, socket) do
     article = Manage.load_article!(username, id)
 
+    meta = %{@meta | title: "#{article.title} – Branchpage"}
     name = "Felipe Lincoln"
     username = article.blog.username
 
     socket =
       socket
-      |> assign(:meta, @meta)
+      |> assign(:meta, meta)
       |> assign(:name, name)
       |> assign(:username, username)
       |> assign(:article, article)
