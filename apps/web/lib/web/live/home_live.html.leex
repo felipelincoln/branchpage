@@ -1,12 +1,57 @@
-<nav class="navbar">
-  <a href="/" class="logo" aria-label="Branchpage">bp</a>
-  <div>
-    <a href="#">Start a blog</a>
-  </div>
-</nav>
+<div class="bg-gray-700 pl-8 pt-8 text-white text-xl font-bold">
+  <div>Branchpage</div>
+</div>
+<div class="bg-gray-700 pb-36 py-24">
+  <main class="container text-center h-full flex flex-col justify-between">
+    <h1 class="font-black text-white text-4xl">Start your open source blog</h1>
 
-<main class="container">
-  <section class="flex flex-col items-center sm:w-1/2 h-64 sm:mx-auto px-mb sm:px-0 mb-10 sm:mb-14 border-2 border-yellow-400">
-    landing section
-  </section>
-</main>
+    <form class="my-8 mb-16" phx-change="go-preview">
+      <input name="url" class="input p-4 rounded-xl" type="text" placeholder="Paste your github article's url">
+    </form>
+
+    <div class="flex justify-between mb-4 text-white text-lg">
+      <p class="w-72 text-right">GitHub <code class="language-none">.md</code> file</p>
+      <p>=</p>
+      <p class="w-72 text-left">blog post</p>
+    </div>
+  </main>
+</div>
+
+<div class="container -mt-36">
+  <div class="flex shadow-xl rounded-xl overflow-hidden text-sm">
+
+    <div class="w-1/2 h-72">
+      <div style="background-color: #242c2c" class="px-4 py-2 w-full">
+        <div class="h-8 w-8 rounded-full" style="background: url(images/github-mark.png) center; background-size: cover"></div>
+      </div>
+      <div class="p-4 bg-gray-50 border-b">
+        <div style="color: #0366d6">felipelincoln / <span class="font-bold">blog</span></div>
+      </div>
+      <div class="px-8 bg-white">
+        <div class="font-bold pt-4 pb-2">my_article.md</div>
+        <div class="border rounded px-4 py-4">
+          <div class="bg-gray-200 py-2 w-3/4 mb-4"></div>
+          <div class="bg-gray-200 py-2 w-1/2 mb-2"></div>
+          <div class="bg-gray-200 py-2 mb-2"></div>
+          <div class="bg-gray-200 py-2 mb-2"></div>
+          <div class="bg-gray-200 w-1/4 py-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-1/2 h-72 border-l bg-white p-4 flex flex-col justify-between">
+      <div>
+        <div class="float-left font-bold">Felipe Lincoln</div>
+        <div class="float-right">Edit<span class="ml-4">Donate</span></div>
+      </div>
+      <div class="clear-both px-8">
+        <div class="bg-gray-200 py-2 w-3/4 mb-4"></div>
+        <div class="bg-gray-200 py-2 w-1/2 mb-2"></div>
+        <div class="bg-gray-200 py-2 mb-2"></div>
+        <div class="bg-gray-200 py-2 mb-2"></div>
+        <div class="bg-gray-200 w-1/4 py-2"></div>
+      </div>
+      <div class="text-gray-400 text-xs">Branchpage</div>
+    </div>
+  </div>
+</div>
