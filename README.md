@@ -9,7 +9,7 @@
 ![](https://i.ibb.co/ZWgjbS5/Screenshot-from-2021-06-05-11-55-08.png)
 
 ## Features
-* Tottally free. :money_with_wings:
+* Totally free. :money_with_wings:
 * Blog can be created in seconds :fast_forward:
 * You content is always safe on github :octocat:
 * Readers can contribute to your posts :hammer:
