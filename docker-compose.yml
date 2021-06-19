@@ -9,6 +9,8 @@ services:
     container_name: branchpage_web
     command: mix phx.server
     restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - 4000:4000
     volumes:
