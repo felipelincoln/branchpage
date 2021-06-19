@@ -147,13 +147,25 @@ defmodule Publishing.Manage do
   end
 
   defp get_platform(url) do
-    platform_url =
-      url
-      |> URI.parse()
-      |> Map.merge(%{path: "/"})
-      |> URI.to_string()
+    url
+    |> URI.parse()
+    |> Map.merge(%{path: "/"})
+    |> URI.to_string()
+    |> upsert_platform!()
+  end
 
-    Repo.one(from Platform, where: [name: ^platform_url])
+  defp upsert_platform!(name) do
+    platform = Repo.get_by(Platform, name: name)
+
+    case platform do
+      nil ->
+        %Platform{}
+        |> Platform.changeset(%{name: name})
+        |> Repo.insert!()
+
+      item ->
+        item
+    end
   end
 
   defp upsert_blog(%Article{} = article) do
