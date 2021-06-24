@@ -1,22 +1,29 @@
-<nav class="navbar">
-  <a href="/<%= @username %>" class="font-bold" aria-labelledby="navBack">
-    <span id="navBack" class="hidden sm:inline"><%= @name %></span>
-    <svg class="inline sm:hidden h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-  </a>
+<div class="min-h-screen flex flex-col justify-between">
+  <nav class="navbar">
+    <a href="/<%= @username %>" class="font-bold" aria-labelledby="navBack">
+      <span id="navBack" class="hidden sm:inline"><%= @name %></span>
+      <svg class="inline sm:hidden h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    </a>
 
-  <div>
-    <a href="<%= @article.url %>" class="mr-mb sm:mr-sc">Edit</a>
-    <a href="#">Donate</a>
-  </div>
-</nav>
+    <div>
+      <a href="<%= @article.url %>" class="mr-mb sm:mr-sc">Edit</a>
+      <a href="#">Donate</a>
+    </div>
+  </nav>
 
-<main class="container">
-  <article>
-    <header>
-      <p class="hidden sm:block text-gray-500"><%= format_date(@article.inserted_at) %></p>
-      <h1 class="font-black text-gray-900 text-3xl sm:text-5xl sm:mb-sc"><%= @article.title %></h1>
-      <p class="sm:hidden text-gray-500 mb-5 mt-1"><%= @article.inserted_at %><span class="px-2">–</span><a href="/a" class="font-bold"><%= @name %></a></p>
-    </header>
-    <div class="text-gray-700 markdown-body" phx-hook="CodeHighlight" id="content"><%= raw @article.body %></div>
-  </article>
-</main>
+  <main class="container">
+    <article>
+      <header>
+        <p class="hidden sm:block text-gray-500"><%= format_date(@article.inserted_at) %></p>
+        <h1 class="font-black text-gray-900 text-3xl sm:text-5xl sm:mb-sc"><%= @article.title %></h1>
+        <p class="sm:hidden text-gray-500 mb-5 mt-1"><%= @article.inserted_at %><span class="px-2">–</span><a href="/a" class="font-bold"><%= @name %></a></p>
+      </header>
+      <div class="text-gray-700 markdown-body" phx-hook="CodeHighlight" id="content"><%= raw @article.body %></div>
+    </article>
+  </main>
+
+  <footer class="p-5 sm:p-8 mt-5 sm:mt-8 text-gray-400">
+    <a class="hover:underline" href="/">Branchpage</a>
+    <a class="px-8 hover:underline" href="https://github.com/felipelincoln/branchpage">GitHub</a>
+  </footer>
+</div>
