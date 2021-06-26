@@ -28,8 +28,6 @@
 
 
   <main class="container">
-    <p class="text-red-600"><%= @validation %></p>
-    <p><%= if @loading, do: "Loading..." %></p>
     <%= if @article do %>
     <article>
       <header>
@@ -51,34 +49,35 @@
         <input class="input my-1 <%= @validation && "border-red-600 focus:border-red-600" %>" type="text" spellcheck="false" autocomplete="off" name="url" id="url" value="<%= @url %>" phx-debounce="200">
         <p class="h-3 text-xs text-red-600"><%= @validation %></p>
       </div>
-
-      <div class="py-3">
-        <label for="title">Title</label>
-        <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="title" id="title" value="<%= "" %>">
-      </div>
-
-      <div class="py-3">
-        <label for="cover">Cover</label>
-        <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="cover" id="cover" value="<%= "" %>">
-      </div>
-
-      <div class="py-3">
-        <label for="description">Description</label>
-        <textarea class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" name="description" id="description"><%= "" %></textarea>
-      </div>
     </form>
+
+    <div class="py-3">
+      <label for="title">Title</label>
+      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="title" id="title" value="<%= "" %>">
+    </div>
+
+    <div class="py-3">
+      <label for="cover">Cover</label>
+      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="cover" id="cover" value="<%= "" %>">
+    </div>
+
+    <div class="py-3">
+      <label for="description">Description</label>
+      <textarea class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" name="description" id="description"><%= "" %></textarea>
+    </div>
   </main>
 
   <div class="h-32 w-full bg-gray-200 flex items-center justify-center">
-    <%= if @loading do %>
-      <button class="bg-gray-800 text-white h-14 w-36 rounded-full cursor-default" disabled>
-        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-        </svg>
-      </button>
-    <% else %>
-      <% disabled_button = @validation && "disabled" %>
-      <button <%= disabled_button %> class="disabled:cursor-default disabled:bg-gray-300 disabled:text-gray-400 uppercase font-bold bg-gray-800 text-white text-lg h-14 w-36 rounded-full" phx-click="publish">publish</button>
-    <% end %>
+    <button <%= (@url == "" || @validation) && "disabled" %>
+       class="disabled:cursor-default disabled:bg-gray-300 disabled:text-gray-400 focus:outline-none uppercase font-bold bg-gray-800 text-white text-lg h-14 w-36 rounded-full transition ease-in-out duration-300 <%= !(@url == "" || @validation) && "transform hover:scale-105" %>"
+       phx-click="publish">
+        <%= if @loading do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+        <% else %>
+          Publish
+        <% end %>
+    </button>
   </div>
 </div>

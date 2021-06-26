@@ -63,6 +63,7 @@ defmodule Web.NewLive do
       |> assign(:validation, nil)
       |> assign(:error, nil)
       |> assign(:article, nil)
+      |> assign(:url, "")
 
     {:noreply, socket}
   end
