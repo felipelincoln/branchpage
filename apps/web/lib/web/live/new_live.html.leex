@@ -1,3 +1,7 @@
+<div class="<%= !@error && "hidden" %> cursor-pointer absolute top-0 w-full bg-red-600 h-14 flex items-center justify-center" phx-click="clear-flash">
+  <div class="text-xs font-bold text-white uppercase"><%= @error %></div>
+</div>
+
 <div class="min-h-screen flex flex-col">
   <nav class="px-5 bg-gray-100 uppercase h-14 items-center flex justify-between">
     <div>
@@ -22,12 +26,6 @@
   <!--
 
 
-  <%= if @error do %>
-  <div class="flash" phx-click="clear-flash">
-    <p class="text-red-600">Error</p>
-    <p><%= raw @error %></p>
-  </div>
-  <% end %>
 
   <main class="container">
     <p class="text-red-600"><%= @validation %></p>
@@ -48,9 +46,10 @@
 
   <main class="w-full max-w-screen-sm mx-auto flex-grow p-14 text-gray-700">
     <form phx-change="preview" onkeydown="return event.key != 'Enter';">
-      <div class="py-3">
+      <div>
         <label for="url">URL</label>
-        <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="url" id="url" value="<%= @url %>" phx-debounce="200">
+        <input class="input my-1 <%= @validation && "border-red-600 focus:border-red-600" %>" type="text" spellcheck="false" autocomplete="off" name="url" id="url" value="<%= @url %>" phx-debounce="200">
+        <p class="h-3 text-xs text-red-600"><%= @validation %></p>
       </div>
 
       <div class="py-3">
@@ -77,7 +76,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
         </svg>
       </button>
-    <%= else %>
+    <% else %>
       <button class="uppercase font-bold bg-gray-800 text-white text-lg h-14 w-36 rounded-full" phx-click="publish">publish</button>
     <% end %>
   </div>
