@@ -45,24 +45,24 @@
   <main class="w-full max-w-screen-sm mx-auto flex-grow p-14 text-gray-700">
     <form phx-change="preview" onkeydown="return event.key != 'Enter';">
       <div>
-        <label for="url">URL</label>
+        <label class="text-sm" for="url">URL</label>
         <input class="input my-1 <%= @validation && "border-red-600 focus:border-red-600" %>" type="text" spellcheck="false" autocomplete="off" name="url" id="url" value="<%= @url %>" phx-debounce="200">
         <p class="h-3 text-xs text-red-600"><%= @validation %></p>
       </div>
     </form>
 
     <div class="py-3">
-      <label for="title">Title</label>
+      <label class="text-sm" for="title">Title</label>
       <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="title" id="title" value="<%= "" %>">
     </div>
 
     <div class="py-3">
-      <label for="cover">Cover</label>
+      <label class="text-sm" for="cover">Cover</label>
       <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="cover" id="cover" value="<%= "" %>">
     </div>
 
     <div class="py-3">
-      <label for="description">Description</label>
+      <label class="text-sm" for="description">Description</label>
       <textarea class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" name="description" id="description"><%= "" %></textarea>
     </div>
   </main>
