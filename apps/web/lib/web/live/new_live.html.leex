@@ -2,7 +2,7 @@
   <nav class="px-5 bg-gray-100 uppercase h-14 items-center flex justify-between">
     <div>
       <a href="/">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </a>
@@ -52,28 +52,38 @@
   -->
 
   <main class="w-full max-w-screen-sm mx-auto flex-grow p-14 text-gray-700">
-    <div class="py-3">
-      <label for="url">URL</label>
-      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="url" id="url" value="<%= @url %>" phx-debounce="200">
-    </div>
+    <form phx-change="preview" onkeydown="return event.key != 'Enter';">
+      <div class="py-3">
+        <label for="url">URL</label>
+        <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="url" id="url" value="<%= @url %>" phx-debounce="200">
+      </div>
 
-    <div class="py-3">
-      <label for="title">Title</label>
-      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="title" id="title" value="<%= "" %>">
-    </div>
+      <div class="py-3">
+        <label for="title">Title</label>
+        <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="title" id="title" value="<%= "" %>">
+      </div>
 
-    <div class="py-3">
-      <label for="cover">Cover</label>
-      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="cover" id="cover" value="<%= "" %>">
-    </div>
+      <div class="py-3">
+        <label for="cover">Cover</label>
+        <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="cover" id="cover" value="<%= "" %>">
+      </div>
 
-    <div class="py-3">
-      <label for="description">Description</label>
-      <textarea class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" name="description" id="description"><%= "" %></textarea>
-    </div>
+      <div class="py-3">
+        <label for="description">Description</label>
+        <textarea class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" name="description" id="description"><%= "" %></textarea>
+      </div>
+    </form>
   </main>
 
   <div class="h-32 w-full bg-gray-200 flex items-center justify-center">
-    <button class="uppercase font-bold bg-gray-800 text-white text-lg h-14 px-8 rounded-full">publish</button>
+    <%= if @loading do %>
+      <button class="bg-gray-800 text-white h-14 w-36 rounded-full cursor-default" disabled>
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+      </button>
+    <%= else %>
+      <button class="uppercase font-bold bg-gray-800 text-white text-lg h-14 w-36 rounded-full">publish</button>
+    <% end %>
   </div>
 </div>
