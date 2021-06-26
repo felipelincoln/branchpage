@@ -51,20 +51,22 @@
       </div>
     </form>
 
-    <div class="py-3">
-      <label class="text-sm" for="title">Title</label>
-      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="title" id="title" value="<%= @title %>">
-    </div>
+    <form phx-change="update" onkeydown="return event.key != 'Enter';">
+      <div class="py-3">
+        <label class="text-sm" for="title">Title</label>
+        <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="title" id="title" value="<%= @title %>">
+      </div>
 
-    <div class="py-3">
-      <label class="text-sm" for="cover">Cover</label>
-      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="cover" id="cover" value="<%= @cover %>">
-    </div>
+      <div class="py-3">
+        <label class="text-sm" for="cover">Cover</label>
+        <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="cover" id="cover" value="<%= @cover %>">
+      </div>
 
-    <div class="py-3">
-      <label class="text-sm" for="description">Description</label>
-      <textarea class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" name="description" id="description"><%= @description %></textarea>
-    </div>
+      <div class="py-3">
+        <label class="text-sm" for="description">Description</label>
+        <textarea class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" name="description" id="description"><%= @description %></textarea>
+      </div>
+    </form>
   </main>
 
   <div class="h-32 w-full bg-gray-200 flex items-center justify-center">
