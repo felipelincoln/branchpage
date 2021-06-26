@@ -77,7 +77,8 @@
         </svg>
       </button>
     <% else %>
-      <button class="uppercase font-bold bg-gray-800 text-white text-lg h-14 w-36 rounded-full" phx-click="publish">publish</button>
+      <% disabled_button = @validation && "disabled" %>
+      <button <%= disabled_button %> class="disabled:cursor-default disabled:bg-gray-300 disabled:text-gray-400 uppercase font-bold bg-gray-800 text-white text-lg h-14 w-36 rounded-full" phx-click="publish">publish</button>
     <% end %>
   </div>
 </div>
