@@ -22,6 +22,7 @@ module.exports = {
   variants: {
     extend: {
       display: ['last'],
+      borderWidth: ['hover', 'focus']
     },
   },
   plugins: [],

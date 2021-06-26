@@ -40,7 +40,7 @@
   }
 
   .input {
-    @apply w-full border-b border-gray-300 focus:border-gray-800 focus:outline-none p-0 sm:p-1
+    @apply bg-gray-100 w-full border focus:border-gray-800 focus:outline-none px-4 py-3 rounded-md
   }
 }
 

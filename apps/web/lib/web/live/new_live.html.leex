@@ -1,43 +1,79 @@
-<nav class="px-5 bg-gray-100 uppercase h-14 items-center flex justify-between">
-  <div>
-    <a href="/">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </a>
+<div class="min-h-screen flex flex-col">
+  <nav class="px-5 bg-gray-100 uppercase h-14 items-center flex justify-between">
+    <div>
+      <a href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </a>
+    </div>
+    <div class="text-xs font-bold text-black">new article</div>
+    <div class="w-5"></div>
+  </nav>
+
+  <nav class="border-b">
+    <div style="padding-bottom: 2px" class="h-14 container uppercase text-xs font-bold text-black flex justify-center">
+      <div class="w-32 h-14 box-content text-center cursor-pointer flex items-center justify-center border-b-2 border-black"><div>Form</div></div>
+      <div class="w-1"></div>
+      <div class="w-32 h-14 box-content text-center cursor-pointer flex items-center justify-center hover:border-b-2"><div>Preview</div></div>
+    </div>
+  </nav>
+
+  <!--
+
+    <form class="flex-1 max-w-screen-sm" phx-change="preview" onkeydown="return event.key != 'Enter';">
+      <input class="input" type="text" placeholder="post url" spellcheck="false" autocomplete="off" name="url" value="<%= @url %>" phx-debounce="200">
+    </form>
+
+    <div class="navbar-side-item pl-mb justify-end"><a href="#" phx-click="publish">Publish</a></div>
+
+  <%= if @error do %>
+  <div class="flash" phx-click="clear-flash">
+    <p class="text-red-600">Error</p>
+    <p><%= raw @error %></p>
   </div>
-  <div class="text-sm font-bold">new article</div>
-  <div class="w-5"></div>
-</nav>
-
-
-
-
-
-  <form class="flex-1 max-w-screen-sm" phx-change="preview" onkeydown="return event.key != 'Enter';">
-    <input class="input" type="text" placeholder="post url" spellcheck="false" autocomplete="off" name="url" value="<%= @url %>" phx-debounce="200">
-  </form>
-
-  <div class="navbar-side-item pl-mb justify-end"><a href="#" phx-click="publish">Publish</a></div>
-
-<%= if @error do %>
-<div class="flash" phx-click="clear-flash">
-  <p class="text-red-600">Error</p>
-  <p><%= raw @error %></p>
-</div>
-<% end %>
-
-<main class="container">
-  <p class="text-red-600"><%= @validation %></p>
-  <p><%= if @loading, do: "Loading..." %></p>
-  <%= if @article do %>
-  <article>
-    <header>
-      <p class="hidden sm:block text-gray-500">Preview</p>
-      <h1 class="font-black text-gray-900 text-3xl sm:text-5xl sm:mb-sc"><%= @article.title %></h1>
-      <p class="sm:hidden text-gray-500 mb-mb mt-1">Preview</p>
-    </header>
-    <div class="text-gray-700 markdown-body" phx-hook="CodeHighlight" id="content"><%= raw @article.body %></div>
-  </article>
   <% end %>
-</main>
+
+  <main class="container">
+    <p class="text-red-600"><%= @validation %></p>
+    <p><%= if @loading, do: "Loading..." %></p>
+    <%= if @article do %>
+    <article>
+      <header>
+        <p class="hidden sm:block text-gray-500">Preview</p>
+        <h1 class="font-black text-gray-900 text-3xl sm:text-5xl sm:mb-sc"><%= @article.title %></h1>
+        <p class="sm:hidden text-gray-500 mb-mb mt-1">Preview</p>
+      </header>
+      <div class="text-gray-700 markdown-body" phx-hook="CodeHighlight" id="content"><%= raw @article.body %></div>
+    </article>
+    <% end %>
+  </main>
+
+  -->
+
+  <main class="w-full max-w-screen-sm mx-auto flex-grow p-14 text-gray-700">
+    <div class="py-3">
+      <label for="url">URL</label>
+      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="url" id="url" value="<%= @url %>" phx-debounce="200">
+    </div>
+
+    <div class="py-3">
+      <label for="title">Title</label>
+      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="title" id="title" value="<%= "" %>">
+    </div>
+
+    <div class="py-3">
+      <label for="cover">Cover</label>
+      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" name="cover" id="cover" value="<%= "" %>">
+    </div>
+
+    <div class="py-3">
+      <label for="description">Description</label>
+      <textarea class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" name="description" id="description"><%= "" %></textarea>
+    </div>
+  </main>
+
+  <div class="h-32 w-full bg-gray-200 flex items-center justify-center">
+    <button class="uppercase font-bold bg-gray-800 text-white text-lg h-14 px-8 rounded-full">publish</button>
+  </div>
+</div>
