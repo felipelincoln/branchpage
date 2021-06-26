@@ -96,6 +96,11 @@ defmodule Web.NewLive do
   end
 
   @impl true
+  def handle_event("update", _params, %{assigns: %{article:  nil}} = socket) do
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_event("update", %{"field" => "title", "value" => title}, socket) do
     updated_article = %{socket.assigns.article | title: title}
 
