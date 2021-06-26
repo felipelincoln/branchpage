@@ -1,14 +1,24 @@
-<nav class="navbar">
-  <div class="navbar-side-item pr-mb">
-    <a href="/" class="logo" aria-label="Branchpage">bp</a>
+<nav class="px-5 bg-gray-100 uppercase h-14 items-center flex justify-between">
+  <div>
+    <a href="/">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </a>
   </div>
+  <div class="text-sm font-bold">new article</div>
+  <div class="w-5"></div>
+</nav>
+
+
+
+
 
   <form class="flex-1 max-w-screen-sm" phx-change="preview" onkeydown="return event.key != 'Enter';">
     <input class="input" type="text" placeholder="post url" spellcheck="false" autocomplete="off" name="url" value="<%= @url %>" phx-debounce="200">
   </form>
 
   <div class="navbar-side-item pl-mb justify-end"><a href="#" phx-click="publish">Publish</a></div>
-</nav>
 
 <%= if @error do %>
 <div class="flash" phx-click="clear-flash">
