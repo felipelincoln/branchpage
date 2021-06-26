@@ -21,11 +21,6 @@
 
   <!--
 
-    <form class="flex-1 max-w-screen-sm" phx-change="preview" onkeydown="return event.key != 'Enter';">
-      <input class="input" type="text" placeholder="post url" spellcheck="false" autocomplete="off" name="url" value="<%= @url %>" phx-debounce="200">
-    </form>
-
-    <div class="navbar-side-item pl-mb justify-end"><a href="#" phx-click="publish">Publish</a></div>
 
   <%= if @error do %>
   <div class="flash" phx-click="clear-flash">
@@ -83,7 +78,7 @@
         </svg>
       </button>
     <%= else %>
-      <button class="uppercase font-bold bg-gray-800 text-white text-lg h-14 w-36 rounded-full">publish</button>
+      <button class="uppercase font-bold bg-gray-800 text-white text-lg h-14 w-36 rounded-full" phx-click="publish">publish</button>
     <% end %>
   </div>
 </div>
