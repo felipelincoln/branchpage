@@ -42,7 +42,7 @@
 
   -->
 
-  <main class="w-full max-w-screen-sm mx-auto flex-grow p-14 text-gray-700">
+  <main class="w-full max-w-screen-sm mx-auto flex-grow p-14">
     <form phx-change="preview" onkeydown="return event.key != 'Enter';">
       <div>
         <label class="text-sm" for="url">URL</label>
@@ -51,24 +51,26 @@
       </div>
     </form>
 
+    <% invalid? = (@url == "" || @validation) && true %>
+
     <div class="py-3">
-      <label class="text-sm" for="title">Title</label>
-      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" id="title" value="<%= @title %>" phx-value-field="title" phx-blur="update">
+      <label class="text-sm <%= invalid? && "text-gray-400" %>" for="title">Title</label>
+      <input <%= invalid? && "disabled" %> class="input mt-1" type="text" spellcheck="false" autocomplete="off" id="title" value="<%= @title %>" phx-value-field="title" phx-blur="update">
     </div>
 
     <div class="py-3">
-      <label class="text-sm" for="cover">Cover</label>
-      <input class="input mt-1" type="text" spellcheck="false" autocomplete="off" id="cover" value="<%= @cover %>" phx-value-field="cover" phx-blur="update">
+      <label class="text-sm <%= invalid? && "text-gray-400" %>" for="cover">Cover</label>
+      <input <%= invalid? && "disabled" %> class="input mt-1" type="text" spellcheck="false" autocomplete="off" id="cover" value="<%= @cover %>" phx-value-field="cover" phx-blur="update">
     </div>
 
     <div class="py-3">
-      <label class="text-sm" for="description">Description</label>
-      <textarea class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" id="description" phx-value-field="description" phx-blur="update"><%= @description %></textarea>
+      <label class="text-sm <%= invalid? && "text-gray-400" %>" for="description">Description</label>
+      <textarea <%= invalid? && "disabled" %> class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" id="description" phx-value-field="description" phx-blur="update"><%= @description %></textarea>
     </div>
   </main>
 
   <div class="h-32 w-full bg-gray-200 flex items-center justify-center">
-    <button <%= (@url == "" || @validation) && "disabled" %>
+    <button <%= invalid? && "disabled" %>
        class="disabled:cursor-default disabled:bg-gray-300 disabled:text-gray-400 focus:outline-none uppercase font-bold bg-gray-800 text-white text-lg h-14 w-36 rounded-full transition ease-in-out duration-300 <%= !(@url == "" || @validation) && "transform hover:scale-105" %>"
        phx-click="publish">
         <%= if @loading do %>
