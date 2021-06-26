@@ -27,6 +27,8 @@ defmodule Web.NewLive do
       |> assign(:error, nil)
       |> assign(:article, nil)
       |> assign(:title, "")
+      |> assign(:cover, "")
+      |> assign(:description, "")
       |> assign(:loading, false)
       |> assign(:url, url || "")
 
@@ -43,6 +45,8 @@ defmodule Web.NewLive do
           socket
           |> assign(:article, article)
           |> assign(:title, article.title)
+          |> assign(:cover, "some cover")
+          |> assign(:description, "some description")
           |> assign(:loading, false)
           |> push_event("highlightAll", %{})
 
@@ -52,6 +56,8 @@ defmodule Web.NewLive do
         socket =
           socket
           |> assign(:title, "")
+          |> assign(:cover, "")
+          |> assign(:description, "")
           |> assign(:validation, validation)
           |> assign(:loading, false)
 
@@ -68,6 +74,8 @@ defmodule Web.NewLive do
       |> assign(:article, nil)
       |> assign(:url, "")
       |> assign(:title, "")
+      |> assign(:cover, "")
+      |> assign(:description, "")
 
     {:noreply, socket}
   end
