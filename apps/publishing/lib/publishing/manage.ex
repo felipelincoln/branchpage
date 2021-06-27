@@ -68,10 +68,7 @@ defmodule Publishing.Manage do
         :fail
       end
 
-    content = %{
-      title: article.title,
-      body: article.body
-    }
+    content = %{body: article.body}
 
     {:ok, _} =
       db_article
