@@ -46,7 +46,7 @@ defmodule Web.NewLive do
           |> assign(:article, article)
           |> assign(:title, article.title)
           |> assign(:cover, "some cover")
-          |> assign(:description, "some description")
+          |> assign(:description, article.description)
           |> assign(:loading, false)
           |> push_event("highlightAll", %{})
 

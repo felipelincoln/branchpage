@@ -4,6 +4,7 @@ defmodule Publishing.Markdown do
   """
 
   @heading_default Application.compile_env!(:publishing, :markdown)[:heading_default]
+  @description_default ""
 
   @doc """
   Transform markdown into HMTL performing additional mutations.
@@ -47,17 +48,28 @@ defmodule Publishing.Markdown do
   """
   @spec get_title(String.t()) :: String.t()
   def get_title(markdown, default \\ @heading_default) when is_binary(markdown) do
+    get_content(markdown, default, &title_tags/1)
+  end
+
+  def get_description(markdown, default \\ @description_default) when is_binary(markdown) do
+    get_content(markdown, default, &paragraph_tag/1)
+  end
+
+  defp get_content(markdown, default, tag_function) do
     markdown
     |> to_ast()
-    |> Enum.find(&title_tags/1)
+    |> Enum.find(tag_function)
     |> tag_content_or_default(default)
   end
 
-  defp title_tags({tag, _, [title], _})
-       when tag in ["h1", "h2", "h3", "h4", "h5", "h6"] and is_binary(title),
+  defp title_tags({tag, _, [content], _})
+       when tag in ["h1", "h2", "h3", "h4", "h5", "h6"] and is_binary(content),
        do: true
 
   defp title_tags(_), do: false
+
+  defp paragraph_tag({"p", _, [content], _}) when is_binary(content), do: true
+  defp paragraph_tag(_), do: false
 
   defp tag_content_or_default({_, _, [content], _}, _default), do: content
   defp tag_content_or_default(_, default), do: default
