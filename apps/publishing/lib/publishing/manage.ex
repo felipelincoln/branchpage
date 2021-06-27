@@ -124,7 +124,15 @@ defmodule Publishing.Manage do
       html = Markdown.parse(content)
       blog = %Blog{username: username}
 
-      {:ok, %Article{body: html, title: title, description: description, cover: cover, url: url, blog: blog}}
+      {:ok,
+       %Article{
+         body: html,
+         title: title,
+         description: description,
+         cover: cover,
+         url: url,
+         blog: blog
+       }}
     else
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}

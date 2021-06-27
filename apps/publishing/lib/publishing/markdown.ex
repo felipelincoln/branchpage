@@ -3,6 +3,7 @@ defmodule Publishing.Markdown do
   Module for handling raw markdown texts.
   """
 
+  @heading_tags ["h1", "h2", "h3", "h4", "h5", "h6"]
   @heading_default Application.compile_env!(:publishing, :markdown)[:heading_default]
   @description_default ""
   @cover_default ""
@@ -67,9 +68,8 @@ defmodule Publishing.Markdown do
     |> tag_content_or_default(default)
   end
 
-  defp title_tags({tag, _, [content], _})
-       when tag in ["h1", "h2", "h3", "h4", "h5", "h6"] and is_binary(content),
-       do: true
+  defp title_tags({tag, _, [content], _}) when tag in @heading_tags and is_binary(content),
+    do: true
 
   defp title_tags(_), do: false
 
@@ -89,6 +89,7 @@ defmodule Publishing.Markdown do
 
     src
   end
+
   defp tag_content_or_default({_, _, [content], _}, _default), do: content
   defp tag_content_or_default(_, default), do: default
 
