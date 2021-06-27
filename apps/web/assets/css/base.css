@@ -22,7 +22,7 @@
 
 @layer components {
   .flash {
-    @apply shadow-lg cursor-pointer absolute top-0 w-full bg-red-500 h-14 flex items-center justify-center
+    @apply shadow-lg cursor-pointer absolute top-0 w-full bg-red-500 h-mbar sm:h-bar flex items-center justify-center
   }
 
   .flash-msg {
