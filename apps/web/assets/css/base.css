@@ -19,16 +19,28 @@
 }
 
 @layer components {
+  .flash {
+    @apply shadow-lg cursor-pointer absolute top-0 w-full bg-red-500 h-14 flex items-center justify-center
+  }
+
+  .flash-msg {
+    @apply font-bold text-white
+  }
+
+  .nav {
+    @apply px-5 uppercase text-xs font-bold text-black h-14
+  }
+
+  .nav-item {
+    @apply w-32 h-14 box-content text-center cursor-pointer flex items-center justify-center mr-1 last:mr-0
+  }
+
   .logo {
     @apply font-bold border-2 border-gray-800 px-1
 
   }
   .navbar {
     @apply flex items-center justify-between px-mb sm:px-sc mb-mb sm:mb-sc h-16 sm:h-20
-  }
-
-  .flash {
-    @apply sm:float-right mx-mb mb-mb sm:mr-sc py-2 px-4 border border-gray-200 shadow-md
   }
 
   .navbar-side-item {

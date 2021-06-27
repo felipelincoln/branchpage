@@ -25,7 +25,8 @@ module.exports = {
       borderWidth: ['hover', 'focus'],
       cursor: ['disabled'],
       textColor: ['disabled'],
-      backgroundColor: ['disabled']
+      backgroundColor: ['disabled'],
+      margin: ['last']
     },
   },
   plugins: [],

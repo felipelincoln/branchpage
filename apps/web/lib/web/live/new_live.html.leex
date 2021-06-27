@@ -1,33 +1,32 @@
-<div class="<%= !@error && "hidden" %> shadow-lg cursor-pointer absolute top-0 w-full bg-red-500 h-14 flex items-center justify-center" phx-click="clear-flash">
-  <div class="text-s font-bold text-white"><%= @error %></div>
+<div class="<%= !@error && "hidden" %> flash" phx-click="clear-flash">
+  <p class="flash-msg" role="alert"><%= @error %></p>
 </div>
 
 <div class="min-h-screen flex flex-col">
-  <nav class="px-5 bg-gray-100 uppercase h-14 items-center flex justify-between">
+  <nav class="nav bg-gray-100 flex items-center justify-between">
     <div>
-      <a href="/">
+      <a href="/" aria-label="Home">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </a>
     </div>
-    <div class="text-xs font-bold text-black">new article</div>
+    <div>new article</div>
     <div class="w-5"></div>
   </nav>
 
-  <nav class="border-b">
-    <div style="padding-bottom: 2px" class="h-14 container uppercase text-xs font-bold text-black flex justify-center">
-      <div class="w-32 h-14 box-content text-center cursor-pointer flex items-center justify-center border-b-2 border-black"><div>Form</div></div>
-      <div class="w-1"></div>
-      <div class="w-32 h-14 box-content text-center cursor-pointer flex items-center justify-center hover:border-b-2"><div>Preview</div></div>
-    </div>
-  </nav>
+  <div class="border-b">
+    <nav style="padding-bottom: 2px" class="nav flex justify-center">
+      <div class="nav-item border-b-2 border-black"><div>Form</div></div>
+      <div class="nav-item hover:border-b-2"><div>Preview</div></div>
+    </nav>
+  </div>
 
   <!--
 
 
 
-  <main class="container">
+  <div class="container">
     <%= if @article do %>
     <article>
       <header>
@@ -38,11 +37,11 @@
       <div class="text-gray-700 markdown-body" phx-hook="CodeHighlight" id="content"><%= raw @article.body %></div>
     </article>
     <% end %>
-  </main>
+  </div>
 
   -->
 
-  <main class="w-full max-w-screen-sm mx-auto flex-grow p-14">
+  <div class="w-full max-w-screen-sm mx-auto flex-grow p-14">
     <form phx-change="preview" onkeydown="return event.key != 'Enter';">
       <div>
         <label class="text-sm" for="url">URL</label>
@@ -65,7 +64,7 @@
       <label class="text-sm <%= !@article && "text-gray-400" %>" for="description">Description</label>
       <textarea <%= !@article && "disabled" %> class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" id="description" phx-value-field="description" phx-blur="update"><%= @description %></textarea>
     </div>
-  </main>
+  </div>
 
   <div class="h-32 w-full bg-gray-200 flex items-center justify-center">
     <button <%= !@article && "disabled" %>
