@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --space-mobile: 1.25rem;
-  --space: 1.75rem;
+  --space-mobile: 1rem;
+  --space: 1.25rem;
+  --bar-mobile: 3rem;
+  --bar: 3.5rem;
 }
 
 @layer base {
@@ -28,11 +30,15 @@
   }
 
   .nav {
-    @apply px-5 uppercase text-xs font-bold text-black h-14
+    @apply px-mobile sm:px-screen uppercase text-xs font-bold text-black h-mbar sm:h-bar
   }
 
   .nav-item {
-    @apply w-32 h-14 box-content text-center cursor-pointer flex items-center justify-center mr-1 last:mr-0
+    @apply w-32 h-mbar sm:h-bar border-b-2 hover:border-gray-200 border-transparent text-center cursor-pointer flex items-center justify-center mr-1 last:mr-0
+  }
+
+  .nav-current {
+    @apply border-black hover:border-black
   }
 
   .logo {

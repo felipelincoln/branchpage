@@ -14,6 +14,10 @@ module.exports = {
         'sans': '"Lato", "Helvetica Neue", Helvetica, Arial, sans-serif'
       },
       spacing: {
+        'screen': 'var(--space)',
+        'mobile': 'var(--space-mobile)',
+        'bar': 'var(--bar)',
+        'mbar': 'var(--bar-mobile)',
         'sc': 'var(--space)',
         'mb': 'var(--space-mobile)'
       },
