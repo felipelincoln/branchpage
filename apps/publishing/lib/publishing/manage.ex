@@ -120,10 +120,11 @@ defmodule Publishing.Manage do
          {:ok, content} <- integration.get_content(url) do
       title = Markdown.get_title(content)
       description = Markdown.get_description(content)
+      cover = Markdown.get_cover(content)
       html = Markdown.parse(content)
       blog = %Blog{username: username}
 
-      {:ok, %Article{body: html, title: title, description: description, url: url, blog: blog}}
+      {:ok, %Article{body: html, title: title, description: description, cover: cover, url: url, blog: blog}}
     else
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}

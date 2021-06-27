@@ -45,7 +45,7 @@ defmodule Web.NewLive do
           socket
           |> assign(:article, article)
           |> assign(:title, article.title)
-          |> assign(:cover, "some cover")
+          |> assign(:cover, article.cover)
           |> assign(:description, article.description)
           |> assign(:loading, false)
           |> push_event("highlightAll", %{})

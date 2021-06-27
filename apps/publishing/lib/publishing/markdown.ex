@@ -5,6 +5,7 @@ defmodule Publishing.Markdown do
 
   @heading_default Application.compile_env!(:publishing, :markdown)[:heading_default]
   @description_default ""
+  @cover_default ""
 
   @doc """
   Transform markdown into HMTL performing additional mutations.
@@ -55,6 +56,10 @@ defmodule Publishing.Markdown do
     get_content(markdown, default, &paragraph_tag/1)
   end
 
+  def get_cover(markdown, default \\ @cover_default) when is_binary(markdown) do
+    get_content(markdown, default, &image_tag/1)
+  end
+
   defp get_content(markdown, default, tag_function) do
     markdown
     |> to_ast()
@@ -71,6 +76,19 @@ defmodule Publishing.Markdown do
   defp paragraph_tag({"p", _, [content], _}) when is_binary(content), do: true
   defp paragraph_tag(_), do: false
 
+  defp image_tag({"img", _, _, _}), do: true
+  defp image_tag({"p", _, [{"img", _, _, _}], _}), do: true
+  defp image_tag(_), do: false
+
+  defp tag_content_or_default({"p", _, [{"img", _, _, _} = img], _}, default) do
+    tag_content_or_default(img, default)
+  end
+
+  defp tag_content_or_default({"img", attrs, _, _}, _default) do
+    %{"src" => src} = Map.new(attrs)
+
+    src
+  end
   defp tag_content_or_default({_, _, [content], _}, _default), do: content
   defp tag_content_or_default(_, default), do: default
 
