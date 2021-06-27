@@ -96,7 +96,7 @@ defmodule Web.NewLive do
   end
 
   @impl true
-  def handle_event("update", _params, %{assigns: %{article:  nil}} = socket) do
+  def handle_event("update", _params, %{assigns: %{article: nil}} = socket) do
     {:noreply, socket}
   end
 
@@ -114,8 +114,6 @@ defmodule Web.NewLive do
 
   @impl true
   def handle_event("update", _params, socket) do
-    IO.inspect "not implemented yet"
-
     {:noreply, socket}
   end
 
@@ -125,8 +123,6 @@ defmodule Web.NewLive do
 
   @impl true
   def handle_event("publish", _params, socket) do
-    IO.inspect socket.assigns.article
-
     case Manage.save_article(socket.assigns.article) do
       {:ok, article} ->
         username = socket.assigns.article.blog.username
