@@ -41,28 +41,61 @@
 
   -->
 
-  <div class="w-full max-w-screen-sm mx-auto flex-grow p-14">
+  <div class="container flex-grow sm:px-bar py-mbar sm:py-bar">
     <form phx-change="preview" onkeydown="return event.key != 'Enter';">
-      <div>
-        <label class="text-sm" for="url">URL</label>
-        <input class="input my-1 <%= @validation && "border-red-600 focus:border-red-600" %>" type="text" spellcheck="false" autocomplete="off" name="url" id="url" value="<%= @url %>" phx-debounce="200">
-        <p class="h-3 text-xs text-red-600"><%= @validation %></p>
-      </div>
+      <label class="text-sm" for="url">URL</label>
+      <input
+        class="input mt-1 <%= @validation && "border-red-600 focus:border-red-600" %>"
+        type="text"
+        spellcheck="false"
+        autocomplete="off"
+        name="url"
+        id="url"
+        value="<%= @url %>" phx-debounce="200">
+
+      <p class="h-2 mt-1 text-xs text-red-600"><%= @validation %></p>
     </form>
 
     <div class="py-3">
       <label class="text-sm <%= !@article && "text-gray-400" %>" for="title">Title</label>
-      <input <%= !@article && "disabled" %> class="input mt-1" type="text" spellcheck="false" autocomplete="off" id="title" value="<%= @title %>" phx-value-field="title" phx-blur="update">
+      <input <%= !@article && "disabled" %>
+        class="input mt-1"
+        type="text"
+        spellcheck="false"
+        autocomplete="off"
+        id="title"
+        value="<%= @title %>"
+        phx-value-field="title"
+        phx-blur="update">
+
     </div>
 
     <div class="py-3">
       <label class="text-sm <%= !@article && "text-gray-400" %>" for="cover">Cover</label>
-      <input <%= !@article && "disabled" %> class="input mt-1" type="text" spellcheck="false" autocomplete="off" id="cover" value="<%= @cover %>" phx-value-field="cover" phx-blur="update">
+      <input <%= !@article && "disabled" %>
+        class="input mt-1"
+        type="text"
+        spellcheck="false"
+        autocomplete="off"
+        id="cover"
+        value="<%= @cover %>"
+        phx-value-field="cover"
+        phx-blur="update">
+
     </div>
 
     <div class="py-3">
       <label class="text-sm <%= !@article && "text-gray-400" %>" for="description">Description</label>
-      <textarea <%= !@article && "disabled" %> class="input mt-1 resize-none" rows="3" maxlength="160" spellcheck="false" autocomplete="off" id="description" phx-value-field="description" phx-blur="update"><%= @description %></textarea>
+      <textarea <%= !@article && "disabled" %>
+        class="input mt-1 resize-none"
+        rows="3"
+        maxlength="160"
+        spellcheck="false"
+        autocomplete="off"
+        id="description"
+        phx-value-field="description"
+        phx-blur="update"><%= @description %></textarea>
+
     </div>
   </div>
 

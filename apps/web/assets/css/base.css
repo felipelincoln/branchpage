@@ -54,7 +54,7 @@
   }
 
   .container {
-    @apply max-w-screen-sm sm:mx-auto box-content px-mb sm:px-sc
+    @apply w-full max-w-screen-sm sm:mx-auto px-mb sm:px-sc
   }
 
   .input {
