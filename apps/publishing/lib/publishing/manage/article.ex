@@ -5,13 +5,14 @@ defmodule Publishing.Manage.Article do
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  @optional_fields ~w(title preview url blog_id)a
+  @optional_fields ~w(title description cover url blog_id)a
   @required_fields ~w()a
 
   schema "article" do
     field :title, :string
     field :url, :string
-    field :preview, :string
+    field :description, :string
+    field :cover, :string
     field :body, :string, virtual: true
 
     belongs_to :blog, Publishing.Manage.Blog, type: :binary_id
@@ -24,6 +25,7 @@ defmodule Publishing.Manage.Article do
     |> cast(attrs, @optional_fields ++ @required_fields)
     |> validate_required(@required_fields)
     |> validate_length(:title, max: 255)
+    |> validate_length(:description, max: 255)
     |> assoc_constraint(:blog)
     |> unique_constraint(:url)
   end

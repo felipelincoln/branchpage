@@ -70,8 +70,7 @@ defmodule Publishing.Manage do
 
     content = %{
       title: article.title,
-      body: article.body,
-      preview: article.preview
+      body: article.body
     }
 
     {:ok, _} =
@@ -119,12 +118,11 @@ defmodule Publishing.Manage do
          {:ok, integration} <- Integration.service(url),
          {:ok, username} <- integration.get_username(url),
          {:ok, content} <- integration.get_content(url) do
-      title = Markdown.get_heading(content)
-      preview = Markdown.get_preview(content)
-      html = Markdown.get_body(content)
+      title = Markdown.get_title(content)
+      html = Markdown.parse(content)
       blog = %Blog{username: username}
 
-      {:ok, %Article{body: html, preview: preview, title: title, url: url, blog: blog}}
+      {:ok, %Article{body: html, title: title, url: url, blog: blog}}
     else
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}
