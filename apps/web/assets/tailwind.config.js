@@ -18,6 +18,10 @@ module.exports = {
         'mobile': 'var(--space-mobile)',
         'bar': 'var(--bar)',
         'mbar': 'var(--bar-mobile)',
+        'bar2': 'var(--bar2)',
+        'mbar2': 'var(--bar2-mobile)',
+        'cta': 'var(--cta)',
+        'mcta': 'var(--cta-mobile)',
         'sc': 'var(--space)',
         'mb': 'var(--space-mobile)'
       },

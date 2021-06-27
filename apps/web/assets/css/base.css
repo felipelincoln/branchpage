@@ -7,6 +7,10 @@
   --space: 1.25rem;
   --bar-mobile: 3rem;
   --bar: 3.5rem;
+  --bar2-mobile: 6rem;
+  --bar2: 8rem;
+  --cta-mobile: 7rem;
+  --cta: 9rem;
 }
 
 @layer base {
@@ -34,11 +38,22 @@
   }
 
   .nav-item {
-    @apply w-32 h-mbar sm:h-bar border-b-2 hover:border-gray-200 border-transparent text-center cursor-pointer flex items-center justify-center mr-1 last:mr-0
+    @apply hover:border-gray-200;
+    @apply w-32 h-mbar sm:h-bar border-b-2 border-transparent text-center cursor-pointer flex items-center justify-center mr-1 last:mr-0
   }
 
   .nav-current {
     @apply border-black hover:border-black
+  }
+
+  .cta-bar {
+    @apply w-full bg-gray-200 h-mbar2 sm:h-bar2
+  }
+
+  .cta {
+    @apply disabled:cursor-default disabled:bg-gray-300 disabled:text-gray-400;
+    @apply focus:outline-none;
+    @apply uppercase font-bold bg-gray-800 text-white sm:text-lg h-mbar sm:h-bar w-mcta sm:w-cta rounded-full transition ease-in-out duration-300
   }
 
   .logo {
