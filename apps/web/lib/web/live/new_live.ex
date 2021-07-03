@@ -31,6 +31,7 @@ defmodule Web.NewLive do
       |> assign(:description, "")
       |> assign(:loading, false)
       |> assign(:url, url || "")
+      |> assign(:tab, "form")
 
     {:ok, socket}
   end
@@ -64,6 +65,15 @@ defmodule Web.NewLive do
 
         {:noreply, socket}
     end
+  end
+
+  @impl true
+  def handle_event("change-tab", %{"tab" => tab}, socket) do
+    socket =
+      socket
+      |> assign(:tab, tab)
+
+    {:noreply, socket}
   end
 
   @impl true

@@ -17,30 +17,22 @@
 
   <div class="border-b">
     <nav class="nav flex justify-center">
-      <div class="nav-item nav-current"><div>Form</div></div>
-      <div class="nav-item"><div>Preview</div></div>
+      <div class="nav-item <%= if @tab == "form", do: "nav-current" %>" phx-value-tab="form" phx-click="change-tab"><div>Form</div></div>
+      <div class="nav-item <%= if @tab == "preview", do: "nav-current" %>" phx-value-tab="preview" phx-click="change-tab"><div>Preview</div></div>
     </nav>
   </div>
 
-  <!--
-
-
-
-  <div class="container">
+  <%= case @tab do %>
+  <% "preview" -> %>
+  <div class="container flex-grow py-mbar sm:py-bar">
     <%= if @article do %>
-    <article>
-      <header>
-        <p class="hidden sm:block text-gray-500">Preview</p>
-        <h1 class="font-black text-gray-900 text-3xl sm:text-5xl sm:mb-sc"><%= @article.title %></h1>
-        <p class="sm:hidden text-gray-500 mb-mb mt-1">Preview</p>
-      </header>
-      <div class="text-gray-700 markdown-body" phx-hook="CodeHighlight" id="content"><%= raw @article.body %></div>
+    <article class="text-gray-700 markdown-body" phx-hook="CodeHighlight" id="content">
+      <%= raw @article.body %>
     </article>
     <% end %>
   </div>
 
-  -->
-
+  <% "form" -> %>
   <div class="container flex-grow sm:px-bar py-mbar sm:py-bar">
     <form phx-change="preview" onkeydown="return event.key != 'Enter';">
       <label class="text-sm" for="url">URL</label>
@@ -98,6 +90,7 @@
 
     </div>
   </div>
+  <% end %>
 
   <div class="cta-bar flex items-center justify-center">
     <button <%= !@article && "disabled" %> class="cta <%= @article && "transform hover:scale-105" %>" phx-click="publish">
