@@ -4,7 +4,7 @@ defmodule Publishing.Markdown do
   """
 
   @heading_tags ["h1", "h2", "h3", "h4", "h5", "h6"]
-  @heading_default Application.compile_env!(:publishing, :markdown)[:heading_default]
+  @heading_default "Untitled"
   @description_default ""
   @cover_default ""
 
@@ -26,6 +26,9 @@ defmodule Publishing.Markdown do
 
       iex> parse("```\\nsome code\\n```")
       "<pre><code class=\\"language-none\\">some code</code></pre>\\n"
+
+      iex> parse("```elixir\\nsome code\\n```")
+      "<pre><code class=\\"elixir language-elixir\\">some code</code></pre>\\n"
   """
   @spec parse(String.t()) :: list
   def parse(markdown) do
@@ -36,7 +39,7 @@ defmodule Publishing.Markdown do
   end
 
   @doc """
-  Returns the markdown's main title or the given `default` (optional).
+  Returns the markdown's title or first subtitle or the given `default` (optional).
 
   Examples:
       iex> get_title("# Hello World!\\nLorem ipsum...")
@@ -53,10 +56,31 @@ defmodule Publishing.Markdown do
     get_content(markdown, default, &title_tags/1)
   end
 
+  @doc """
+  Returns the markdown's first paragraph or the given `default` (optional).
+
+  Examples:
+      iex> get_description("# Hello World!\\nLorem ipsum...")
+      "Lorem ipsum..."
+
+      iex> get_description("## Hello World!", "Untitled")
+      "Untitled"
+  """
+  @spec get_description(String.t()) :: String.t()
   def get_description(markdown, default \\ @description_default) when is_binary(markdown) do
     get_content(markdown, default, &paragraph_tag/1)
   end
 
+  @doc """
+  Returns the markdown's first image or the given `default` (optional).
+
+  Examples:
+      iex> get_cover("# Hello World!\\n![](image.png)")
+      "image.png"
+
+      iex> get_cover("## Hello World!", "img.png")
+      "img.png"
+  """
   def get_cover(markdown, default \\ @cover_default) when is_binary(markdown) do
     get_content(markdown, default, &image_tag/1)
   end

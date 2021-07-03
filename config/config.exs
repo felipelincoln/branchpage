@@ -13,6 +13,4 @@ config :publishing,
 
 config :publishing, Publishing.Repo, migration_timestamps: [type: :utc_datetime]
 
-config :publishing, :markdown, heading_default: "Untitled"
-
 import_config "#{Mix.env()}.exs"
