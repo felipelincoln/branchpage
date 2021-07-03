@@ -20,8 +20,6 @@ defmodule Publishing.ManageTest do
   @invalid_500_url "https://github.com/f/b/blob/repo/500.md"
   @invalid_500_raw_url "https://raw.githubusercontent.com/f/b/repo/500.md"
 
-  setup :create_github_platform
-
   test "build_article/1 on invalid url returns error tuple" do
     assert {:error, "Invalid scheme. Use http or https"} = Manage.build_article("")
 
@@ -114,7 +112,8 @@ defmodule Publishing.ManageTest do
     assert_raise Publishing.PageNotFound, fn -> Manage.load_blog!("") end
   end
 
-  test "load_blog!/1 return blogs with preloaded articles", %{platform: platform} do
+  test "load_blog!/1 return blogs with preloaded articles" do
+    platform = Factory.insert(:platform, name: "https://github.com/")
     expect(TeslaMock, :call, &api/2)
 
     blog = Factory.insert(:blog, username: "test", platform_id: platform.id)
@@ -141,11 +140,5 @@ defmodule Publishing.ManageTest do
     }
 
     {:ok, %{body: response, status: 200}}
-  end
-
-  defp create_github_platform(_) do
-    platform = Factory.insert(:platform, name: "https://github.com/")
-
-    %{platform: platform}
   end
 end
