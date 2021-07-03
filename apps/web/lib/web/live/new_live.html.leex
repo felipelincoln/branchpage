@@ -57,7 +57,7 @@
         spellcheck="false"
         autocomplete="off"
         id="title"
-        value="<%= @title %>"
+        value="<%= @article_form[:title] %>"
         phx-value-field="title"
         phx-blur="update">
 
@@ -71,7 +71,7 @@
         spellcheck="false"
         autocomplete="off"
         id="cover"
-        value="<%= @cover %>"
+        value="<%= @article_form[:cover] %>"
         phx-value-field="cover"
         phx-blur="update">
 
@@ -87,7 +87,7 @@
         autocomplete="off"
         id="description"
         phx-value-field="description"
-        phx-blur="update"><%= @description %></textarea>
+        phx-blur="update"><%= @article_form[:description] %></textarea>
 
     </div>
   </div>

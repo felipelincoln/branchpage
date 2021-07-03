@@ -26,9 +26,7 @@ defmodule Web.NewLive do
       |> assign(:validation, nil)
       |> assign(:error, nil)
       |> assign(:article, nil)
-      |> assign(:title, "")
-      |> assign(:cover, "")
-      |> assign(:description, "")
+      |> assign(:article_form, %{})
       |> assign(:loading, false)
       |> assign(:url, url || "")
       |> assign(:tab, "form")
@@ -42,12 +40,16 @@ defmodule Web.NewLive do
 
     case Manage.build_article(url) do
       {:ok, article} ->
+        article_form = %{
+          title: article.title,
+          cover: article.cover,
+          description: article.description
+        }
+
         socket =
           socket
           |> assign(:article, article)
-          |> assign(:title, article.title)
-          |> assign(:cover, article.cover)
-          |> assign(:description, article.description)
+          |> assign(:article_form, article_form)
           |> assign(:loading, false)
 
         {:noreply, socket}
@@ -56,9 +58,7 @@ defmodule Web.NewLive do
         socket =
           socket
           |> assign(:article, nil)
-          |> assign(:title, "")
-          |> assign(:cover, "")
-          |> assign(:description, "")
+          |> assign(:article_form, %{})
           |> assign(:validation, validation)
           |> assign(:loading, false)
 
@@ -84,10 +84,8 @@ defmodule Web.NewLive do
       |> assign(:validation, nil)
       |> assign(:error, nil)
       |> assign(:article, nil)
+      |> assign(:article_form, %{})
       |> assign(:url, "")
-      |> assign(:title, "")
-      |> assign(:cover, "")
-      |> assign(:description, "")
 
     {:noreply, socket}
   end
@@ -112,13 +110,16 @@ defmodule Web.NewLive do
   end
 
   @impl true
-  def handle_event("update", %{"field" => "title", "value" => title}, socket) do
-    updated_article = %{socket.assigns.article | title: title}
+  def handle_event("update", %{"field" => field, "value" => value}, socket) do
+    field_atom = String.to_existing_atom(field)
+
+    article_form =
+      socket.assigns.article_form
+      |> Map.put(field_atom, value)
 
     socket =
       socket
-      |> assign(:article, updated_article)
-      |> assign(:title, title)
+      |> assign(:article_form, article_form)
 
     {:noreply, socket}
   end
@@ -133,11 +134,13 @@ defmodule Web.NewLive do
     do: {:noreply, socket}
 
   @impl true
-  def handle_event("publish", _params, socket) do
-    case Manage.save_article(socket.assigns.article) do
-      {:ok, article} ->
-        username = socket.assigns.article.blog.username
-        path = Routes.live_path(socket, ArticleLive, username, article.id)
+  def handle_event("publish", _params, %{assigns: assigns} = socket) do
+    article = Map.merge(assigns.article, assigns.article_form)
+
+    case Manage.save_article(article) do
+      {:ok, saved_article} ->
+        username = article.blog.username
+        path = Routes.live_path(socket, ArticleLive, username, saved_article.id)
 
         {:noreply, redirect(socket, to: path)}
 

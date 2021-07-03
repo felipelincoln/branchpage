@@ -68,14 +68,7 @@ defmodule Publishing.Manage do
         :fail
       end
 
-    content = %{body: article.body}
-
-    {:ok, _} =
-      db_article
-      |> Article.changeset(content)
-      |> Repo.update()
-
-    Map.merge(db_article, content)
+    %{db_article | body: article.body}
   rescue
     _error ->
       reraise Publishing.PageNotFound, __STACKTRACE__
