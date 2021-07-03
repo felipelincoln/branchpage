@@ -68,7 +68,7 @@ defmodule Publishing.ManageTest do
     {:ok, %Article{} = article} = Manage.build_article(@valid_url)
 
     assert {:ok, %Article{}} = Manage.save_article(article)
-    assert {:error, "This article has already been published!"} = Manage.save_article(article)
+    assert {:error, "This article has already been published."} = Manage.save_article(article)
   end
 
   test "load_article!/2 loads an article from database" do

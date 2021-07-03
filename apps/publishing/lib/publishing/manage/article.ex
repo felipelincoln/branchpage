@@ -5,8 +5,8 @@ defmodule Publishing.Manage.Article do
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  @optional_fields ~w(title description cover url blog_id)a
-  @required_fields ~w()a
+  @optional_fields ~w(cover url blog_id)a
+  @required_fields ~w(title description)a
 
   schema "article" do
     field :title, :string
@@ -34,6 +34,22 @@ defmodule Publishing.Manage.Article do
   Prints a message relative to the first error in the `changeset`.
   """
   def get_error(%Ecto.Changeset{errors: [{:url, _reason} | _tail]}) do
-    "This article has already been published!"
+    "This article has already been published."
+  end
+
+  def get_error(%Ecto.Changeset{errors: [{field, reason} | _tail]}) do
+    {msg, opts} = reason
+
+    error_msg =
+      Enum.reduce(opts, msg, fn {key, value}, msg ->
+        String.replace(msg, "%{#{key}}", to_string(value))
+      end)
+
+    field_str =
+      field
+      |> to_string()
+      |> String.capitalize()
+
+    field_str <> " " <> error_msg
   end
 end
