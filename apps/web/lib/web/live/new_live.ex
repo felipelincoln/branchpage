@@ -49,7 +49,6 @@ defmodule Web.NewLive do
           |> assign(:cover, article.cover)
           |> assign(:description, article.description)
           |> assign(:loading, false)
-          |> push_event("highlightAll", %{})
 
         {:noreply, socket}
 
@@ -73,6 +72,7 @@ defmodule Web.NewLive do
       socket
       |> assign(:tab, tab)
       |> assign(:error, nil)
+      |> push_event("highlightAll", %{})
 
     {:noreply, socket}
   end

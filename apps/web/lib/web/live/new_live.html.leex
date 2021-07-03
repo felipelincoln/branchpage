@@ -26,7 +26,7 @@
   <% "preview" -> %>
   <div class="container flex-grow py-mbar sm:py-bar">
     <%= if @article do %>
-    <article class="text-gray-700 markdown-body" phx-hook="CodeHighlight" id="content">
+    <article class="text-gray-700 markdown-body" phx-hook="CodeHighlight" phx-update="ignore" id="content">
       <%= raw @article.body %>
     </article>
     <% end %>
