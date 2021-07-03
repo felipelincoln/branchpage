@@ -20,17 +20,25 @@
     @apply text-gray-800
   }
 
+  button {
+    @apply focus:outline-none;
+  }
+
+  button:focus-visible {
+    @apply ring-2 ring-black
+  }
+
   iframe {
     display: none
   }
 }
 
 @layer components {
-  .flash {
+  .alert {
     @apply shadow-lg cursor-pointer absolute top-0 w-full bg-red-500 h-mbar sm:h-bar flex items-center justify-center
   }
 
-  .flash-msg {
+  .alert-msg {
     @apply font-bold text-white
   }
 
@@ -40,7 +48,7 @@
 
   .nav-item {
     @apply hover:border-gray-200;
-    @apply w-32 h-mbar sm:h-bar border-b-2 border-transparent text-center cursor-pointer flex items-center justify-center mr-1 last:mr-0
+    @apply w-32 h-mbar sm:h-bar border-b-2 border-transparent mr-1 last:mr-0 uppercase text-xs font-bold text-black
   }
 
   .nav-current {
@@ -53,7 +61,7 @@
 
   .cta {
     @apply disabled:cursor-default disabled:bg-gray-300 disabled:text-gray-400;
-    @apply focus:outline-none;
+    @apply ring-offset-4 ring-offset-gray-200;
     @apply uppercase font-bold bg-gray-800 text-white sm:text-lg h-mbar sm:h-bar w-mcta sm:w-cta rounded-full transition ease-in-out duration-300
   }
 

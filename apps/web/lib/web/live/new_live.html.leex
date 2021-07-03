@@ -1,9 +1,9 @@
-<div class="<%= !@error && "hidden" %> flash" phx-click="clear-flash">
-  <p class="flash-msg" role="alert"><%= @error %></p>
+<div class="<%= !@error && "hidden" %> alert" phx-click="clear-alert">
+  <p class="alert-msg" role="alert"><%= @error %></p>
 </div>
 
 <div class="min-h-screen flex flex-col">
-  <nav class="nav bg-gray-100 flex items-center justify-between">
+  <nav class="nav bg-gray-100 flex items-center justify-between" aria-label="main">
     <div>
       <a href="/" aria-label="Home">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -16,9 +16,9 @@
   </nav>
 
   <div class="border-b">
-    <nav class="nav flex justify-center">
-      <div class="nav-item <%= if @tab == "form", do: "nav-current" %>" phx-value-tab="form" phx-click="change-tab"><div>Form</div></div>
-      <div class="nav-item <%= if @tab == "preview", do: "nav-current" %>" phx-value-tab="preview" phx-click="change-tab"><div>Preview</div></div>
+    <nav class="nav flex justify-center" aria-label="tabs">
+      <button class="nav-item <%= if @tab == "form", do: "nav-current" %>" phx-value-tab="form" phx-click="change-tab">Form</button>
+      <button class="nav-item <%= if @tab == "preview", do: "nav-current" %>" phx-value-tab="preview" phx-click="change-tab"><div>Preview</div></button>
     </nav>
   </div>
 

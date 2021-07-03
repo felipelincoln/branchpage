@@ -152,7 +152,7 @@ defmodule Web.NewLive do
   end
 
   @impl true
-  def handle_event("clear-flash", _params, socket) do
+  def handle_event("clear-alert", _params, socket) do
     socket =
       socket
       |> assign(:error, nil)
