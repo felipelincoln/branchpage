@@ -139,10 +139,15 @@ defmodule Web.NewLive do
         username = socket.assigns.article.blog.username
         path = Routes.live_path(socket, ArticleLive, username, article.id)
 
-        {:noreply, push_redirect(socket, to: path)}
+        {:noreply, redirect(socket, to: path)}
 
       {:error, reason} ->
-        {:noreply, assign(socket, :error, reason)}
+        socket =
+          socket
+          |> assign(:error, reason)
+          |> push_event("scrollTop", %{})
+
+        {:noreply, socket}
     end
   end
 

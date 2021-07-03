@@ -43,7 +43,8 @@
         autocomplete="off"
         name="url"
         id="url"
-        value="<%= @url %>" phx-debounce="200">
+        value="<%= @url %>" phx-debounce="200"
+        onClick="this.select();">
 
       <p class="h-2 mt-1 text-xs text-red-600"><%= @validation %></p>
     </form>
@@ -93,7 +94,7 @@
   <% end %>
 
   <div class="cta-bar flex items-center justify-center">
-    <button <%= !@article && "disabled" %> class="cta <%= @article && "transform hover:scale-105" %>" phx-click="publish" onclick="window.scrollTo(0, 0);">
+    <button <%= !@article && "disabled" %> class="cta <%= @article && "transform hover:scale-105" %>" phx-click="publish" phx-hook="PublishButton">
       <%= if @loading do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
