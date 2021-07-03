@@ -13,13 +13,7 @@ defmodule Publishing.ManageTest do
   @valid_username "felipelincoln"
   @valid_body "# Document title\n\nSome description"
   @valid_title "Document title"
-  @valid_html "<p>\nSome description</p>\n"
-  @valid_preview "<p>\nSome ...</p>\n"
-
-  @updated_body "# Updated document title\n\nTest"
-  @updated_title "Updated document title"
-  @updated_html "<p>\nTest</p>\n"
-  @updated_preview "<p>\nTest</p>\n"
+  @valid_html "<h1>\nDocument title</h1>\n<p>\nSome description</p>\n"
 
   @invalid_404_url "https://github.com/f/b/blob/repo/a.md"
   @invalid_404_raw_url "https://raw.githubusercontent.com/f/b/repo/a.md"
@@ -61,7 +55,6 @@ defmodule Publishing.ManageTest do
     assert article.url == @valid_url
     assert article.title == @valid_title
     assert article.body == @valid_html
-    assert article.preview == @valid_preview
     assert article.blog == %Blog{username: @valid_username}
   end
 
@@ -89,24 +82,7 @@ defmodule Publishing.ManageTest do
     assert article.url == @valid_url
     assert article.title == @valid_title
     assert article.body == @valid_html
-    assert article.preview == @valid_preview
     assert %Blog{username: @valid_username} = article.blog
-  end
-
-  test "load_article!/2 updates title and preview" do
-    expect(TeslaMock, :call, &raw/2)
-    expect(TeslaMock, :call, &raw_updated/2)
-
-    {:ok, %Article{} = article} = Manage.build_article(@valid_url)
-    {:ok, %Article{id: id}} = Manage.save_article(article)
-
-    assert (%Article{} = article) = Manage.load_article!(@valid_username, id)
-    assert article.url == @valid_url
-    assert %Blog{username: @valid_username} = article.blog
-
-    assert article.body == @updated_html
-    assert article.title == @updated_title
-    assert article.preview == @updated_preview
   end
 
   test "load_article!/2 deletes article if deleted from integration" do
@@ -149,7 +125,6 @@ defmodule Publishing.ManageTest do
   end
 
   defp raw_deleted(%{url: @valid_raw_url}, _), do: {:ok, %{status: 404}}
-  defp raw_updated(%{url: @valid_raw_url}, _), do: {:ok, %{status: 200, body: @updated_body}}
   defp raw(%{url: @valid_raw_url}, _), do: {:ok, %{status: 200, body: @valid_body}}
   defp raw(%{url: @invalid_404_raw_url}, _), do: {:ok, %{status: 404}}
   defp raw(%{url: @invalid_500_raw_url}, _), do: {:ok, %{status: 500}}
