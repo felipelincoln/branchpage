@@ -93,7 +93,7 @@
   <% end %>
 
   <div class="cta-bar flex items-center justify-center">
-    <button <%= !@article && "disabled" %> class="cta <%= @article && "transform hover:scale-105" %>" phx-click="publish">
+    <button <%= !@article && "disabled" %> class="cta <%= @article && "transform hover:scale-105" %>" phx-click="publish" onclick="window.scrollTo(0, 0);">
       <%= if @loading do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path

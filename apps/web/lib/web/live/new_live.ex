@@ -72,6 +72,7 @@ defmodule Web.NewLive do
     socket =
       socket
       |> assign(:tab, tab)
+      |> assign(:error, nil)
 
     {:noreply, socket}
   end
