@@ -10,10 +10,6 @@ defmodule Publishing.Manage do
 
   import Ecto.Query
 
-  def count_blogs do
-    Repo.aggregate(Blog, :count, :id)
-  end
-
   def load_blog!(username) do
     db_blog =
       Blog

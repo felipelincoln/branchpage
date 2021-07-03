@@ -6,8 +6,6 @@ defmodule Web.HomeLive do
   alias Web.NewLive
   alias Web.Router.Helpers, as: Routes
 
-  import Publishing.Manage, only: [count_blogs: 0]
-
   @meta %{
     title: "Branchpage",
     description:
@@ -20,7 +18,6 @@ defmodule Web.HomeLive do
     socket =
       socket
       |> assign(:meta, @meta)
-      |> assign(:count_blogs, count_blogs())
 
     {:ok, socket}
   end
