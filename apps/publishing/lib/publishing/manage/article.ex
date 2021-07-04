@@ -5,8 +5,8 @@ defmodule Publishing.Manage.Article do
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  @optional_fields ~w(cover url blog_id)a
-  @required_fields ~w(title description)a
+  @optional_fields ~w(cover blog_id)a
+  @required_fields ~w(title description url)a
 
   schema "article" do
     field :title, :string

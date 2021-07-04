@@ -4,7 +4,7 @@ defmodule Publishing.Manage.ArticleTest do
   import Publishing.ChangesetHelpers
   alias Publishing.Manage.Article
 
-  @valid_empty_attrs %{title: "title", description: "desc"}
+  @valid_empty_attrs %{title: "title", description: "desc", url: "some url"}
   @valid_attrs %{title: "title", description: "desc", url: "url", blog_id: "blog_id"}
   @invalid_cast_attrs %{title: 0, url: 0, blog_id: 0, description: 0}
   @invalid_length_attrs %{title: long_string(), description: long_string()}
