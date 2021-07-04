@@ -26,6 +26,6 @@ defmodule Web.HomeLive do
   def handle_event("go-preview", %{"url" => url}, socket) do
     path = Routes.live_path(socket, NewLive, url: url)
 
-    {:noreply, push_redirect(socket, to: path)}
+    {:noreply, redirect(socket, to: path)}
   end
 end
