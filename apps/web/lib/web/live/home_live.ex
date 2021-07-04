@@ -18,14 +18,15 @@ defmodule Web.HomeLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {_cursor, articles} = Manage.list_articles(limit: 3)
+    {cursor, articles} = Manage.list_articles(limit: 3)
 
     socket =
       socket
       |> assign(:meta, @meta)
       |> assign(:articles, articles)
+      |> assign(:cursor, cursor)
 
-    {:ok, socket}
+    {:ok, socket, temporary_assigns: [articles: []]}
   end
 
   @impl true
@@ -33,5 +34,19 @@ defmodule Web.HomeLive do
     path = Routes.live_path(socket, NewLive, url: url)
 
     {:noreply, redirect(socket, to: path)}
+  end
+
+  @impl true
+  def handle_event("load-more", _params, socket) do
+    %{assigns: %{cursor: start_cursor}} = socket
+
+    {end_cursor, articles} = Manage.list_articles(limit: 3, cursor: start_cursor)
+
+    socket =
+      socket
+      |> assign(:cursor, end_cursor)
+      |> assign(:articles, articles)
+
+    {:noreply, socket}
   end
 end
