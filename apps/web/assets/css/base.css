@@ -3,14 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --space-mobile: 1.25rem;
-  --space: 1.75rem;
+  --space-mobile: 1rem;
+  --space: 1.25rem;
+  --bar-mobile: 3rem;
+  --bar: 3.5rem;
+  --bar2-mobile: 6rem;
+  --bar2: 8rem;
+  --cta-mobile: 7rem;
+  --cta: 9rem;
 }
 
 @layer base {
   html {
     font-size: 18px;
+    scroll-behavior: smooth;
     @apply text-gray-800
+  }
+
+  button {
+    @apply focus:outline-none;
+  }
+
+  button:focus-visible {
+    @apply ring-2 ring-black
   }
 
   iframe {
@@ -19,6 +34,37 @@
 }
 
 @layer components {
+  .alert {
+    @apply shadow-lg cursor-pointer absolute top-0 w-full bg-red-500 h-mbar sm:h-bar flex items-center justify-center
+  }
+
+  .alert-msg {
+    @apply font-bold text-white
+  }
+
+  .nav {
+    @apply px-mobile sm:px-screen uppercase text-xs font-bold text-black h-mbar sm:h-bar
+  }
+
+  .nav-item {
+    @apply hover:border-gray-200;
+    @apply w-32 h-mbar sm:h-bar border-b-2 border-transparent mr-1 last:mr-0 uppercase text-xs font-bold text-black
+  }
+
+  .nav-current {
+    @apply border-black hover:border-black
+  }
+
+  .cta-bar {
+    @apply w-full bg-gray-200 h-mbar2 sm:h-bar2
+  }
+
+  .cta {
+    @apply disabled:cursor-default disabled:bg-gray-300 disabled:text-gray-400;
+    @apply ring-offset-4 ring-offset-gray-200;
+    @apply uppercase font-bold bg-gray-800 text-white sm:text-lg h-mbar sm:h-bar w-mcta sm:w-cta rounded-full transition ease-in-out duration-300
+  }
+
   .logo {
     @apply font-bold border-2 border-gray-800 px-1
 
@@ -27,20 +73,16 @@
     @apply flex items-center justify-between px-mb sm:px-sc mb-mb sm:mb-sc h-16 sm:h-20
   }
 
-  .flash {
-    @apply sm:float-right mx-mb mb-mb sm:mr-sc py-2 px-4 border border-gray-200 shadow-md
-  }
-
   .navbar-side-item {
     @apply w-1/5 min-w-min whitespace-nowrap flex items-center h-16
   }
 
   .container {
-    @apply max-w-screen-sm sm:mx-auto box-content px-mb sm:px-sc
+    @apply w-full max-w-screen-sm sm:mx-auto px-mb sm:px-sc
   }
 
   .input {
-    @apply w-full border-b border-gray-300 focus:border-gray-800 focus:outline-none p-0 sm:p-1
+    @apply text-gray-500 focus:text-gray-800 bg-gray-100 w-full border border-transparent focus:border-gray-800 focus:outline-none px-4 py-3 rounded-md
   }
 }
 

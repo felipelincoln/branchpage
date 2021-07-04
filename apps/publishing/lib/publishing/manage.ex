@@ -10,10 +10,6 @@ defmodule Publishing.Manage do
 
   import Ecto.Query
 
-  def count_blogs do
-    Repo.aggregate(Blog, :count, :id)
-  end
-
   def load_blog!(username) do
     db_blog =
       Blog
@@ -68,18 +64,7 @@ defmodule Publishing.Manage do
         :fail
       end
 
-    content = %{
-      title: article.title,
-      body: article.body,
-      preview: article.preview
-    }
-
-    {:ok, _} =
-      db_article
-      |> Article.changeset(content)
-      |> Repo.update()
-
-    Map.merge(db_article, content)
+    %{db_article | body: article.body}
   rescue
     _error ->
       reraise Publishing.PageNotFound, __STACKTRACE__
@@ -119,12 +104,21 @@ defmodule Publishing.Manage do
          {:ok, integration} <- Integration.service(url),
          {:ok, username} <- integration.get_username(url),
          {:ok, content} <- integration.get_content(url) do
-      title = Markdown.get_heading(content)
-      preview = Markdown.get_preview(content)
-      html = Markdown.get_body(content)
+      title = Markdown.get_title(content)
+      description = Markdown.get_description(content)
+      cover = Markdown.get_cover(content)
+      html = Markdown.parse(content)
       blog = %Blog{username: username}
 
-      {:ok, %Article{body: html, preview: preview, title: title, url: url, blog: blog}}
+      {:ok,
+       %Article{
+         body: html,
+         title: title,
+         description: description,
+         cover: cover,
+         url: url,
+         blog: blog
+       }}
     else
       {:error, :scheme} ->
         {:error, "Invalid scheme. Use http or https"}
@@ -147,13 +141,25 @@ defmodule Publishing.Manage do
   end
 
   defp get_platform(url) do
-    platform_url =
-      url
-      |> URI.parse()
-      |> Map.merge(%{path: "/"})
-      |> URI.to_string()
+    url
+    |> URI.parse()
+    |> Map.merge(%{path: "/"})
+    |> URI.to_string()
+    |> upsert_platform!()
+  end
 
-    Repo.one(from Platform, where: [name: ^platform_url])
+  defp upsert_platform!(name) do
+    platform = Repo.get_by(Platform, name: name)
+
+    case platform do
+      nil ->
+        %Platform{}
+        |> Platform.changeset(%{name: name})
+        |> Repo.insert!()
+
+      item ->
+        item
+    end
   end
 
   defp upsert_blog(%Article{} = article) do

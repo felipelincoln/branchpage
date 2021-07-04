@@ -3,89 +3,125 @@ defmodule Publishing.Markdown do
   Module for handling raw markdown texts.
   """
 
-  @preview_length Application.compile_env!(:publishing, :markdown)[:preview_length]
-  @heading_length Application.compile_env!(:publishing, :markdown)[:heading_length]
-  @heading_default Application.compile_env!(:publishing, :markdown)[:heading_default]
+  @heading_tags ["h1", "h2", "h3", "h4", "h5", "h6"]
+  @heading_default "Untitled"
+  @description_default ""
+  @cover_default ""
 
   @doc """
   Transform markdown into HMTL performing additional mutations.
 
   ## Features
-  * Removes the first `#` heading
   * Add `language-none` to inline and code blocks.
 
   Example:
-      iex> get_body("# title")
-      ""
+      iex> parse("# title")
+      "<h1>\\ntitle</h1>\\n"
 
-      iex> get_body("## title")
+      iex> parse("## title")
       "<h2>\\ntitle</h2>\\n"
 
-      iex> get_body("`some code`")
+      iex> parse("`some code`")
       "<p>\\n<code class=\\"language-none\\">some code</code></p>\\n"
 
-      iex> get_body("```\\nsome code\\n```")
+      iex> parse("```\\nsome code\\n```")
       "<pre><code class=\\"language-none\\">some code</code></pre>\\n"
+
+      iex> parse("```elixir\\nsome code\\n```")
+      "<pre><code class=\\"elixir language-elixir\\">some code</code></pre>\\n"
   """
-  @spec get_body(String.t()) :: list
-  def get_body(markdown) do
+  @spec parse(String.t()) :: list
+  def parse(markdown) do
     markdown
     |> to_ast()
-    |> remove_heading()
     |> add_code_class()
     |> Earmark.Transform.transform()
   end
 
   @doc """
-  Returns the markdown's main title or the given `default` (optional).
+  Returns the markdown's title or first subtitle or the given `default` (optional).
 
   Examples:
-      iex> get_heading("# Hello World!\\nLorem ipsum...")
+      iex> get_title("# Hello World!\\nLorem ipsum...")
       "Hello World!"
 
-      iex> get_heading("Lorem ipsum dolor sit amet...", "Untitled")
+      iex> get_title("## Hello World!\\nLorem ipsum...")
+      "Hello World!"
+
+      iex> get_title("Lorem ipsum dolor sit amet...", "Untitled")
       "Untitled"
   """
-  @spec get_heading(String.t()) :: String.t()
-  def get_heading(markdown, default \\ @heading_default) when is_binary(markdown) do
-    with {:ok, ast, _} <- EarmarkParser.as_ast(markdown),
-         [{"h1", _, [title], _} | _tail] when is_binary(title) <- ast do
-      title
-      |> String.slice(0, @heading_length)
-      |> String.trim()
-    else
-      _ -> default
-    end
+  @spec get_title(String.t()) :: String.t()
+  def get_title(markdown, default \\ @heading_default) when is_binary(markdown) do
+    get_content(markdown, default, &title_tags/1)
   end
 
-  def get_preview(markdown) do
-    title_size =
-      "# #{get_heading(markdown)}\n"
-      |> byte_size
+  @doc """
+  Returns the markdown's first paragraph or the given `default` (optional).
 
-    preview_length = @preview_length + title_size
+  Examples:
+      iex> get_description("# Hello World!\\nLorem ipsum...")
+      "Lorem ipsum..."
 
-    if byte_size(markdown) > preview_length do
-      markdown
-      |> String.slice(0, preview_length)
-      |> String.trim()
-      |> Kernel.<>(" ...")
-      |> get_body()
-    else
-      markdown
-      |> String.trim()
-      |> get_body()
-    end
+      iex> get_description("## Hello World!", "Untitled")
+      "Untitled"
+  """
+  @spec get_description(String.t()) :: String.t()
+  def get_description(markdown, default \\ @description_default) when is_binary(markdown) do
+    get_content(markdown, default, &paragraph_tag/1)
   end
+
+  @doc """
+  Returns the markdown's first image or the given `default` (optional).
+
+  Examples:
+      iex> get_cover("# Hello World!\\n![](image.png)")
+      "image.png"
+
+      iex> get_cover("## Hello World!", "img.png")
+      "img.png"
+  """
+  def get_cover(markdown, default \\ @cover_default) when is_binary(markdown) do
+    get_content(markdown, default, &image_tag/1)
+  end
+
+  defp get_content(markdown, default, tag_function) do
+    markdown
+    |> to_ast()
+    |> Enum.find(tag_function)
+    |> tag_content_or_default(default)
+  end
+
+  defp title_tags({tag, _, [content], _}) when tag in @heading_tags and is_binary(content),
+    do: true
+
+  defp title_tags(_), do: false
+
+  defp paragraph_tag({"p", _, [content], _}) when is_binary(content), do: true
+  defp paragraph_tag(_), do: false
+
+  defp image_tag({"img", _, _, _}), do: true
+  defp image_tag({"p", _, [{"img", _, _, _}], _}), do: true
+  defp image_tag(_), do: false
+
+  defp tag_content_or_default({"p", _, [{"img", _, _, _} = img], _}, default) do
+    tag_content_or_default(img, default)
+  end
+
+  defp tag_content_or_default({"img", attrs, _, _}, _default) do
+    %{"src" => src} = Map.new(attrs)
+
+    src
+  end
+
+  defp tag_content_or_default({_, _, [content], _}, _default), do: content
+  defp tag_content_or_default(_, default), do: default
 
   defp to_ast(markdown) do
     {:ok, ast, _} = EarmarkParser.as_ast(markdown, code_class_prefix: "language-")
 
     ast
   end
-
-  defp remove_heading([{"h1", _, [_title], _} | tail]), do: tail
-  defp remove_heading(ast), do: ast
 
   defp add_code_class(ast) do
     Earmark.Transform.map_ast(ast, fn

@@ -1,33 +1,112 @@
-<nav class="navbar">
-  <div class="navbar-side-item pr-mb">
-    <a href="/" class="logo" aria-label="Branchpage">bp</a>
+<div class="<%= !@error && "hidden" %> alert" phx-click="clear-alert">
+  <p class="alert-msg" role="alert"><%= @error %></p>
+</div>
+
+<div class="min-h-screen flex flex-col">
+  <nav class="nav bg-gray-100 flex items-center justify-between" aria-label="main">
+    <div>
+      <a href="/" aria-label="Home">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </a>
+    </div>
+    <div>new article</div>
+    <div class="w-5"></div>
+  </nav>
+
+  <div class="border-b">
+    <nav class="nav flex justify-center" aria-label="tabs">
+      <button class="nav-item <%= if @tab == "form", do: "nav-current" %>" phx-value-tab="form" phx-click="change-tab">Form</button>
+      <button class="nav-item <%= if @tab == "preview", do: "nav-current" %>" phx-value-tab="preview" phx-click="change-tab"><div>Preview</div></button>
+    </nav>
   </div>
 
-  <form class="flex-1 max-w-screen-sm" phx-change="preview" onkeydown="return event.key != 'Enter';">
-    <input class="input" type="text" placeholder="post url" spellcheck="false" autocomplete="off" name="url" value="<%= @url %>" phx-debounce="200">
-  </form>
+  <%= case @tab do %>
+  <% "preview" -> %>
+  <div class="container flex-grow py-mbar sm:py-bar">
+    <%= if @article do %>
+    <article class="text-gray-700 markdown-body" phx-hook="CodeHighlight" phx-update="ignore" id="content">
+      <%= raw @article.body %>
+    </article>
+    <% end %>
+  </div>
 
-  <div class="navbar-side-item pl-mb justify-end"><a href="#" phx-click="publish">Publish</a></div>
-</nav>
+  <% "form" -> %>
+  <div class="container flex-grow sm:px-bar py-mbar sm:py-bar">
+    <form phx-change="preview" onkeydown="return event.key != 'Enter';">
+      <label class="text-sm" for="url">URL</label>
+      <input
+        class="input mt-1 <%= @validation && "border-red-600 focus:border-red-600" %>"
+        type="text"
+        spellcheck="false"
+        autocomplete="off"
+        name="url"
+        id="url"
+        value="<%= @url %>" phx-debounce="200"
+        onClick="this.select();">
 
-<%= if @error do %>
-<div class="flash" phx-click="clear-flash">
-  <p class="text-red-600">Error</p>
-  <p><%= raw @error %></p>
-</div>
-<% end %>
+      <p class="h-2 mt-1 text-xs text-red-600"><%= @validation %></p>
+    </form>
 
-<main class="container">
-  <p class="text-red-600"><%= @validation %></p>
-  <p><%= if @loading, do: "Loading..." %></p>
-  <%= if @article do %>
-  <article>
-    <header>
-      <p class="hidden sm:block text-gray-500">Preview</p>
-      <h1 class="font-black text-gray-900 text-3xl sm:text-5xl sm:mb-sc"><%= @article.title %></h1>
-      <p class="sm:hidden text-gray-500 mb-mb mt-1">Preview</p>
-    </header>
-    <div class="text-gray-700 markdown-body" phx-hook="CodeHighlight" id="content"><%= raw @article.body %></div>
-  </article>
+    <div class="py-3">
+      <label class="text-sm <%= !@article && "text-gray-400" %>" for="title">Title</label>
+      <input <%= !@article && "disabled" %>
+        class="input mt-1"
+        type="text"
+        spellcheck="false"
+        autocomplete="off"
+        id="title"
+        value="<%= @article_form[:title] %>"
+        phx-value-field="title"
+        phx-blur="update">
+
+    </div>
+
+    <div class="py-3">
+      <label class="text-sm <%= !@article && "text-gray-400" %>" for="cover">Cover</label>
+      <input <%= !@article && "disabled" %>
+        class="input mt-1"
+        type="text"
+        spellcheck="false"
+        autocomplete="off"
+        id="cover"
+        value="<%= @article_form[:cover] %>"
+        phx-value-field="cover"
+        phx-blur="update">
+
+    </div>
+
+    <div class="py-3">
+      <label class="text-sm <%= !@article && "text-gray-400" %>" for="description">Description</label>
+      <textarea <%= !@article && "disabled" %>
+        class="input mt-1 resize-none"
+        rows="3"
+        maxlength="160"
+        spellcheck="false"
+        autocomplete="off"
+        id="description"
+        phx-value-field="description"
+        phx-blur="update"><%= @article_form[:description] %></textarea>
+
+    </div>
+  </div>
   <% end %>
-</main>
+
+  <div class="cta-bar flex items-center justify-center">
+    <button <%= !@article && "disabled" %> class="cta <%= @article && "transform hover:scale-105" %>" phx-click="publish" phx-hook="PublishButton">
+      <%= if @loading do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+
+        </svg>
+      <% else %>
+        Publish
+      <% end %>
+    </button>
+  </div>
+</div>
