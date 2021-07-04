@@ -10,6 +10,33 @@ defmodule Publishing.Manage do
 
   import Ecto.Query
 
+  def article_list(opts \\ []) do
+    start_cursor = opts[:cursor] || DateTime.utc_now()
+    limit = opts[:limit] || 10
+
+    articles =
+      Article
+      |> from()
+      |> order_by([a], desc: a.inserted_at)
+      |> limit(^limit)
+      |> where([a], a.inserted_at < ^start_cursor)
+      |> Repo.all()
+
+    case articles do
+      [] ->
+        {nil, []}
+
+      articles ->
+        end_cursor =
+          articles
+          |> List.last()
+          |> Map.get(:inserted_at)
+
+        {end_cursor, articles}
+    end
+  end
+
+
   def load_blog!(username) do
     db_blog =
       Blog
