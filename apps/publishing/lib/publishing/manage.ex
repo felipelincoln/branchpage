@@ -10,7 +10,7 @@ defmodule Publishing.Manage do
 
   import Ecto.Query
 
-  def article_list(opts \\ []) do
+  def list_articles(opts \\ []) do
     start_cursor = opts[:cursor] || DateTime.utc_now()
     limit = opts[:limit] || 10
 
@@ -35,7 +35,6 @@ defmodule Publishing.Manage do
         {end_cursor, articles}
     end
   end
-
 
   def load_blog!(username) do
     db_blog =

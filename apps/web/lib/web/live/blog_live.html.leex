@@ -13,7 +13,7 @@
       </div>
     </section>
 
-    <section phx-hook="CodeHighlight" id="content">
+    <section>
       <%= for a <- @articles do %>
         <% link = "/#{@blog.username}/#{a.id}" %>
         <article>

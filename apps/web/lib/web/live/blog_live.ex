@@ -25,7 +25,6 @@ defmodule Web.BlogLive do
       |> assign(:meta, meta)
       |> assign(:blog, blog)
       |> assign(:articles, articles)
-      |> push_event("highlightAll", %{})
 
     {:ok, socket}
   end
