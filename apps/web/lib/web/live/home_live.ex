@@ -3,8 +3,11 @@ defmodule Web.HomeLive do
 
   use Phoenix.LiveView
 
+  alias Publishing.Manage
   alias Web.NewLive
   alias Web.Router.Helpers, as: Routes
+
+  import Publishing.Helper, only: [format_date: 1]
 
   @meta %{
     title: "Branchpage",
@@ -15,9 +18,12 @@ defmodule Web.HomeLive do
 
   @impl true
   def mount(_params, _session, socket) do
+    {_cursor, articles} = Manage.list_articles(limit: 3)
+
     socket =
       socket
       |> assign(:meta, @meta)
+      |> assign(:articles, articles)
 
     {:ok, socket}
   end

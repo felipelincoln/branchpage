@@ -54,6 +54,19 @@
       <div class="text-gray-400 text-xs">Branchpage</div>
     </div>
   </div>
+
+  <section>
+    <%= for a <- @articles do %>
+      <% link = "/#{a.blog.username}/#{a.id}" %>
+      <article>
+        <header>
+          <p class="text-gray-500 text-sm sm:text-base"><a href="<%= link %>"><%= format_date(a.inserted_at) %></a></p>
+          <h2 class="font-black text-xl sm:text-3xl"><a href="<%= link %>"><%= a.title %></a></h1>
+        </header>
+      </article>
+      <hr class="my-mb my-sc last:hidden">
+    <% end %>
+  </section>
 </div>
 
 <footer class="p-5 sm:p-8 mt-5 sm:mt-8 text-gray-400">

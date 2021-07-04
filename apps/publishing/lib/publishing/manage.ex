@@ -20,6 +20,7 @@ defmodule Publishing.Manage do
       |> order_by([a], desc: a.inserted_at)
       |> limit(^limit)
       |> where([a], a.inserted_at < ^start_cursor)
+      |> preload(:blog)
       |> Repo.all()
 
     case articles do
