@@ -39,15 +39,13 @@
     -->
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" href='<%= Routes.static_path(@conn, "/css/base.css") %>'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap">
     <script defer type="text/javascript" src='<%= Routes.static_path(@conn, "/js/main.js") %>'></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-zc7WDnCM3aom2EziyDIRAtQg1mVXLdILE09Bo+aE1xk0AM2c2cVLfSW9NrxE5tKTX44WBY0Z2HClZ05ur9vB6A==" crossorigin="anonymous"></script>
   </head>
   <body class="min-h-screen flex flex-col justify-between">
     <%= @inner_content %>
-    <footer class="p-5 sm:p-8 mt-5 sm:mt-8 text-gray-400">
-      <a class="hover:underline" href="/">Branchpage</a>
-      <a class="px-8 hover:underline" href="https://github.com/felipelincoln/branchpage">GitHub</a>
-    </footer>
   </body>
 </html>

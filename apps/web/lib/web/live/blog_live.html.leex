@@ -1,28 +1,34 @@
-<nav class="navbar">
-  <a href="/" class="font-bold border-2 border-gray-800 px-1" aria-label="Branchpage">bp</a>
-  <a href="#">Donate</a>
-</nav>
+<div class="min-h-screen flex flex-col justify-between">
+  <nav class="navbar">
+    <a href="/" class="font-bold border-2 border-gray-800 px-1" aria-label="Branchpage">bp</a>
+    <a href="#">Donate</a>
+  </nav>
 
-<main class="container">
-  <section class="flex flex-col items-center sm:w-1/2 sm:mx-auto px-mb sm:px-0 mb-10 sm:mb-14">
-    <figure class="w-24 h-24 sm:w-40 sm:h-40 rounded-full mb-mb sm:mb-sc" style="background: url(<%= @blog.avatar_url %>) center; background-size: cover"></figure>
-    <h1 class="text-xl sm:text-3xl font-black mb-1"><%= @blog.fullname %></h1>
-    <p class="text-gray-500"><%= @blog.bio %></p>
-    <div class="w-full">
-    </div>
-  </section>
+  <main class="container">
+    <section class="flex flex-col items-center sm:w-1/2 sm:mx-auto px-mb sm:px-0 mb-10 sm:mb-14">
+      <figure class="w-24 h-24 sm:w-40 sm:h-40 rounded-full mb-mb sm:mb-sc" style="background: url(<%= @blog.avatar_url %>) center; background-size: cover"></figure>
+      <h1 class="text-xl sm:text-3xl font-black mb-1"><%= @blog.fullname %></h1>
+      <p class="text-gray-500"><%= @blog.bio %></p>
+      <div class="w-full">
+      </div>
+    </section>
 
-  <section phx-hook="CodeHighlight" id="content">
-    <%= for a <- @articles do %>
-      <% link = "/#{@blog.username}/#{a.id}" %>
-      <article>
-        <header>
-          <p class="text-gray-500 text-sm sm:text-base"><a href="<%= link %>"><%= format_date(a.inserted_at) %></a></p>
-          <h2 class="font-black text-xl sm:text-3xl"><a href="<%= link %>"><%= a.title %></a></h1>
-        </header>
-      </article>
-      <hr class="my-mb my-sc last:hidden">
-    <% end %>
-  </section>
-</main>
+    <section phx-hook="CodeHighlight" id="content">
+      <%= for a <- @articles do %>
+        <% link = "/#{@blog.username}/#{a.id}" %>
+        <article>
+          <header>
+            <p class="text-gray-500 text-sm sm:text-base"><a href="<%= link %>"><%= format_date(a.inserted_at) %></a></p>
+            <h2 class="font-black text-xl sm:text-3xl"><a href="<%= link %>"><%= a.title %></a></h1>
+          </header>
+        </article>
+        <hr class="my-mb my-sc last:hidden">
+      <% end %>
+    </section>
+  </main>
 
+  <footer class="p-5 sm:p-8 mt-5 sm:mt-8 text-gray-400">
+    <a class="hover:underline" href="/">Branchpage</a>
+    <a class="px-8 hover:underline" href="https://github.com/felipelincoln/branchpage">GitHub</a>
+  </footer>
+</div>

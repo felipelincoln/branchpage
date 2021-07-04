@@ -6,7 +6,12 @@ defmodule BranchPage.Umbrella.MixProject do
       apps_path: "apps",
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
-      preferred_cli_env: [coveralls: :test, ci: :test, "ecto.reset.test": :test],
+      preferred_cli_env: [
+        ci: :test,
+        coveralls: :test,
+        "coveralls.html": :test,
+        "ecto.reset.test": :test
+      ],
       test_coverage: [tool: ExCoveralls],
       deps: deps(),
       aliases: aliases(),
