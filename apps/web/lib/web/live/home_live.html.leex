@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <section phx-update="append" id="feed">
+  <section id="feed" phx-update="append" phx-hook="InfiniteScroll">
     <%= for a <- @articles do %>
       <% link = "/#{a.blog.username}/#{a.id}" %>
       <article id="<%= a.id %>">
@@ -63,8 +63,8 @@
           <p class="text-gray-500 text-sm sm:text-base"><a href="<%= link %>"><%= format_date(a.inserted_at) %></a></p>
           <h2 class="font-black text-xl sm:text-3xl"><a href="<%= link %>"><%= a.title %></a></h1>
         </header>
+        <hr class="my-mb my-sc last:hidden">
       </article>
-      <hr class="my-mb my-sc last:hidden">
     <% end %>
   </section>
   <button phx-click="load-more">Load more</button>
