@@ -1,26 +1,24 @@
-<div class="h-bar bg-gray-700 text-white text-xl font-bold flex items-center justify-between">
-  <div>Branchpage</div>
+<div class="h-bar bg-gray-700 text-white text-xl font-bold flex items-center justify-between pl-6">
+  <div>B</div>
 </div>
 
 <div class="container">
-
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <div class="nav bg-gray-100 flex items-center justify-between rounded-xl mb-12">
+  <div class="nav bg-gray-100 flex items-center justify-between rounded-xl my-12">
     <div>newest articles</div>
   </div>
 
   <section id="feed" phx-update="append" phx-hook="InfiniteScroll" data-page="<%= @page %>">
     <%= for a <- @articles do %>
       <% link = "/#{a.blog.username}/#{a.id}" %>
-      <article id="<%= a.id %>" class="flex mb-12">
-        <div class="flex-grow">
+      <article id="<%= a.id %>" class="flex mb-6">
+        <div class="flex-grow pr-3">
           <h2 class="text-xl sm:text-2xl text-gray-700 font-black"><%= a.title %></h2>
-          <p><%= a.description %></p>
+          <p class="text-gray-500"><%= a.description %></p>
+          <div class="text-sm text-gray-500 mt-1">
+            <%= a.blog.username %>
+            <span class="px-1">·</span>
+            <%= format_date(a.inserted_at) %>
+          </div>
         </div>
         <div class="flex-shrink-0 bg-cover bg-center" style="width: 170px; height: 170px; background-image: url(<%= a.cover %>)"> </div>
       </article>
