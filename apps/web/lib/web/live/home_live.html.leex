@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <section id="feed" phx-update="append" phx-hook="InfiniteScroll">
+  <section id="feed" phx-update="append" phx-hook="InfiniteScroll" data-page="<%= @page %>">
     <%= for a <- @articles do %>
       <% link = "/#{a.blog.username}/#{a.id}" %>
       <article id="<%= a.id %>">

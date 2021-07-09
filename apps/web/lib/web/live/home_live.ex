@@ -25,6 +25,7 @@ defmodule Web.HomeLive do
       |> assign(:meta, @meta)
       |> assign(:articles, articles)
       |> assign(:cursor, cursor)
+      |> assign(:page, nil)
 
     {:ok, socket, temporary_assigns: [articles: []]}
   end
@@ -37,6 +38,14 @@ defmodule Web.HomeLive do
   end
 
   @impl true
+  def handle_event("load-more", _params, %{assigns: %{cursor: nil}} = socket) do
+    socket =
+      socket
+      |> assign(:page, "last")
+
+    {:noreply, socket}
+  end
+
   def handle_event("load-more", _params, socket) do
     %{assigns: %{cursor: start_cursor}} = socket
 

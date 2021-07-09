@@ -27,10 +27,10 @@ Hooks.PublishButton = {
 }
 
 Hooks.InfiniteScroll = {
+  page(){ return this.el.dataset.page },
   mounted(){
     window.addEventListener("scroll", e => {
-      if(scrollAt() > 99){
-        console.log("chamando evento")
+      if(this.page() != "last" && scrollAt() > 80){
         this.pushEvent("load-more", {})
       }
     })
