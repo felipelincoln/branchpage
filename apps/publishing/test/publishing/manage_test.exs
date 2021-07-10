@@ -123,6 +123,34 @@ defmodule Publishing.ManageTest do
     assert [_, _] = blog.articles
   end
 
+  test "list_articles/0 returns nil cursor and empty list" do
+    assert {nil, []} = Manage.list_articles()
+  end
+
+  test "list_articles/1 returns by default 10 latest articles" do
+    inserted_at = DateTime.utc_now() |> DateTime.add(-60)
+    _articles = Factory.insert_list(19, :article, inserted_at: inserted_at)
+
+    assert {_cursor, articles} = Manage.list_articles()
+    assert length(articles) == 10
+  end
+
+  test "list_articles/1 can set limit and cursor" do
+    inserted_at = DateTime.utc_now() |> DateTime.add(-60)
+    _articles = Factory.insert(:article, inserted_at: inserted_at)
+
+    inserted_at = DateTime.utc_now() |> DateTime.add(-30)
+    _articles = Factory.insert_list(2, :article, inserted_at: inserted_at)
+
+    inserted_at = DateTime.utc_now() |> DateTime.add(-5)
+    _articles = Factory.insert_list(2, :article, inserted_at: inserted_at)
+
+    assert {cursor, [_, _]} = Manage.list_articles(limit: 2)
+    assert {cursor, [_, _]} = Manage.list_articles(limit: 2, cursor: cursor)
+    assert {_cursor, [_]} = Manage.list_articles(limit: 2, cursor: cursor)
+    assert {nil, []}
+  end
+
   defp raw_deleted(%{url: @valid_raw_url}, _), do: {:ok, %{status: 404}}
   defp raw(%{url: @valid_raw_url}, _), do: {:ok, %{status: 200, body: @valid_body}}
   defp raw(%{url: @invalid_404_raw_url}, _), do: {:ok, %{status: 404}}
