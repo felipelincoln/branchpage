@@ -12,10 +12,10 @@
       <% link = "/#{a.blog.username}/#{a.id}" %>
       <article id="<%= a.id %>" class="flex mb-6">
         <div class="flex-grow pr-3">
-          <h2 class="text-xl sm:text-2xl text-gray-700 font-black"><a href="<%= link %>"><%= a.title %></a></h2>
+          <h2 class="text-xl sm:text-xl text-black font-black"><a href="<%= link %>"><%= a.title %></a></h2>
           <p class="text-gray-500"><%= a.description %></p>
           <div class="text-sm text-gray-500 mt-1">
-            <a href="<%= "/#{a.blog.username}" %>" class="hover:underline"><%= a.blog.username %></a>
+            <a href="<%= "/#{a.blog.username}" %>" class="hover:underline font-bold"><%= a.blog.username %></a>
             <span class="px-1">·</span>
             <a href="<%= link %>"><%= format_date(a.inserted_at) %></a>
           </div>
