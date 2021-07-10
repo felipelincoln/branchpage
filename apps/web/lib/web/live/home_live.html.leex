@@ -56,7 +56,26 @@
   </div>
 </div>
 
-<footer class="p-5 sm:p-8 mt-5 sm:mt-8 text-gray-400">
-  <a class="hover:underline" href="/">Branchpage</a>
-  <a class="px-8 hover:underline" href="https://github.com/felipelincoln/branchpage">GitHub</a>
-</footer>
+<div class="container">
+  <div class="nav bg-gray-100 flex items-center justify-between rounded-xl my-12">
+    <div>newest articles</div>
+  </div>
+
+  <section id="feed" phx-update="append" phx-hook="InfiniteScroll" data-page="<%= @page %>">
+    <%= for a <- @articles do %>
+      <% link = "/#{a.blog.username}/#{a.id}" %>
+      <article id="<%= a.id %>" class="flex mb-6">
+        <div class="flex-grow pr-3">
+          <h2 class="text-xl sm:text-xl text-black font-black"><a href="<%= link %>"><%= a.title %></a></h2>
+          <p class="text-gray-500"><%= a.description %></p>
+          <div class="text-sm text-gray-500 mt-1">
+            <a href="<%= "/#{a.blog.username}" %>" class="hover:underline font-bold"><%= a.blog.username %></a>
+            <span class="px-1">·</span>
+            <a href="<%= link %>"><%= format_date(a.inserted_at) %></a>
+          </div>
+        </div>
+        <a href="<%= link %>" class="flex-shrink-0 bg-cover bg-center" style="width: 170px; height: 170px; background-image: url(<%= a.cover %>)"> </a>
+      </article>
+    <% end %>
+  </section>
+</div>
