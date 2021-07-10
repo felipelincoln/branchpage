@@ -11,3 +11,7 @@ config :publishing, Publishing.Repo,
 
 config :publishing, Publishing.Integration.Github,
   token: System.get_env("GITHUB_API_TOKEN") || raise("GITHUB_API_TOKEN is missing.")
+
+config :ueberauth, Ueberauth.Strategy.Github.OAuth,
+  client_id: System.get_env("GITHUB_OAUTH_CLIENT_ID"),
+  client_secret: System.get_env("GITHUB_OAUTH_CLIENT_SECRET")
