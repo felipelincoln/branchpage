@@ -3,10 +3,14 @@ defmodule Web.Router do
   import Phoenix.LiveView.Router
 
   pipeline :browser do
-    plug Ueberauth
     plug :fetch_session
     plug :protect_from_forgery
     plug :put_root_layout, {Web.LayoutView, :base}
+  end
+
+  scope "/auth", Web do
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
   end
 
   scope "/", Web do
