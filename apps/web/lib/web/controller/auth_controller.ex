@@ -1,9 +1,9 @@
 defmodule Web.AuthController do
   use Phoenix.Controller
 
-  plug Ueberauth
-
   alias Ueberauth.Strategy.Helpers
+
+  plug Ueberauth
 
   def request(conn, _params) do
     render(conn, callback_url: Helpers.callback_url(conn))
@@ -12,6 +12,6 @@ defmodule Web.AuthController do
   def callback(%{assigns: %{ueberauth_auth: token}} = conn, _params) do
     IO.inspect(token, label: "token")
 
-    redirect(conn, "/")
+    redirect(conn, to: "/")
   end
 end

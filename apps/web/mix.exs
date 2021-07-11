@@ -33,6 +33,7 @@ defmodule Web.MixProject do
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.2"},
+      {:oauth2, "~> 2.0.0"},
       {:ueberauth, "~> 0.6"},
       {:ueberauth_github, "~> 0.7"}
     ]

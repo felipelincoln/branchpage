@@ -9,6 +9,8 @@ defmodule Web.Router do
   end
 
   scope "/auth", Web do
+    pipe_through :browser
+
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
   end
