@@ -2,7 +2,7 @@ name: Elixir CI
 
 on:
   push:
-    branches: [main, dev]
+    branches: [dev, main]
   pull_request:
 
 jobs:
