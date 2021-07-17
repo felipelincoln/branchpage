@@ -43,7 +43,7 @@ And much more features coming :grin:
 
 - Fork this repository;
 - Create a branch with your feature: `git checkout -b my-feature`;
-- Commit your changes: `git commit -m 'feat: My new feature'`;
+- Commit your changes: `git commit -m 'My new feature'`;
 - Push to your branch: `git push origin my-feature`.
 
 After the merge of your pull request is done, you can delete your branch.
