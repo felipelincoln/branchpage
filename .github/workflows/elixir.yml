@@ -1,6 +1,9 @@
 name: Elixir CI
 
-on: push
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
 
 jobs:
   build:
