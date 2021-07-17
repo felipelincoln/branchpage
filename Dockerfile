@@ -21,11 +21,8 @@ ARG MIX_ENV=prod
 ENV MIX_ENV=$MIX_ENV
 COPY . ./
 
-# install mix dependencies
-RUN mix do deps.get, deps.compile --skip-umbrella-children
-
 # install application
-RUN mix compile
+RUN mix do deps.get, deps.compile, compile
 
 
 # -----------------
