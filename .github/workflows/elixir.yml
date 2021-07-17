@@ -38,5 +38,5 @@ jobs:
           chmod +x codecov
           ls -l
           ls -l codecov
-          ls -l ./codecov
+          ./codecov
 
