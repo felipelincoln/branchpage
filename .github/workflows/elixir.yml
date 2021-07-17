@@ -35,7 +35,8 @@ jobs:
         run: |
           docker exec branchpage mix coveralls.json --umbrella
           curl -Os https://uploader.codecov.io/latest/alpine/codecov
-          ls
+          ls ./
+          pwd
           chmod +x codecov
           ./codecov
 
