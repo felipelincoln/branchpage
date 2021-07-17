@@ -37,7 +37,7 @@ And much more features coming :grin:
 
 ### 🧪 Tests
 
-1. Run `docker-compose run --rm web mix test`;
+1. Run `docker-compose run --rm web mix ci`;
 
 ## 🤔 How to contribute
 
