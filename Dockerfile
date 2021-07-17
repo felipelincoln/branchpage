@@ -22,7 +22,7 @@ ENV MIX_ENV=$MIX_ENV
 COPY . ./
 
 # install application
-RUN mix do deps.get, deps.compile, compile
+RUN mix do deps.get, compile
 
 
 # -----------------
