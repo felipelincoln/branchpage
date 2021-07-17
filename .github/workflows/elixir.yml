@@ -23,7 +23,7 @@ jobs:
       - name: Start container
         run: |
           cp .env.dev .env
-          docker-compose run -d -e MIX_ENV=test -e CODECOV_TOKEN=${{ secrets.CODECOV_TOKEN }} -v /branchpage/deps -v /branchpage/_build --name branchpage web /bin/sh
+          docker-compose run -d -e MIX_ENV=test -v /branchpage/deps -v /branchpage/_build --name branchpage web /bin/sh
 
       - name: Code format
         run: docker exec branchpage mix format --check-formatted
