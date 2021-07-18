@@ -21,8 +21,8 @@ And much more features coming :grin:
 
 1. Clone this repository and go to the directory;
 2. Create a .env file with the following variables
-  * `GITHUB_API_TOKEN` - [Create a personal access token](https://github.com/settings/tokens/new) (no scope needed);
-  * `GITHUB_OAUTH_CLIENT_ID` and `GITHUB_OAUTH_CLIENT_SECRET` - [Create an OAuth application](https://github.com/settings/applications/new) with homepage url `http://127.0.0.1:4000` and callback `http://127.0.0.1:4000/auth/github/callback`.
+    * `GITHUB_API_TOKEN` - [Create a personal access token](https://github.com/settings/tokens/new) (no scope needed);
+    * `GITHUB_OAUTH_CLIENT_ID` and `GITHUB_OAUTH_CLIENT_SECRET` - [Create an OAuth application](https://github.com/settings/applications/new) with homepage url `http://127.0.0.1:4000` and callback `http://127.0.0.1:4000/auth/github/callback`.
 
 ### 📦️ Running for the first time
 
