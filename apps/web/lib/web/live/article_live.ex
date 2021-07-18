@@ -19,8 +19,7 @@ defmodule Web.ArticleLive do
     article = Manage.load_article!(username, id)
 
     meta = %{@meta | title: "#{article.title} – Branchpage"}
-    name = article.blog.fullname || "Go to your blog"
-    username = article.blog.username
+    name = article.blog.fullname || username
 
     socket =
       socket

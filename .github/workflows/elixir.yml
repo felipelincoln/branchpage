@@ -1,6 +1,9 @@
 name: Elixir CI
 
-on: push
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
 
 jobs:
   build:
@@ -8,19 +11,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Login to GitHub container registry
-        run: echo ${{ secrets.WRITE_PACKAGE_TOKEN }} | docker login docker.pkg.github.com -u felipelincoln --password-stdin
-
-      - name: Build Docker image from cache
-        run: |
-          docker pull docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest
-          docker build --target build --build-arg MIX_ENV=test --cache-from docker.pkg.github.com/felipelincoln/branchpage/dev-cache:latest --tag branchpage:latest .
+      
+      - name: Build Docker image
+        run: docker build --target build --build-arg MIX_ENV=test --tag branchpage:latest .
 
       - name: Start container
         run: |
           cp .env.dev .env
-          docker-compose run -d -e MIX_ENV=test -e CODECOV_TOKEN=${{ secrets.CODECOV_TOKEN }} -v /branchpage/deps -v /branchpage/_build --name branchpage web /bin/sh
+          docker-compose run -d -e MIX_ENV=test -v /branchpage/deps -v /branchpage/_build --name branchpage web /bin/sh
 
       - name: Code format
         run: docker exec branchpage mix format --check-formatted
@@ -31,6 +29,7 @@ jobs:
       - name: Test
         run: |
           docker exec branchpage mix coveralls.json --umbrella
-          docker exec branchpage curl -s https://codecov.io/bash -o upload.sh
-          docker exec branchpage bash upload.sh
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
+          chmod +x codecov
+          ./codecov
 

@@ -19,17 +19,10 @@ RUN apk add curl bash git
 
 ARG MIX_ENV=prod
 ENV MIX_ENV=$MIX_ENV
-
-# install mix dependencies
-COPY mix.exs mix.lock ./
-COPY apps/web/mix.exs apps/web/mix.exs
-COPY apps/publishing/mix.exs apps/publishing/mix.exs
-COPY config config
-RUN mix do deps.get, deps.compile --skip-umbrella-children
+COPY . ./
 
 # install application
-COPY . ./
-RUN mix compile
+RUN mix do deps.get, compile
 
 
 # -----------------
