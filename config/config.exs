@@ -13,4 +13,6 @@ config :publishing,
 
 config :publishing, Publishing.Repo, migration_timestamps: [type: :utc_datetime]
 
+config :ueberauth, Ueberauth, providers: [github: {Ueberauth.Strategy.Github, []}]
+
 import_config "#{Mix.env()}.exs"

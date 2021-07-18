@@ -151,6 +151,21 @@ defmodule Publishing.ManageTest do
     assert {nil, []}
   end
 
+  test "get_or_create_blog/2 on non existing blog creates it" do
+    attrs = %{username: "test"}
+
+    assert is_nil(Publishing.Repo.get_by(Blog, username: "test"))
+    assert {:ok, %Blog{}} = Manage.get_or_create_blog(attrs, "github")
+  end
+
+  test "get_or_create_blog/2 on existing blog gets it" do
+    attrs = %{username: "test"}
+    _blog = Factory.insert(:blog, attrs)
+
+    assert %Blog{} = Publishing.Repo.get_by(Blog, username: "test")
+    assert {:ok, %Blog{}} = Manage.get_or_create_blog(attrs, "github")
+  end
+
   defp raw_deleted(%{url: @valid_raw_url}, _), do: {:ok, %{status: 404}}
   defp raw(%{url: @valid_raw_url}, _), do: {:ok, %{status: 200, body: @valid_body}}
   defp raw(%{url: @invalid_404_raw_url}, _), do: {:ok, %{status: 404}}

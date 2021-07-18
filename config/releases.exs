@@ -9,3 +9,7 @@ config :publishing, Publishing.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 config :publishing, Publishing.Integration.Github, token: System.fetch_env!("GITHUB_API_TOKEN")
+
+config :ueberauth, Ueberauth.Strategy.Github.OAuth,
+  client_id: System.get_env("GITHUB_OAUTH_CLIENT_ID"),
+  client_secret: System.get_env("GITHUB_OAUTH_CLIENT_SECRET")

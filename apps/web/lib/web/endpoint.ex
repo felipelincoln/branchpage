@@ -22,6 +22,11 @@ defmodule Web.Endpoint do
     plug Phoenix.LiveReloader
   end
 
+  plug Plug.Parsers,
+    parsers: [:urlencoded, :multipart, :json],
+    pass: ["*/*"],
+    json_decoder: Phoenix.json_library()
+
   plug Plug.Session, @session_options
   plug Web.Router
 end
