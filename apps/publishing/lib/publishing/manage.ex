@@ -102,7 +102,7 @@ defmodule Publishing.Manage do
   """
   @spec save_article(Article.t()) :: {:ok, Article.t()} | {:error, String.t()}
   def save_article(%Article{} = article) do
-    {:ok, blog} = upsert_blog(article)
+    {:ok, blog} = get_or_create_blog(article)
 
     attrs =
       article
@@ -189,13 +189,31 @@ defmodule Publishing.Manage do
     end
   end
 
-  defp upsert_blog(%Article{} = article) do
+  def get_or_create_blog(%Article{} = article) do
     %{url: url, blog: %{username: username}} = article
     platform = get_platform(url)
+    blog = Repo.get_by(Blog, username: username)
 
-    case Repo.one(from Blog, where: [username: ^username]) do
+    case blog do
       nil ->
         attrs = %{username: username, platform_id: platform.id}
+
+        %Blog{}
+        |> Blog.changeset(attrs)
+        |> Repo.insert()
+
+      blog ->
+        {:ok, blog}
+    end
+  end
+
+  def get_or_create_blog(user_data, provider) do
+    platform = upsert_platform!("https://#{provider}.com/")
+    blog = Repo.get_by(Blog, username: user_data.username)
+
+    case blog do
+      nil ->
+        attrs = Map.merge(user_data, %{platform_id: platform.id})
 
         %Blog{}
         |> Blog.changeset(attrs)

@@ -13,7 +13,7 @@ defmodule Web.Router do
     plug :authenticated_or_404
   end
 
-  def authenticated_or_404(conn, options) do
+  def authenticated_or_404(conn, _options) do
     case get_session(conn) do
       %{"current_user" => _user} -> conn
       _session -> raise Publishing.PageNotFound
@@ -28,7 +28,7 @@ defmodule Web.Router do
   end
 
   scope "/", Web do
-    pipe_through [:browser, :auth]
+    pipe_through :browser
 
     live "/", HomeLive
     live "/new", NewLive

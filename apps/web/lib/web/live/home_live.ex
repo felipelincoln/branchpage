@@ -17,9 +17,7 @@ defmodule Web.HomeLive do
   }
 
   @impl true
-  def mount(_params, session, socket) do
-    IO.inspect(session, label: "session")
-
+  def mount(_params, _session, socket) do
     {cursor, articles} = Manage.list_articles(limit: 3)
 
     socket =
