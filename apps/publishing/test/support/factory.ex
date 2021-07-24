@@ -5,9 +5,11 @@ defmodule Publishing.Factory do
 
   use ExMachina.Ecto, repo: Publishing.Repo
 
+  alias Publishing.Interact.DailyImpressionCounter
   alias Publishing.Manage.{Article, Blog, Platform}
 
   def article_factory, do: %Article{}
   def blog_factory, do: %Blog{}
   def platform_factory, do: %Platform{}
+  def daily_impression_counter_factory, do: %DailyImpressionCounter{}
 end
