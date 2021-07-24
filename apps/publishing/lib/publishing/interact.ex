@@ -6,6 +6,19 @@ defmodule Publishing.Interact do
   alias Publishing.Interact.DailyImpressionCounter
   alias Publishing.Repo
 
+  import Ecto.Query
+
+  def put_impressions(article) do
+    impressions =
+      DailyImpressionCounter
+      |> from()
+      |> where(article_id: ^article.id)
+      |> Repo.all()
+      |> Enum.reduce(0, fn %{count: count}, acc -> acc + count end)
+
+    %{article | impressions: impressions}
+  end
+
   def view(article_id) do
     today = Date.utc_today()
 
