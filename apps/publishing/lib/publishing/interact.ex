@@ -8,6 +8,11 @@ defmodule Publishing.Interact do
 
   import Ecto.Query
 
+  @doc """
+  Populate article's impressions field with the sum of
+  all daily impression counter.
+  """
+  @spec put_impressions(struct) :: struct
   def put_impressions(article) do
     impressions =
       DailyImpressionCounter
@@ -19,6 +24,10 @@ defmodule Publishing.Interact do
     %{article | impressions: impressions}
   end
 
+  @doc """
+  Increase article's impression counter for the current day.
+  """
+  @spec view(Ecto.UUID.t()) :: {:ok, DailyImpressionCounter.t()}
   def view(article_id) do
     today = Date.utc_today()
 
