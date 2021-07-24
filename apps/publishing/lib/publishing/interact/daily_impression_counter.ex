@@ -1,4 +1,4 @@
-defmodule Publishing.Manage.DailyImpressionCounter do
+defmodule Publishing.Interact.DailyImpressionCounter do
   @moduledoc false
 
   use Ecto.Schema
