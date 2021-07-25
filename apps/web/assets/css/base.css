@@ -88,11 +88,12 @@
   /* dashboard */
 
   .dashboard-container {
-    @apply w-full max-w-screen-lg sm:mx-auto box-content px-mb sm:px-sc
+    @apply w-full max-w-screen-lg sm:mx-auto box-content px-mb sm:px-sc flex
   }
 
   .dashboard-container > .content {
-    @apply w-2/3
+    height: calc(100vh - var(--bar));
+    @apply w-2/3 overflow-y-auto
   }
 
   .dashboard-container > .side {
