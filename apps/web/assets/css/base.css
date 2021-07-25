@@ -88,7 +88,7 @@
   /* dashboard */
 
   .dashboard-container {
-    @apply w-full max-w-screen-lg sm:mx-auto box-content px-mb sm:px-sc flex
+    @apply w-full max-w-screen-lg sm:mx-auto flex
   }
 
   .dashboard-container > .content {
