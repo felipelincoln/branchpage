@@ -45,7 +45,12 @@
           <div class="text-sm text-gray-500">Impressions</div>
         </li>
         <li>
-          <div class="w-full h-28 bg-gray-200"></div>
+          <div class="w-full h-bar2 flex justify-between">
+            <%= for _ <- 1..28 do %>
+              <div class="group w-1.5 h-full flex items-end">
+                <div style="height: <%= :rand.uniform*90 %>% " class="w-1.5 h-1/2 bg-gray-200 group-hover:bg-gray-400"></div></div>
+            <% end %>
+          </div>
           <div class="text-sm text-gray-500">
             1,413 Impressions <span class="float-right">Jul 24, 2020</span>
           </div>
