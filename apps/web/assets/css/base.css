@@ -91,9 +91,21 @@
     @apply w-full max-w-screen-lg sm:mx-auto flex
   }
 
-  .dashboard-container > .content {
+  .dashboard-content {
     height: calc(100vh - var(--bar));
-    @apply w-2/3 overflow-y-auto
+    @apply w-2/3 overflow-y-auto py-10 pr-10
+  }
+
+  .dashboard-table {
+    @apply w-full table-fixed
+  }
+
+  .dashboard-table > thead > tr {
+    @apply text-xs uppercase
+  }
+
+  .dashboard-table > tbody > tr {
+    @apply hover:bg-gray-100 cursor-pointer
   }
 
   .dashboard-container > .side {
