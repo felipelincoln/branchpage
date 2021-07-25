@@ -84,6 +84,41 @@
   .input {
     @apply text-gray-500 focus:text-gray-800 bg-gray-100 w-full border border-transparent focus:border-gray-800 focus:outline-none px-4 py-3 rounded-md
   }
+
+  /* dashboard */
+
+  .dashboard-container {
+    @apply w-full max-w-screen-lg sm:mx-auto box-content px-mb sm:px-sc
+  }
+
+  .dashboard-container > .content {
+    @apply w-2/3
+  }
+
+  .dashboard-container > .side {
+    @apply w-1/3
+  }
+
+  .navtop {
+    @apply px-mobile sm:px-screen uppercase text-xs font-bold text-black h-mbar sm:h-bar bg-gray-100 flex items-center justify-between
+  }
+
+  .navtop-side {
+    @apply w-5
+  }
+
+  .navtop-middle {
+    @apply w-full max-w-screen-lg flex
+  }
+
+  .navtop-middle > button {
+    @apply hover:border-black;
+    @apply h-mbar sm:h-bar border-b-2 border-transparent uppercase text-xs font-bold text-black
+  }
+
+  .navtop-middle > button.current {
+    @apply border-black hover:border-black
+  }
 }
 
 .markdown-body .octicon {
