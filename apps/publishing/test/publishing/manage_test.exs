@@ -1,5 +1,5 @@
 defmodule Publishing.ManageTest do
-  use Publishing.DataCase
+  use Publishing.DataCase, async: true
 
   alias Publishing.Factory
   alias Publishing.Manage
