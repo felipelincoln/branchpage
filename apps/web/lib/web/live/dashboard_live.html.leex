@@ -38,14 +38,15 @@
           <div class="text-sm text-gray-500">Impressions</div>
         </li>
         <li>
-          <div class="w-full h-bar2 flex justify-between">
-            <%= for _ <- 1..28 do %>
+          <div id="graph" class="w-full h-bar2 flex justify-between" phx-hook="DashboardImpressionsGraph">
+            <%= for x <- 0..27 do %>
               <div class="group w-1.5 h-full flex items-end">
-                <div style="height: <%= :rand.uniform*70 %>% " class="w-1.5 h-1/2 bg-gray-200 group-hover:bg-gray-400"></div></div>
+                <div data-index="<%= x %>" style="height: <%= :rand.uniform*70 %>% " class="w-1.5 h-1/2 bg-gray-200 group-hover:bg-gray-400"></div>
+              </div>
             <% end %>
           </div>
           <div class="text-sm text-gray-500">
-            <%= @graph_impressions %> Impressions <span class="float-right"><%= format_date(@graph_date) %></span>
+            <%= @graph_impressions[@graph_index] %> Impressions <span class="float-right"><%= @graph_dates[@graph_index] %></span>
           </div>
         </li>
       </ol>
