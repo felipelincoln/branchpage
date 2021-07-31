@@ -3,6 +3,8 @@ defmodule Web.DashboardLive do
 
   use Phoenix.LiveView
 
+  alias Publishing.Manage
+
   @meta %{
     title: "branchpage title",
     description: "some description",
@@ -11,9 +13,18 @@ defmodule Web.DashboardLive do
 
   @impl true
   def mount(_args, %{"current_user" => user}, socket) do
+    articles = Manage.articles_by_blog(user)
+    articles_count = length(articles)
+
+    articles_impressions =
+      Enum.reduce(articles, 0, fn %{impressions_total: total}, acc -> acc + total end)
+
     socket =
       socket
       |> assign(:meta, @meta)
+      |> assign(:articles, articles)
+      |> assign(:articles_count, articles_count)
+      |> assign(:articles_impressions, articles_impressions)
 
     {:ok, socket}
   end

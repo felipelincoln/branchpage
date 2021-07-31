@@ -7,6 +7,7 @@ defmodule Web.ArticleLive do
   import Publishing.Helper, only: [format_date: 1]
 
   alias Publishing.Manage
+  alias Publishing.Interact
 
   @meta %{
     title: "branchpage title",
@@ -17,6 +18,11 @@ defmodule Web.ArticleLive do
   @impl true
   def mount(%{"username" => username, "article" => id}, _session, socket) do
     article = Manage.load_article!(username, id)
+
+    if connected?(socket) do
+      Interact.view(article.id)
+      IO.puts "###############################"
+    end
 
     meta = %{@meta | title: "#{article.title} – Branchpage"}
     name = article.blog.fullname || username

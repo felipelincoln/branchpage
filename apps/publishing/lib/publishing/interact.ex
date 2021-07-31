@@ -9,19 +9,39 @@ defmodule Publishing.Interact do
   import Ecto.Query
 
   @doc """
-  Populate article's impressions field with the sum of
-  all daily impression counter.
+  Returns the sum of all daily impression counter.
   """
-  @spec put_impressions(struct) :: struct
-  def put_impressions(article) do
-    impressions =
-      DailyImpressionCounter
-      |> from()
-      |> where(article_id: ^article.id)
-      |> Repo.all()
-      |> Enum.reduce(0, fn %{count: count}, acc -> acc + count end)
+  @spec impressions_total(struct) :: struct
+  def impressions_total(article) do
+    DailyImpressionCounter
+    |> from()
+    |> where(article_id: ^article.id)
+    |> select([d], sum(d.count))
+    |> Repo.one()
+    |> Kernel.||(0)
+  end
 
-    %{article | impressions: impressions}
+  def impressions_today(article) do
+    impressions_by_date(article, Date.utc_today())
+  end
+
+  def impressions_by_date(article, date) do
+    DailyImpressionCounter
+    |> from()
+    |> where(article_id: ^article.id)
+    |> where(day: ^date)
+    |> select([d], d.count)
+    |> Repo.one()
+    |> Kernel.||(0)
+  end
+
+  def put_impressions(article) do
+    total = impressions_total(article)
+    today = impressions_today(article)
+
+    article
+    |> Map.put(:impressions_total, total)
+    |> Map.put(:impressions_today, today)
   end
 
   @doc """
@@ -43,7 +63,8 @@ defmodule Publishing.Interact do
         |> Repo.insert()
 
       %DailyImpressionCounter{} ->
-        attrs = %{count: daily_impression_count.count + 1}
+        IO.inspect(daily_impression_count.count)
+        attrs = %{count: daily_impression_count.count + 1} |> IO.inspect()
 
         daily_impression_count
         |> DailyImpressionCounter.changeset(attrs)
