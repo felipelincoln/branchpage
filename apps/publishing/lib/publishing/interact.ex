@@ -63,8 +63,7 @@ defmodule Publishing.Interact do
         |> Repo.insert()
 
       %DailyImpressionCounter{} ->
-        IO.inspect(daily_impression_count.count)
-        attrs = %{count: daily_impression_count.count + 1} |> IO.inspect()
+        attrs = %{count: daily_impression_count.count + 1}
 
         daily_impression_count
         |> DailyImpressionCounter.changeset(attrs)

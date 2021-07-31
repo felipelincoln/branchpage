@@ -31,4 +31,6 @@ defmodule Publishing.Helper do
     n = @current_year - year
     "#{n} years ago"
   end
+
+  def format_date(_), do: ""
 end

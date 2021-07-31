@@ -16,17 +16,26 @@ defmodule Web.BlogLive do
 
   @impl true
   def mount(%{"username" => username}, _session, socket) do
-    IO.puts "blog -----------------------------------------------------------------------------------"
-    blog = Manage.load_blog!(username)
-    articles = blog.articles
-    meta = %{@meta | title: "#{username} – Branchpage"}
+    if connected?(socket) do
+      blog = Manage.load_blog!(username)
+      articles = blog.articles
+      meta = %{@meta | title: "#{username} – Branchpage"}
 
-    socket =
-      socket
-      |> assign(:meta, meta)
-      |> assign(:blog, blog)
-      |> assign(:articles, articles)
+      socket =
+        socket
+        |> assign(:meta, meta)
+        |> assign(:blog, blog)
+        |> assign(:articles, articles)
 
-    {:ok, socket}
+      {:ok, socket}
+    else
+      socket =
+        socket
+        |> assign(:meta, @meta)
+        |> assign(:blog, %Manage.Blog{})
+        |> assign(:articles, [])
+
+      {:ok, socket}
+    end
   end
 end
