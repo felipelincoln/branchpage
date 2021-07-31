@@ -17,11 +17,12 @@ defmodule Web.ArticleLive do
 
   @impl true
   def mount(%{"username" => username, "article" => id}, _session, socket) do
+    IO.puts "mount -----------------------------------------------------------------------------------"
     article = Manage.load_article!(username, id)
 
     if connected?(socket) do
+      IO.puts "######################################################################################"
       Interact.view(article.id)
-      IO.puts "###############################"
     end
 
     meta = %{@meta | title: "#{article.title} – Branchpage"}

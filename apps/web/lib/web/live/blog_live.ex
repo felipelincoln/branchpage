@@ -16,6 +16,7 @@ defmodule Web.BlogLive do
 
   @impl true
   def mount(%{"username" => username}, _session, socket) do
+    IO.puts "blog -----------------------------------------------------------------------------------"
     blog = Manage.load_blog!(username)
     articles = blog.articles
     meta = %{@meta | title: "#{username} – Branchpage"}
