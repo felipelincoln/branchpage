@@ -28,6 +28,7 @@ defmodule Web.DashboardLive do
         graph_impressions
         |> Enum.max(fn {_key1, value1}, {_key2, value2} -> value1 > value2 end)
         |> elem(1)
+        |> Kernel.||(1)
 
       socket =
         socket
