@@ -24,6 +24,11 @@ defmodule Web.DashboardLive do
 
       {graph_dates, graph_impressions} = build_graph_data(user)
 
+      max_impressions =
+        graph_impressions
+        |> Enum.max(fn {_key1, value1}, {_key2, value2} -> value1 > value2 end)
+        |> elem(1)
+
       socket =
         socket
         |> assign(:meta, @meta)
@@ -35,6 +40,7 @@ defmodule Web.DashboardLive do
         |> assign(:graph_index, "27")
         |> assign(:graph_dates, graph_dates)
         |> assign(:graph_impressions, graph_impressions)
+        |> assign(:graph_max_impressions, max_impressions)
 
       {:ok, socket}
     else
@@ -49,6 +55,7 @@ defmodule Web.DashboardLive do
         |> assign(:graph_index, "27")
         |> assign(:graph_dates, %{})
         |> assign(:graph_impressions, %{})
+        |> assign(:graph_max_impressions, 1)
 
       {:ok, socket}
     end
