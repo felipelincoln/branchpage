@@ -4,6 +4,9 @@ defmodule Web.DashboardLive do
   use Phoenix.LiveView
 
   alias Publishing.Manage
+  alias Publishing.Interact
+
+  import Publishing.Helper, only: [format_date: 1]
 
   @meta %{
     title: "branchpage title",
@@ -17,8 +20,7 @@ defmodule Web.DashboardLive do
       articles = Manage.articles_by_blog(user)
       articles_count = length(articles)
 
-      articles_impressions =
-        Enum.reduce(articles, 0, fn %{impressions_total: total}, acc -> acc + total end)
+      articles_impressions = Interact.user_impressions_by_date(user, Date.utc_today())
 
       socket =
         socket
@@ -26,6 +28,8 @@ defmodule Web.DashboardLive do
         |> assign(:articles, articles)
         |> assign(:articles_count, articles_count)
         |> assign(:articles_impressions, articles_impressions)
+        |> assign(:graph_impressions, articles_impressions)
+        |> assign(:graph_date, Date.utc_today())
 
       {:ok, socket}
     else
@@ -35,6 +39,8 @@ defmodule Web.DashboardLive do
         |> assign(:articles, [])
         |> assign(:articles_count, 0)
         |> assign(:articles_impressions, 0)
+        |> assign(:graph_impressions, 0)
+        |> assign(:graph_date, Date.utc_today())
 
       {:ok, socket}
     end

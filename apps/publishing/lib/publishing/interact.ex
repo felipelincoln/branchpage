@@ -35,6 +35,18 @@ defmodule Publishing.Interact do
     |> Kernel.||(0)
   end
 
+  def user_impressions_by_date(user_id, date) do
+    from(
+      d in DailyImpressionCounter,
+      join: a in assoc(d, :article),
+      on: a.blog_id == ^user_id,
+      where: d.day == ^date,
+      select: sum(d.count)
+    )
+    |> Repo.one()
+    |> Kernel.||(0)
+  end
+
   def put_impressions(article) do
     total = impressions_total(article)
     today = impressions_today(article)
