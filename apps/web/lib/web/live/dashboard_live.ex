@@ -20,7 +20,7 @@ defmodule Web.DashboardLive do
       articles = Manage.articles_by_blog(user)
       articles_count = length(articles)
 
-      articles_impressions = Interact.user_impressions_by_date(user, Date.utc_today())
+      articles_impressions = Interact.user_impressions_total(user)
 
       {graph_dates, graph_impressions} = build_graph_data(user)
 
@@ -36,7 +36,6 @@ defmodule Web.DashboardLive do
         |> assign(:articles, articles)
         |> assign(:articles_count, articles_count)
         |> assign(:articles_impressions, articles_impressions)
-        |> assign(:graph_impressions, articles_impressions)
         |> assign(:graph_date, Date.utc_today())
         |> assign(:graph_index, "27")
         |> assign(:graph_dates, graph_dates)
