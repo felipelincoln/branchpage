@@ -18,16 +18,27 @@ defmodule Web.HomeLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {cursor, articles} = Manage.list_articles(limit: 3)
+    if connected?(socket) do
+      {cursor, articles} = Manage.list_articles(limit: 3)
 
-    socket =
-      socket
-      |> assign(:meta, @meta)
-      |> assign(:articles, articles)
-      |> assign(:cursor, cursor)
-      |> assign(:page, nil)
+      socket =
+        socket
+        |> assign(:meta, @meta)
+        |> assign(:articles, articles)
+        |> assign(:cursor, cursor)
+        |> assign(:page, nil)
 
-    {:ok, socket, temporary_assigns: [articles: []]}
+      {:ok, socket, temporary_assigns: [articles: []]}
+    else
+      socket =
+        socket
+        |> assign(:meta, @meta)
+        |> assign(:articles, [])
+        |> assign(:cursor, nil)
+        |> assign(:page, nil)
+
+      {:ok, socket}
+    end
   end
 
   @impl true

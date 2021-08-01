@@ -18,7 +18,7 @@ defmodule Web.NewLive do
   def mount(params, _session, socket) do
     url = Map.get(params, "url")
 
-    if url, do: send(self(), :preview)
+    if connected?(socket) and url, do: send(self(), :preview)
 
     socket =
       socket
