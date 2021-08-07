@@ -26,9 +26,9 @@ defmodule Web.DashboardLive do
 
       max_impressions =
         graph_impressions
+        |> Map.merge(%{"threshold" => 100})
         |> Enum.max(fn {_key1, value1}, {_key2, value2} -> value1 > value2 end)
         |> elem(1)
-        |> Kernel.||(1)
 
       socket =
         socket

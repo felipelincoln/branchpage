@@ -43,7 +43,7 @@
               <% index = to_string(x) %>
 
               <div class="group w-1.5 h-full flex items-end">
-                <div data-index="<%= x %>" style="height: <%= (@graph_impressions[index] || 0) / @graph_max_impressions * 80  %>% " class="w-1.5 h-1/2 bg-gray-200 group-hover:bg-gray-400"></div>
+                <div data-index="<%= x %>" style="height: <%= (@graph_impressions[index] || 0) / @graph_max_impressions * 100  %>% " class="w-1.5 h-1/2 bg-gray-200 group-hover:bg-gray-400"></div>
               </div>
             <% end %>
           </div>
