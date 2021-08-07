@@ -37,7 +37,7 @@ defmodule Web.DashboardLive do
         |> assign(:articles_count, articles_count)
         |> assign(:articles_impressions, articles_impressions)
         |> assign(:graph_date, Date.utc_today())
-        |> assign(:graph_index, "27")
+        |> assign(:hover_index, "27")
         |> assign(:graph_dates, graph_dates)
         |> assign(:graph_impressions, graph_impressions)
         |> assign(:graph_max_impressions, max_impressions)
@@ -52,7 +52,7 @@ defmodule Web.DashboardLive do
         |> assign(:articles_impressions, 0)
         |> assign(:graph_impressions, 0)
         |> assign(:graph_date, Date.utc_today())
-        |> assign(:graph_index, "27")
+        |> assign(:hover_index, "27")
         |> assign(:graph_dates, %{})
         |> assign(:graph_impressions, %{})
         |> assign(:graph_max_impressions, 1)
@@ -62,10 +62,10 @@ defmodule Web.DashboardLive do
   end
 
   @impl true
-  def handle_event("get-graph-impressions", %{"barIndex" => graph_index}, socket) do
+  def handle_event("get-graph-impressions", %{"barIndex" => hover_index}, socket) do
     socket =
       socket
-      |> assign(:graph_index, graph_index)
+      |> assign(:hover_index, hover_index)
 
     {:noreply, socket}
   end

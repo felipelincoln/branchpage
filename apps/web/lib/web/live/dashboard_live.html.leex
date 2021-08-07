@@ -39,16 +39,16 @@
         </li>
         <li>
           <div id="graph" class="w-full h-bar2 flex justify-between" phx-hook="DashboardImpressionsGraph">
-            <%= for x <- 0..27 do %>
-              <% index = to_string(x) %>
+            <%= for index <- 0..27 do %>
+              <% height = (@graph_impressions[to_string(index)] || 0) / @graph_max_impressions * 100 %>
 
               <div class="group w-1.5 h-full flex items-end border-b">
-                  <div data-index="<%= x %>" style="height: <%= (@graph_impressions[index] || 0) / @graph_max_impressions * 100 %>% " class="w-1.5 h-1/2 bg-gray-200 group-hover:bg-gray-400"></div>
+                  <div data-index="<%= index %>" style="height: <%= height %>%" class="w-1.5 h-1/2 bg-gray-200 group-hover:bg-gray-400"></div>
               </div>
             <% end %>
           </div>
           <div class="text-sm text-gray-500">
-            <%= @graph_impressions[@graph_index] %> Impressions <span class="float-right"><%= @graph_dates[@graph_index] %></span>
+            <%= @graph_impressions[@hover_index] %> Impressions <span class="float-right"><%= @graph_dates[@hover_index] %></span>
           </div>
         </li>
       </ol>
