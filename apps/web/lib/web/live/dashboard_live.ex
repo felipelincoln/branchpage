@@ -3,8 +3,8 @@ defmodule Web.DashboardLive do
 
   use Phoenix.LiveView
 
-  alias Publishing.Manage
   alias Publishing.Interact
+  alias Publishing.Manage
 
   import Publishing.Helper, only: [format_date: 1]
 

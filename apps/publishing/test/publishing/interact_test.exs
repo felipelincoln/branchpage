@@ -41,6 +41,6 @@ defmodule Publishing.InteractTest do
         day: ~D[2020-12-12]
       })
 
-    assert %{impressions: 635} = Interact.put_impressions(article)
+    assert %{impressions_total: 635} = Interact.put_impressions(article)
   end
 end
