@@ -20,11 +20,11 @@
     @apply text-gray-800
   }
 
-  button {
+  button, .side-button {
     @apply focus:outline-none;
   }
 
-  button:focus-visible {
+  button:focus-visible, .side-button:focus-visible {
     @apply ring-2 ring-black
   }
 
@@ -116,7 +116,7 @@
     @apply border-t py-3
   }
 
-  .dashboard-container > .side button {
+  .side-button {
     @apply ring-offset-4 ring-offset-gray-200;
     @apply uppercase px-6 py-2 bg-red-600 rounded-full text-white font-bold
   }
