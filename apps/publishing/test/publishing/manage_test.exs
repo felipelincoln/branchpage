@@ -123,6 +123,23 @@ defmodule Publishing.ManageTest do
     assert [_, _] = blog.articles
   end
 
+  test "articles_by_blog/1 returns all articles from a blog" do
+    blog = Factory.insert(:blog)
+    article = Factory.insert(:article, blog_id: blog.id)
+    inserted_at = DateTime.utc_now() |> DateTime.add(-60)
+    _article_2 = Factory.insert(:article, blog_id: blog.id, inserted_at: inserted_at)
+
+    _imp_1 =
+      Factory.insert(:daily_impression_counter, %{
+        article_id: article.id,
+        count: 100,
+        day: ~D[2021-01-01]
+      })
+
+    assert [%_{impressions_total: 100}, %_{}] = Manage.articles_by_blog(blog.id)
+
+  end
+
   test "list_articles/0 returns nil cursor and empty list" do
     assert {nil, []} = Manage.list_articles()
   end
