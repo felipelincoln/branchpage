@@ -137,7 +137,6 @@ defmodule Publishing.ManageTest do
       })
 
     assert [%_{impressions_total: 100}, %_{}] = Manage.articles_by_blog(blog.id)
-
   end
 
   test "list_articles/0 returns nil cursor and empty list" do
