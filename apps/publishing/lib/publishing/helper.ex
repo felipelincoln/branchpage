@@ -13,10 +13,10 @@ defmodule Publishing.Helper do
     past_year = today.year - 1
 
     case datetime do
-      %{day: ^this_day} ->
+      %{year: ^this_year, day: ^this_day} ->
         "Today"
 
-      %{day: ^yesterday} ->
+      %{year: ^this_year, day: ^yesterday} ->
         "Yesterday"
 
       %{year: ^this_year} ->
