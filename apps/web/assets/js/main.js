@@ -37,6 +37,24 @@ Hooks.InfiniteScroll = {
   }
 }
 
+Hooks.DashboardImpressionsGraph = {
+  mounted(){
+    this.el.addEventListener("mouseover", e => {
+      if(e.target != this.el){
+        let barEl = e.target
+
+        if(e.target.firstElementChild != null){
+          barEl = e.target.firstElementChild
+        }
+
+        this.pushEvent("get-graph-impressions", {barIndex: barEl.dataset.index})
+      }
+    })
+
+    console.log(this)
+  }
+}
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {hooks: Hooks, params: {_csrf_token: csrfToken}})
 

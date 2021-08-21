@@ -6,6 +6,7 @@ defmodule Web.ArticleLive do
   import Phoenix.HTML, only: [raw: 1]
   import Publishing.Helper, only: [format_date: 1]
 
+  alias Publishing.Interact
   alias Publishing.Manage
 
   @meta %{
@@ -16,19 +17,32 @@ defmodule Web.ArticleLive do
 
   @impl true
   def mount(%{"username" => username, "article" => id}, _session, socket) do
-    article = Manage.load_article!(username, id)
+    if connected?(socket) do
+      article = Manage.load_article!(username, id)
 
-    meta = %{@meta | title: "#{article.title} – Branchpage"}
-    name = article.blog.fullname || username
+      Interact.view(article.id)
 
-    socket =
-      socket
-      |> assign(:meta, meta)
-      |> assign(:name, name)
-      |> assign(:username, username)
-      |> assign(:article, article)
-      |> push_event("highlightAll", %{})
+      meta = %{@meta | title: "#{article.title} – Branchpage"}
+      name = article.blog.fullname || username
 
-    {:ok, socket}
+      socket =
+        socket
+        |> assign(:meta, meta)
+        |> assign(:name, name)
+        |> assign(:username, username)
+        |> assign(:article, article)
+        |> push_event("highlightAll", %{})
+
+      {:ok, socket}
+    else
+      socket =
+        socket
+        |> assign(:meta, @meta)
+        |> assign(:name, "")
+        |> assign(:username, "")
+        |> assign(:article, %Manage.Article{})
+
+      {:ok, socket}
+    end
   end
 end

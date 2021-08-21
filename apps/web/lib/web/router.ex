@@ -20,6 +20,12 @@ defmodule Web.Router do
     end
   end
 
+  scope "/dashboard", Web do
+    pipe_through [:browser, :authenticated_or_404]
+
+    live "/", DashboardLive
+  end
+
   scope "/auth", Web do
     pipe_through :browser
 

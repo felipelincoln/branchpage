@@ -14,7 +14,8 @@ defmodule Publishing.Manage.Article do
     field :description, :string
     field :cover, :string
     field :body, :string, virtual: true
-    field :impressions, :integer, virtual: true
+    field :impressions_total, :integer, virtual: true
+    field :impressions_today, :integer, virtual: true
 
     belongs_to :blog, Publishing.Manage.Blog, type: :binary_id
 

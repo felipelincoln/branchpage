@@ -1,0 +1,61 @@
+<nav class="navtop border-b">
+  <div class="navtop-side">H</div>
+  <div class="navtop-middle">
+    <button class="w-1/2 current">Dashboard</button>
+    <button class="w-1/2">Settings</button>
+  </div>
+  <div class="navtop-side">F</div>
+</nav>
+
+<div class="dashboard-container">
+  <section class="dashboard-content">
+    <table class="dashboard-table">
+      <thead>
+        <tr>
+          <th class="text-left">Title</th>
+          <th class="w-1/6 text-right">Impressions</th>
+          <th class="w-1/6 text-right">Impr. today</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for article <- @articles do %>
+          <tr>
+            <td class="truncate"><%= article.title %></td>
+            <td class="text-right"><%= article.impressions_total %></td>
+            <td class="text-right"><%= article.impressions_today %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+  <section class="side border-l pl-10 py-10 flex flex-col items-left">
+    <div class="flex-grow">
+      <h2 class="text-lg font-black"><%= @articles_count %> Articles</h2>
+
+      <ol class="py-3">
+        <li>
+          <div><%= @articles_impressions %></div>
+          <div class="text-sm text-gray-500">Impressions</div>
+        </li>
+        <li>
+          <div id="graph" class="w-full h-bar2 flex justify-between" phx-hook="DashboardImpressionsGraph">
+            <%= for index <- 0..27 do %>
+              <% height = (@graph_impressions[to_string(index)] || 0) / @graph_max_impressions * 100 %>
+
+              <div class="group w-1.5 h-full flex items-end border-b">
+                  <div data-index="<%= index %>" style="height: <%= height %>%" class="w-1.5 h-1/2 bg-gray-200 group-hover:bg-gray-400"></div>
+              </div>
+            <% end %>
+          </div>
+          <div class="text-sm text-gray-500">
+            <%= @graph_impressions[@hover_index] %> Impressions <span class="float-right"><%= @graph_dates[@hover_index] %></span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div>
+      <a href="/new?backref=/dashboard" class="side-button">New article</a>
+    </div>
+  </section>
+</div>

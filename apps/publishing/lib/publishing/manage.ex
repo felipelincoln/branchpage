@@ -4,11 +4,21 @@ defmodule Publishing.Manage do
   """
 
   alias Publishing.Integration
+  alias Publishing.Interact
   alias Publishing.Manage.{Article, Blog, Platform}
   alias Publishing.Markdown
   alias Publishing.Repo
 
   import Ecto.Query
+
+  def articles_by_blog(blog_id) do
+    Article
+    |> from()
+    |> where(blog_id: ^blog_id)
+    |> order_by(desc: :inserted_at)
+    |> Repo.all()
+    |> Enum.map(&Interact.put_impressions/1)
+  end
 
   def list_articles(opts \\ []) do
     start_cursor = opts[:cursor] || DateTime.utc_now()

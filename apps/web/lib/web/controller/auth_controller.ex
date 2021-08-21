@@ -26,6 +26,6 @@ defmodule Web.AuthController do
 
     conn
     |> put_session(:current_user, blog.id)
-    |> redirect(to: "/")
+    |> redirect(to: "/dashboard")
   end
 end

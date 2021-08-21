@@ -17,8 +17,9 @@ defmodule Web.NewLive do
   @impl true
   def mount(params, _session, socket) do
     url = Map.get(params, "url")
+    backref = Map.get(params, "backref")
 
-    if url, do: send(self(), :preview)
+    if connected?(socket) and url, do: send(self(), :preview)
 
     socket =
       socket
@@ -29,6 +30,7 @@ defmodule Web.NewLive do
       |> assign(:article_form, %{})
       |> assign(:loading, false)
       |> assign(:url, url || "")
+      |> assign(:backref, backref || "/")
       |> assign(:tab, "form")
 
     {:ok, socket}
