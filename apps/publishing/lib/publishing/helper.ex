@@ -28,6 +28,9 @@ defmodule Publishing.Helper do
       %{year: year} ->
         years_ago = this_year - year
         "#{years_ago} years ago"
+
+      _ ->
+        ""
     end
   end
 end
