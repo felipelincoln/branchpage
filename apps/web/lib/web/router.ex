@@ -24,6 +24,7 @@ defmodule Web.Router do
     pipe_through [:browser, :authenticated_or_404]
 
     live "/", DashboardLive
+    live "/:article", DashboardArticleLive
   end
 
   scope "/auth", Web do
