@@ -20,8 +20,8 @@
       <tbody>
         <%= for article <- @articles do %>
           <tr>
-            <td class="truncate hover:underline cursor-pointer">
-              <a href="/dashboard/<%= article.id %>">
+            <td class="truncate">
+              <a class="hover:underline cursor-pointer" href="/dashboard/<%= article.id %>">
                 <%= article.title %>
               </a>
             </td>
