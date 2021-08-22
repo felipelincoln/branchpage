@@ -9,36 +9,15 @@
 
 <div class="dashboard-container">
   <section class="dashboard-content">
-    <table class="dashboard-table">
-      <thead>
-        <tr>
-          <th class="text-left">Title</th>
-          <th class="w-1/6 text-right">Impressions</th>
-          <th class="w-1/6 text-right">Impr. today</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= for article <- @articles do %>
-          <tr>
-            <td class="truncate hover:underline cursor-pointer">
-              <a href="/dashboard/<%= article.id %>">
-                <%= article.title %>
-              </a>
-            </td>
-            <td class="text-right"><%= article.impressions_total %></td>
-            <td class="text-right"><%= article.impressions_today %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    md
   </section>
   <section class="side border-l pl-10 py-10 flex flex-col items-left">
     <div class="flex-grow">
-      <h2 class="text-lg font-black"><%= @articles_count %> Articles</h2>
+      <h2 class="text-lg font-black">Article</h2>
 
       <ol class="py-3">
         <li>
-          <div><%= @articles_impressions %></div>
+          <div><%= @impressions_total %></div>
           <div class="text-sm text-gray-500">Impressions</div>
         </li>
         <li>

@@ -20,6 +20,15 @@ defmodule Publishing.Manage do
     |> Enum.map(&Interact.put_impressions/1)
   end
 
+  def article_by_blog(article_id, blog_id) do
+    Article
+    |> from()
+    |> where(id: ^article_id)
+    |> where(blog_id: ^blog_id)
+    |> Repo.one()
+    |> Interact.put_impressions()
+  end
+
   def list_articles(opts \\ []) do
     start_cursor = opts[:cursor] || DateTime.utc_now()
     limit = opts[:limit] || 10

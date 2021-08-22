@@ -105,7 +105,7 @@
   }
 
   .dashboard-table > tbody > tr {
-    @apply hover:bg-gray-100 cursor-pointer
+    @apply hover:bg-gray-100
   }
 
   .dashboard-container > .side {
