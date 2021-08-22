@@ -8,7 +8,7 @@ defmodule Publishing.Helper do
   """
   def format_date(datetime, opts \\ [])
 
-  def format_date(datetime, [full: true]) do
+  def format_date(datetime, full: true) do
     Timex.format!(datetime, "%B %e, %Y - %H:%M", :strftime)
   end
 

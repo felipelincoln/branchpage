@@ -10,11 +10,11 @@ defmodule Publishing.HelperTest do
     past_year = %{today | year: today.year - 1}
     ten_years_ago = %{today | year: today.year - 10}
 
-    assert Helper.format_date(today, today) == "Today"
-    assert Helper.format_date(today, yesterday) == "Yesterday"
-    assert Helper.format_date(today, june_first) == "Jun  1"
-    assert Helper.format_date(today, past_year) == "A year ago"
-    assert Helper.format_date(today, ten_years_ago) == "10 years ago"
-    assert Helper.format_date(today, nil) == ""
+    assert Helper.format_date(today, today: today) == "Today"
+    assert Helper.format_date(yesterday, today: today) == "Yesterday"
+    assert Helper.format_date(june_first, today: today) == "Jun  1"
+    assert Helper.format_date(past_year, today: today) == "A year ago"
+    assert Helper.format_date(ten_years_ago, today: today) == "10 years ago"
+    assert Helper.format_date(nil) == ""
   end
 end
