@@ -31,10 +31,9 @@ defmodule Web.DashboardArticleLive do
       socket =
         socket
         |> assign(:meta, @meta)
-        |> assign(:graph_date, Date.utc_today())
-        |> assign(:hover_index, "27")
         |> assign(:article, article)
         |> assign(:published_date, article.inserted_at |> format_date(full: true))
+        |> assign(:hover_index, "27")
         |> assign(:graph_dates, graph_dates)
         |> assign(:graph_impressions, graph_impressions)
         |> assign(:graph_max_impressions, max_impressions)
@@ -45,12 +44,8 @@ defmodule Web.DashboardArticleLive do
       socket =
         socket
         |> assign(:meta, @meta)
-        |> assign(:articles, [])
         |> assign(:article, %Manage.Article{})
-        |> assign(:articles_count, 0)
         |> assign(:published_date, "")
-        |> assign(:graph_impressions, 0)
-        |> assign(:graph_date, Date.utc_today())
         |> assign(:hover_index, "27")
         |> assign(:graph_dates, %{})
         |> assign(:graph_impressions, %{})
