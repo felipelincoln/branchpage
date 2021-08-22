@@ -21,12 +21,24 @@ defmodule Publishing.Manage do
   end
 
   def article_by_blog(article_id, blog_id) do
-    Article
-    |> from()
-    |> where(id: ^article_id)
-    |> where(blog_id: ^blog_id)
-    |> Repo.one()
-    |> Interact.put_impressions()
+    db_article =
+      Article
+      |> from()
+      |> where(id: ^article_id)
+      |> where(blog_id: ^blog_id)
+      |> Repo.one()
+      |> Interact.put_impressions()
+
+    ^blog_id = db_article.blog_id
+
+    {:ok, article} =
+      with {:error, _} <- build_article(db_article.url) do
+        Repo.delete(db_article)
+
+        :fail
+      end
+
+    %{db_article | body: article.body}
   end
 
   def list_articles(opts \\ []) do

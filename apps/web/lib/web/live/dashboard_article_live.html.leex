@@ -9,7 +9,9 @@
 
 <div class="dashboard-container">
   <section class="dashboard-content">
-    md
+    <article>
+      <div class="text-gray-700 markdown-body" phx-hook="CodeHighlight" id="content"><%= raw @article.body %></div>
+    </article>
   </section>
   <section class="side border-l pl-10 py-10 flex flex-col items-left">
     <div class="flex-grow">

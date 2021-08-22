@@ -6,6 +6,7 @@ defmodule Web.DashboardArticleLive do
   alias Publishing.Interact
   alias Publishing.Manage
 
+  import Phoenix.HTML, only: [raw: 1]
   import Publishing.Helper, only: [format_date: 1, format_date: 2]
 
   @meta %{
@@ -17,7 +18,7 @@ defmodule Web.DashboardArticleLive do
   @impl true
   def mount(%{"article" => article_id}, %{"current_user" => user}, socket) do
     if connected?(socket) do
-      article = Manage.article_by_blog(article_id, user) |> IO.inspect
+      article = Manage.article_by_blog(article_id, user)
 
       {graph_dates, graph_impressions} = build_graph_data(article)
 
@@ -37,6 +38,7 @@ defmodule Web.DashboardArticleLive do
         |> assign(:graph_dates, graph_dates)
         |> assign(:graph_impressions, graph_impressions)
         |> assign(:graph_max_impressions, max_impressions)
+        |> push_event("highlightAll", %{})
 
       {:ok, socket}
     else
