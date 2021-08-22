@@ -139,8 +139,11 @@
   }
 
   .navtop-middle > button {
-    @apply hover:border-black;
-    @apply h-mbar sm:h-bar border-b-2 border-transparent uppercase text-xs font-bold text-black
+    @apply h-mbar sm:h-bar cursor-default border-b-2 border-transparent uppercase text-xs font-bold text-black
+  }
+
+  .navtop-middle > button:not([disabled]) {
+    @apply hover:border-black cursor-pointer;
   }
 
   .navtop-middle > button.current {
