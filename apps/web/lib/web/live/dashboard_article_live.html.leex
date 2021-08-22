@@ -34,19 +34,39 @@
             <%= @graph_impressions[@hover_index] %> Impressions <span class="float-right"><%= @graph_dates[@hover_index] %></span>
           </div>
         </li>
-      </ol>
-
-      <h2 class="text-lg font-black mt-bar">Meta</h2>
-      <ol class="py-3">
         <li>
           <div><%= @published_date %></div>
           <div class="text-sm text-gray-500">Published</div>
+        </li>
+        <li>
+          <div class="truncate">
+            <a class="hover:underline" href="<%= @article.url %>" target="_blank">
+              <%= @article.url %>
+            </a>
+          </div>
+          <div class="text-sm text-gray-500">GitHub</div>
+        </li>
+        <li>
+          <div class="truncate"><%= @article.title %></div>
+          <div class="text-sm text-gray-500">Title</div>
+        </li>
+        <li>
+          <div class="truncate">
+            <a class="hover:underline" href="<%= @article.cover %>" target="_blank">
+              <%= @article.cover %>
+            </a>
+          </div>
+          <div class="text-sm text-gray-500">Cover</div>
+        </li>
+        <li>
+          <div class="truncate"><%= @article.description %></div>
+          <div class="text-sm text-gray-500">Description</div>
         </li>
       </ol>
     </div>
 
     <div>
-      <a href="/new?backref=/dashboard" class="side-button">Update</a>
+      <a href="" class="side-button">Update</a>
     </div>
   </section>
 </div>
