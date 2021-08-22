@@ -18,7 +18,7 @@ defmodule Web.DashboardArticleLive do
   @impl true
   def mount(%{"article" => article_id}, %{"current_user" => user}, socket) do
     if connected?(socket) do
-      article = Manage.article_by_blog(article_id, user)
+      article = Manage.article_by_blog!(article_id, user)
 
       {graph_dates, graph_impressions} = build_graph_data(article)
 

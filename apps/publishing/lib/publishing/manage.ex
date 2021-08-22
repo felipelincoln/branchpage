@@ -20,7 +20,7 @@ defmodule Publishing.Manage do
     |> Enum.map(&Interact.put_impressions/1)
   end
 
-  def article_by_blog(article_id, blog_id) do
+  def article_by_blog!(article_id, blog_id) do
     db_article =
       Article
       |> from()
@@ -39,6 +39,9 @@ defmodule Publishing.Manage do
       end
 
     %{db_article | body: article.body}
+  rescue
+    _error ->
+      reraise Publishing.PageNotFound, __STACKTRACE__
   end
 
   def list_articles(opts \\ []) do

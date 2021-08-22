@@ -16,5 +16,6 @@ defmodule Publishing.HelperTest do
     assert Helper.format_date(past_year, today: today) == "A year ago"
     assert Helper.format_date(ten_years_ago, today: today) == "10 years ago"
     assert Helper.format_date(nil) == ""
+    assert Helper.format_date(~D[2021-01-01], full: true) == "January  1, 2021 - 00:00"
   end
 end
