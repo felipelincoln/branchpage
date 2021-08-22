@@ -6,7 +6,7 @@ defmodule Web.DashboardArticleLive do
   alias Publishing.Interact
   alias Publishing.Manage
 
-  import Publishing.Helper, only: [format_date: 1]
+  import Publishing.Helper, only: [format_date: 1, format_date: 2]
 
   @meta %{
     title: "branchpage title",
@@ -33,8 +33,7 @@ defmodule Web.DashboardArticleLive do
         |> assign(:graph_date, Date.utc_today())
         |> assign(:hover_index, "27")
         |> assign(:article, article)
-        |> assign(:title, article.title)
-        |> assign(:impressions_total, article.impressions_total)
+        |> assign(:published_date, article.inserted_at |> format_date(full: true))
         |> assign(:graph_dates, graph_dates)
         |> assign(:graph_impressions, graph_impressions)
         |> assign(:graph_max_impressions, max_impressions)
@@ -45,9 +44,9 @@ defmodule Web.DashboardArticleLive do
         socket
         |> assign(:meta, @meta)
         |> assign(:articles, [])
+        |> assign(:article, %Manage.Article{})
         |> assign(:articles_count, 0)
-        |> assign(:title, "")
-        |> assign(:impressions_total, 0)
+        |> assign(:published_date, "")
         |> assign(:graph_impressions, 0)
         |> assign(:graph_date, Date.utc_today())
         |> assign(:hover_index, "27")

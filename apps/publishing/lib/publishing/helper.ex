@@ -6,7 +6,15 @@ defmodule Publishing.Helper do
   @doc """
   Formats a datetime into "Month. day" format
   """
-  def format_date(today \\ Date.utc_today(), datetime) do
+  def format_date(datetime, opts \\ [])
+
+  def format_date(datetime, [full: true]) do
+    Timex.format!(datetime, "%B %e, %Y - %H:%M", :strftime)
+  end
+
+  def format_date(datetime, opts) do
+    today = opts[:today] || Date.utc_today()
+
     this_day = today.day
     this_year = today.year
     yesterday = Date.add(today, -1).day
