@@ -20,6 +20,30 @@ defmodule Publishing.Manage do
     |> Enum.map(&Interact.put_impressions/1)
   end
 
+  def article_by_blog!(article_id, blog_id) do
+    db_article =
+      Article
+      |> from()
+      |> where(id: ^article_id)
+      |> where(blog_id: ^blog_id)
+      |> Repo.one()
+      |> Interact.put_impressions()
+
+    ^blog_id = db_article.blog_id
+
+    {:ok, article} =
+      with {:error, _} <- build_article(db_article.url) do
+        Repo.delete(db_article)
+
+        :fail
+      end
+
+    %{db_article | body: article.body}
+  rescue
+    _error ->
+      reraise Publishing.PageNotFound, __STACKTRACE__
+  end
+
   def list_articles(opts \\ []) do
     start_cursor = opts[:cursor] || DateTime.utc_now()
     limit = opts[:limit] || 10

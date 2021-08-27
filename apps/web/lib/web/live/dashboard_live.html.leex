@@ -20,7 +20,11 @@
       <tbody>
         <%= for article <- @articles do %>
           <tr>
-            <td class="truncate"><%= article.title %></td>
+            <td class="truncate">
+              <a class="hover:underline cursor-pointer" href="/dashboard/<%= article.id %>">
+                <%= article.title %>
+              </a>
+            </td>
             <td class="text-right"><%= article.impressions_total %></td>
             <td class="text-right"><%= article.impressions_today %></td>
           </tr>
