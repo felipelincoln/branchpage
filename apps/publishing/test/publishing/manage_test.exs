@@ -108,6 +108,25 @@ defmodule Publishing.ManageTest do
     assert_raise Publishing.PageNotFound, fn -> Manage.load_article!("invalid", "") end
   end
 
+  test "article_by_blog!/2 loads an article from database" do
+    expect(TeslaMock, :call, &raw/2)
+    blog = Factory.insert(:blog)
+    article = Factory.insert(:article, blog_id: blog.id, url: @valid_url)
+
+    assert (%Article{} = article) = Manage.article_by_blog!(article.id, blog.id)
+    assert article.url == @valid_url
+  end
+
+  test "article_by_blog!/2 deletes article if deleted from integration" do
+    expect(TeslaMock, :call, &raw_deleted/2)
+    blog = Factory.insert(:blog)
+    article = Factory.insert(:article, blog_id: blog.id, url: @valid_url)
+
+    assert %Article{} = Publishing.Repo.get(Article, article.id)
+    assert_raise Publishing.PageNotFound, fn -> Manage.article_by_blog!(article.id, blog.id) end
+    assert Publishing.Repo.get(Article, article.id) == nil
+  end
+
   test "load_blog!/1 on non existing username raises PageNotFound" do
     assert_raise Publishing.PageNotFound, fn -> Manage.load_blog!("") end
   end
